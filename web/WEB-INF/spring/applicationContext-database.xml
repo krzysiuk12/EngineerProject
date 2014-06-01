@@ -19,11 +19,31 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
+    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+        <property name="dataSource" ref="dataSource" />
+        <property name="changeLog" value="classpath:db-changelog.xml" />
+        <property name="contexts" value="test, production" />
+        <property name="changeLogParameters">
+            <map>
+                <entry key="schemaName" value="${jdbc.schemaName}" />
+                <entry key="shortVarchar" value="varchar(100)" />
+                <entry key="normalVarchar" value="varchar(255)" />
+                <entry key="longVarchar" value="varchar(500)" />
+                <entry key="double" value="float8" />
+                <entry key="int" value="int4" />
+                <entry key="long" value="int8" />
+                <entry key="dateType" value="timestamp with time zone" />
+                <entry key="enumeratedString" value="varchar(25)" />
+                <entry key="boolean" value="bool" />
+            </map>
+        </property>
+    </bean>
+
     <bean name="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="annotatedClasses">
             <list>
-                <value>domain.Location</value>
+                <value>domain.locations.Location</value>
             </list>
         </property>
         <property name="hibernateProperties">

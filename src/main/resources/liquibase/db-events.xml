@@ -1,0 +1,48 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="EVENTS-001" author="kkicinger">
+        <createTable schemaName="${schemaName}" tableName="logevents">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="useraccountid" type="${long}" />
+            <column name="generatedon" type="${dateType}" />
+            <column name="type" type="${enumeratedString}" />
+            <column name="sessionid" type="${shortVarchar}" />
+            <column name="ipaddress" type="${shortVarchar}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="EVENTS-002" author="kkicinger">
+        <createTable schemaName="${schemaName}" tableName="locationevents">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="useraccountid" type="${long}" />
+            <column name="locationid" type="${long}" />
+            <column name="generatedon" type="${dateType}" />
+            <column name="type" type="${enumeratedString}" />
+            <column name="description" type="${normalVarchar}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="EVENTS-003" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="logevents" baseColumnNames="useraccountid" constraintName="fk_useraccountid_logevents"
+                                 referencedTableName="useraccounts" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="EVENTS-004" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="locationevents" baseColumnNames="useraccountid" constraintName="fk_useraccountid_locationevents"
+                                 referencedTableName="useraccounts" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="EVENTS-005" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="locationevents" baseColumnNames="locationid" constraintName="fk_locationid_locationevents"
+                                 referencedTableName="locations" referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>

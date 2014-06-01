@@ -1,0 +1,65 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="SECURITYPROFILES-001" author="kkicinger">
+        <createTable schemaName="${schemaName}" tableName="accountsecurityprofiles">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="maximumloginlength" type="${int}" />
+            <column name="minimumloginlength" type="${int}" />
+            <column name="maximuminvalidloginattempts" type="${int}" />
+            <column name="accountlockoutdurationinminutes" type="${int}" />
+            <column name="accountimmediatelyturnedoff" type="${boolean}" />
+            <column name="maximumlockoutsbeforeturningoff" type="${int}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="SECURITYPROFILES-002" author="kkicinger">
+        <createTable schemaName="${schemaName}" tableName="passwordsecurityprofiles">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="maximumlength" type="${int}" />
+            <column name="minimumlength" type="${int}" />
+            <column name="periodpasswordchangerequired" type="${boolean}" />
+            <column name="maximumageindays" type="${int}" />
+            <column name="expirationinfoindays" type="${int}" />
+            <column name="digitrequired" type="${boolean}" />
+            <column name="lowercaseletterrequired" type="${boolean}" />
+            <column name="uppercaseletterrequired" type="${boolean}" />
+            <column name="specialcharacterrequired" type="${boolean}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="SECURITYPROFILES-003" author="kkicinger">
+        <createTable schemaName="${schemaName}" tableName="securityprofiles">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="${shortVarchar}" />
+            <column name="description" type="${normalVarchar}" />
+            <column name="defaultprofile" type="${boolean}" />
+            <column name="passwordsecurityprofileturnedon" type="${boolean}" />
+            <column name="accountsecurityprofileturnedon" type="${boolean}" />
+            <column name="status" type="${enumeratedString}" />
+            <column name="passwordsecurityprofileid" type="${long}" />
+            <column name="accountsecurityprofileid" type="${long}" />
+            <column name="securityprofiletype" type="${enumeratedString}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="SECURITYPROFILES-004" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="securityprofiles" baseColumnNames="passwordsecurityprofileid" constraintName="fk_passwordsecurityprofileid_securityprofiles"
+                                 referencedTableName="passwordsecurityprofiles" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="SECURITYPROFILES-005" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="securityprofiles" baseColumnNames="accountsecurityprofileid" constraintName="fk_accountsecurityprofileid_securityprofiles"
+                                 referencedTableName="accountsecurityprofiles" referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>

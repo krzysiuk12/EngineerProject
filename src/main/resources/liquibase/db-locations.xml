@@ -1,0 +1,46 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="LOCATIONS-001" author="kkicinger">
+        <createTable schemaName="${schemaName}" tableName="locations">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="${shortVarchar}" />
+            <column name="description" type="${longVarchar}" />
+            <column name="latitude" type="${double}" />
+            <column name="longitude" type="${double}" />
+            <column name="status" type="${enumeratedString}" />
+            <column name="street" type="${shortVarchar}" />
+            <column name="city" type="${shortVarchar}" />
+            <column name="postalcode" type="${shortVarchar}" />
+            <column name="country" type="${shortVarchar}" />
+            <column name="versionnumber" type="${int}" />
+            <column name="creationdate" type="${dateType}" />
+            <column name="createdbyaccountid" type="${long}" />
+            <column name="lastmodificationdate" type="${dateType}" />
+            <column name="lastmodificationbyid" type="${long}" />
+            <column name="removaldate" type="${dateType}" />
+            <column name="removedbyid" type="${long}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="LOCATIONS-002" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="locations" baseColumnNames="createdbyaccountid" constraintName="fk_created_by_account_id_locations"
+                                 referencedTableName="useraccounts" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="LOCATIONS-003" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="locations" baseColumnNames="lastmodificationbyid" constraintName="fk_last_modifications_by_account_id_locations"
+                                 referencedTableName="useraccounts" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="LOCATIONS-004" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="locations" baseColumnNames="removedbyid" constraintName="fk_removed_by_account_id_locations"
+                                 referencedTableName="useraccounts" referencedColumnNames="id"  />
+    </changeSet>
+
+</databaseChangeLog>

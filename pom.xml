@@ -19,6 +19,9 @@
         <jackson.version>1.9.13</jackson.version>
         <log4j.version>1.2.14</log4j.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+        <liquibase.version>3.1.1</liquibase.version>
+        <liquibase-slf4j.version>1.2.1</liquibase-slf4j.version>
+        <slf4j-api.version>1.7.7</slf4j-api.version>
     </properties>
 
     <dependencies>
@@ -69,13 +72,32 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
 
-        <!-- -->
+
+        <!-- Postgresql Dependencies -->
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
         </dependency>
+
+        <!-- Liquibase Dependency -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mattbertolini</groupId>
+            <artifactId>liquibase-slf4j</artifactId>
+            <version>${liquibase-slf4j.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

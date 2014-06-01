@@ -3,8 +3,11 @@
   <component name="FacetManager">
     <facet type="web" name="Web">
       <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" />
+        </descriptors>
         <webroots>
-          <root url="file://$MODULE_DIR$/src/web" relative="/" />
+          <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
@@ -21,6 +24,7 @@
           <file>file://$MODULE_DIR$/src/web/WEB-INF/spring/applicationContext-services.xml</file>
           <file>file://$MODULE_DIR$/src/web/WEB-INF/spring/applicationContext-repository.xml</file>
           <file>file://$MODULE_DIR$/src/web/WEB-INF/spring/applicationContext-repository.xml</file>
+          <file>file://$MODULE_DIR$/web/WEB-INF/spring/applicationContext-repository.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -62,7 +66,11 @@
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.14" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" level="project" />
+    <orderEntry type="library" name="Maven: org.liquibase:liquibase-core:3.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.13" level="project" />
+    <orderEntry type="library" name="Maven: com.mattbertolini:liquibase-slf4j:1.2.1" level="project" />
   </component>
 </module>
 

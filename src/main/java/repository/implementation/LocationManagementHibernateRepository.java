@@ -1,5 +1,6 @@
 package repository.implementation;
 
+import domain.locations.Location;
 import org.hibernate.SessionFactory;
 import repository.interfaces.ILocationManagementRepository;
 
@@ -10,5 +11,10 @@ public class LocationManagementHibernateRepository extends BaseHibernateReposito
 
     public LocationManagementHibernateRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
+    }
+
+    @Override
+    public void saveLocation(Location location) {
+        getCurrentSession().save(location);
     }
 }

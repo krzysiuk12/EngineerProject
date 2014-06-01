@@ -1,0 +1,40 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="SEQ-001" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_useraccounts" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-002" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_individuals" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-003" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_locations" startValue="2" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-004" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_accountsecurityprofiles" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-005" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_passwordsecurityprofiles" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-006" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_securityprofiles" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-007" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_logevents" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-008" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_locationevents" startValue="1" incrementBy="1" />
+    </changeSet>
+
+</databaseChangeLog>

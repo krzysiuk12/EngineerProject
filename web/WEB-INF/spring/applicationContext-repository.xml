@@ -3,4 +3,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <import resource="applicationContext-database.xml" />
+
+    <bean name="locationManagementRepository" class="repository.implementation.LocationManagementHibernateRepository">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
 </beans>

@@ -1,0 +1,63 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="USERACCOUNTS-001" author="kkicinger">
+        <createTable schemaName="${schemaName}" tableName="useraccounts">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="login" type="${shortVarchar}" />
+            <column name="password" type="${shortVarchar}" />
+            <column name="status" type="${enumeratedString}" />
+            <column name="individualid" type="${long}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="passwordchangerequired" type="${boolean}" />
+            <column name="lastpasswordchangedate" type="${dateType}" />
+            <column name="lastsuccessfulsignindate" type="${dateType}" />
+            <column name="lastinvalidsignindate" type="${dateType}" />
+            <column name="invalidsigninattemptscounter" type="${int}" />
+            <column name="lockedoutfrom" type="${dateType}" />
+            <column name="lockedoutto" type="${dateType}" />
+            <column name="lockoutcounter" type="${int}" />
+            <column name="activatedfrom" type="${dateType}" />
+            <column name="activatedto" type="${dateType}" />
+            <column name="turnoffdate" type="${dateType}" />
+            <column name="turnondate" type="${dateType}" />
+            <column name="versionnumber" type="${int}" />
+            <column name="creationdate" type="${dateType}" />
+            <column name="lastmodificationdate" type="${dateType}" />
+            <column name="removaldate" type="${dateType}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-002" author="kkicinger">
+        <createTable tableName="individuals">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="firstname" type="${shortVarchar}" />
+            <column name="middlename" type="${shortVarchar}" />
+            <column name="lastname" type="${shortVarchar}" />
+            <column name="dateofbirth" type="${dateType}" />
+            <column name="identitycardnumber" type="${shortVarchar}" />
+            <column name="pesel" type="${shortVarchar}" />
+            <column name="gender" type="${enumeratedString}" />
+            <column name="preferredphone" type="${enumeratedString}" />
+            <column name="privatemobile" type="${shortVarchar}" />
+            <column name="workmobile" type="${shortVarchar}" />
+            <column name="preferredemail" type="${enumeratedString}" />
+            <column name="privateemail" type="${shortVarchar}" />
+            <column name="workemail" type="${shortVarchar}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-003" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="useraccounts" baseColumnNames="individualid" constraintName="fk_individualid_useraccounts"
+                                 referencedTableName="individuals" referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>
