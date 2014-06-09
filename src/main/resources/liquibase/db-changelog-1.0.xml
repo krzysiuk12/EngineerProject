@@ -4,12 +4,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <include file="liquibase/db-sequences.xml" />
-    <include file="liquibase/db-changelog-1.0.xml" />
-    <include file="liquibase/db-changelog-1.1.xml" />
+    <include file="liquibase/version_1.0/db-securityprofiles.xml" />
+    <include file="liquibase/version_1.0/db-useraccounts.xml" />
+    <include file="liquibase/version_1.0/db-locations.xml" />
+    <include file="liquibase/version_1.0/db-events.xml" />
 
-<!--    <changeSet id="dataLoads" author="kkicinger">
-        <sqlFile path="data/locations.sql" />
-    </changeSet>-->
-    
 </databaseChangeLog>

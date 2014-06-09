@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="USERACCOUNTS-001" author="kkicinger">
+    <changeSet id="USERACCOUNTS-1001" author="kkicinger">
         <createTable schemaName="${schemaName}" tableName="useraccounts">
             <column name="id" type="${long}">
                 <constraints primaryKey="true" nullable="false" />
@@ -34,7 +34,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="USERACCOUNTS-002" author="kkicinger">
+    <changeSet id="USERACCOUNTS-1002" author="kkicinger">
         <createTable tableName="individuals">
             <column name="id" type="${long}">
                 <constraints primaryKey="true" nullable="false" />
@@ -55,7 +55,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="USERACCOUNTS-003" author="kkicinger">
+    <changeSet id="USERACCOUNTS-1003" author="kkicinger">
         <addForeignKeyConstraint baseTableName="useraccounts" baseColumnNames="individualid" constraintName="fk_individualid_useraccounts"
                                  referencedTableName="individuals" referencedColumnNames="id" />
     </changeSet>

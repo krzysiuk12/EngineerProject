@@ -18,12 +18,6 @@ public class SecurityProfile extends UserVersionedBaseObject {
         REMOVED
     }
 
-    public enum SecurityProfileType {
-        PERSONAL,
-        GROUP,
-        SYSTEM
-    }
-
     private String name;
     private String description;
     private boolean defaultProfile;
@@ -32,7 +26,6 @@ public class SecurityProfile extends UserVersionedBaseObject {
     private Status status;
     private PasswordSecurityProfile passwordSecurityProfile;
     private AccountSecurityProfile accountSecurityProfile;
-    private SecurityProfileType securityProfileType;
 
     public SecurityProfile() {
     }
@@ -46,7 +39,7 @@ public class SecurityProfile extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -64,7 +57,7 @@ public class SecurityProfile extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "defaultProfile")
+    @Column(name = "defaultProfile", nullable = false)
     public boolean isDefaultProfile() {
         return defaultProfile;
     }
@@ -73,7 +66,7 @@ public class SecurityProfile extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "passwordSecurityProfileTurnedOn")
+    @Column(name = "passwordSecurityProfileTurnedOn", nullable = false)
     public boolean isPasswordSecurityProfileTurnedOn() {
         return passwordSecurityProfileTurnedOn;
     }
@@ -82,7 +75,7 @@ public class SecurityProfile extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "accountSecurityProfileTurnedOn")
+    @Column(name = "accountSecurityProfileTurnedOn", nullable = false)
     public boolean isAccountSecurityProfileTurnedOn() {
         return accountSecurityProfileTurnedOn;
     }
@@ -100,7 +93,7 @@ public class SecurityProfile extends UserVersionedBaseObject {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "passwordSecurityProfileId", nullable = false)
+    @JoinColumn(name = "passwordSecurityProfileId", nullable = true)
     public PasswordSecurityProfile getPasswordSecurityProfile() {
         return passwordSecurityProfile;
     }
@@ -109,18 +102,11 @@ public class SecurityProfile extends UserVersionedBaseObject {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "accountSecurityProfileId", nullable = false)
+    @JoinColumn(name = "accountSecurityProfileId", nullable = true)
     public AccountSecurityProfile getAccountSecurityProfile() {
         return accountSecurityProfile;
     }
     public void setAccountSecurityProfile(AccountSecurityProfile accountSecurityProfile) {
         this.accountSecurityProfile = accountSecurityProfile;
-    }
-
-    public SecurityProfileType getSecurityProfileType() {
-        return securityProfileType;
-    }
-    public void setSecurityProfileType(SecurityProfileType securityProfileType) {
-        this.securityProfileType = securityProfileType;
     }
 }

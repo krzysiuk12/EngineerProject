@@ -5,36 +5,48 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
 
-    <changeSet id="SEQ-001" author="kkicinger">
+    <changeSet id="SEQ-1001" author="kkicinger">
         <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_useraccounts" startValue="1" incrementBy="1" />
     </changeSet>
 
-    <changeSet id="SEQ-002" author="kkicinger">
+    <changeSet id="SEQ-1002" author="kkicinger">
         <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_individuals" startValue="1" incrementBy="1" />
     </changeSet>
 
-    <changeSet id="SEQ-003" author="kkicinger">
+    <changeSet id="SEQ-1003" author="kkicinger">
         <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_locations" startValue="2" incrementBy="1" />
     </changeSet>
 
-    <changeSet id="SEQ-004" author="kkicinger">
+    <changeSet id="SEQ-1004" author="kkicinger">
         <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_accountsecurityprofiles" startValue="1" incrementBy="1" />
     </changeSet>
 
-    <changeSet id="SEQ-005" author="kkicinger">
+    <changeSet id="SEQ-1005" author="kkicinger">
         <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_passwordsecurityprofiles" startValue="1" incrementBy="1" />
     </changeSet>
 
-    <changeSet id="SEQ-006" author="kkicinger">
+    <changeSet id="SEQ-1006" author="kkicinger">
         <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_securityprofiles" startValue="1" incrementBy="1" />
     </changeSet>
 
-    <changeSet id="SEQ-007" author="kkicinger">
+    <changeSet id="SEQ-1007" author="kkicinger">
         <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_logevents" startValue="1" incrementBy="1" />
     </changeSet>
 
-    <changeSet id="SEQ-008" author="kkicinger">
+    <changeSet id="SEQ-1008" author="kkicinger">
         <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_locationevents" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-1101" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_usergroups" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-1102" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_comments" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="SEQ-1103" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_useraccountstatusevents" startValue="1" incrementBy="1" />
     </changeSet>
 
 </databaseChangeLog>

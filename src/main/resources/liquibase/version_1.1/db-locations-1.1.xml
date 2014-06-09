@@ -1,0 +1,43 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="LOCATIONS-1101" author="kkicinger">
+        <createTable schemaName="${schemaName}" tableName="comment">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="useraccountid" type="${long}" />
+            <column name="locationid" type="${long}" />
+            <column name="rating" type="${int}" />
+            <column name="message" type="${longVarchar}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="LOCATIONS-1102" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="comment" baseColumnNames="useraccountid" constraintName="fk_useraccountid_comment"
+                                 referencedTableName="useraccounts" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="LOCATIONS-1103" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="comment" baseColumnNames="locationid" constraintName="fk_locationid_comment"
+                                 referencedTableName="locations" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="LOCATIONS-1104" author="kkicinger">
+        <addNotNullConstraint tableName="comment" columnName="rating" schemaName="${schemaName}" />
+    </changeSet>
+
+    <changeSet id="LOCATIONS-1105" author="kkicinger">
+        <addNotNullConstraint tableName="locations" columnName="createdbyaccountid" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="locations" columnName="name" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="locations" columnName="latitude" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="locations" columnName="longitude" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="locations" columnName="status" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="locations" columnName="city" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="locations" columnName="country" schemaName="${schemaName}" />
+    </changeSet>
+
+</databaseChangeLog>

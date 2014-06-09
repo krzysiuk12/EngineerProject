@@ -22,11 +22,10 @@ public class Individual extends VersionedBaseObject {
     private String lastName;
     private Date dateOfBirth;
     private Gender gender;
-    private String identityCardNumber;
-    private String PESEL;
-    private Emails emails;
-    private Phones phones;
-    private Address address;
+    private String description;
+    private String facebookAccountUrl;
+    private String city;
+    private String country;
 
     public Individual() {
     }
@@ -40,7 +39,7 @@ public class Individual extends VersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "firstName")
+    @Column(name = "firstName", nullable = false)
     public String getFirstName() {
         return firstName;
     }
@@ -58,7 +57,7 @@ public class Individual extends VersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "lastName")
+    @Column(name = "lastName", nullable = false)
     public String getLastName() {
         return lastName;
     }
@@ -85,44 +84,38 @@ public class Individual extends VersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "identityCardNumber")
-    public String getIdentityCardNumber() {
-        return identityCardNumber;
+    @Column(name = "description")
+    public String getDescription() {
+        return description;
     }
-    public void setIdentityCardNumber(String identityCardNumber) {
-        this.identityCardNumber = identityCardNumber;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Basic
-    @Column(name = "PESEL")
-    public String getPESEL() {
-        return PESEL;
+    @Column(name = "facebookaccounturl")
+    public String getFacebookAccountUrl() {
+        return facebookAccountUrl;
     }
-    public void setPESEL(String PESEL) {
-        this.PESEL = PESEL;
-    }
-
-    @Embedded
-    public Emails getEmails() {
-        return emails;
-    }
-    public void setEmails(Emails emails) {
-        this.emails = emails;
+    public void setFacebookAccountUrl(String facebookAccountUrl) {
+        this.facebookAccountUrl = facebookAccountUrl;
     }
 
-    @Embedded
-    public Phones getPhones() {
-        return phones;
+    @Basic
+    @Column(name = "city")
+    public String getCity() {
+        return city;
     }
-    public void setPhones(Phones phones) {
-        this.phones = phones;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    @Embedded
-    public Address getAddress() {
-        return address;
+    @Basic
+    @Column(name = "country")
+    public String getCountry() {
+        return country;
     }
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

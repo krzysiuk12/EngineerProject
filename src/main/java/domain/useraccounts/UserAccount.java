@@ -16,26 +16,21 @@ public class UserAccount extends VersionedBaseObject {
         CREATED,
         ACTIVE,
         LOCKED_OUT,
-        OFF,
+        TURNED_OFF,
         REMOVED
     }
 
+    private String token;
     private String login;
     private String password;
+    private String email;
     private Status status;
     private boolean passwordChangeRequired;
     private Date lastPasswordChangeDate;
-    private Date activatedFrom;
-    private Date activatedTo;
-    private Date lastSuccessfulSignInDate;
-    private Date lastInvalidSignInDate;
     private int invalidSignInAttemptsCounter;
-    private Date lockedOutFrom;
-    private Date lockedOutTo;
     private int lockoutCounter;
-    private Date turnOffDate;
-    private Date turnOnDate;
     private Individual individual;
+    private UserGroup userGroup;
 
     public UserAccount() {
     }
@@ -67,7 +62,7 @@ public class UserAccount extends VersionedBaseObject {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     public Status getStatus() {
         return status;
     }
@@ -93,26 +88,8 @@ public class UserAccount extends VersionedBaseObject {
         this.lastPasswordChangeDate = lastPasswordChangeDate;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "lastsuccessfulsignindate")
-    public Date getLastSuccessfulSignInDate() {
-        return lastSuccessfulSignInDate;
-    }
-    public void setLastSuccessfulSignInDate(Date lastSuccessfulSignInDate) {
-        this.lastSuccessfulSignInDate = lastSuccessfulSignInDate;
-    }
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "lastinvalidsignindate")
-    public Date getLastInvalidSignInDate() {
-        return lastInvalidSignInDate;
-    }
-    public void setLastInvalidSignInDate(Date lastInvalidSignInDate) {
-        this.lastInvalidSignInDate = lastInvalidSignInDate;
-    }
-
     @Basic
-    @Column(name = "invalidsigninattemptscounter")
+    @Column(name = "invalidsigninattemptscounter", nullable = false)
     public int getInvalidSignInAttemptsCounter() {
         return invalidSignInAttemptsCounter;
     }
@@ -120,26 +97,8 @@ public class UserAccount extends VersionedBaseObject {
         this.invalidSignInAttemptsCounter = invalidSignInAttemptsCounter;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "lockedoutfrom")
-    public Date getLockedOutFrom() {
-        return lockedOutFrom;
-    }
-    public void setLockedOutFrom(Date lockedOutFrom) {
-        this.lockedOutFrom = lockedOutFrom;
-    }
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "lockedoutto")
-    public Date getLockedOutTo() {
-        return lockedOutTo;
-    }
-    public void setLockedOutTo(Date lockedOutTo) {
-        this.lockedOutTo = lockedOutTo;
-    }
-
     @Basic
-    @Column(name = "lockoutcounter")
+    @Column(name = "lockoutcounter", nullable = false)
     public int getLockoutCounter() {
         return lockoutCounter;
     }
@@ -156,39 +115,30 @@ public class UserAccount extends VersionedBaseObject {
         this.individual = individual;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "activatedfrom")
-    public Date getActivatedFrom() {
-        return activatedFrom;
+    @Basic
+    @Column(name = "lockoutcounter")
+    public String getToken() {
+        return token;
     }
-    public void setActivatedFrom(Date activatedFrom) {
-        this.activatedFrom = activatedFrom;
-    }
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "activatedto")
-    public Date getActivatedTo() {
-        return activatedTo;
-    }
-    public void setActivatedTo(Date activatedTo) {
-        this.activatedTo = activatedTo;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "turnoffdate")
-    public Date getTurnOffDate() {
-        return turnOffDate;
+    @Basic
+    @Column(name = "lockoutcounter", unique = true, nullable = false)
+    public String getEmail() {
+        return email;
     }
-    public void setTurnOffDate(Date turnOffDate) {
-        this.turnOffDate = turnOffDate;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "turnondate")
-    public Date getTurnOnDate() {
-        return turnOnDate;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "usergroupid", nullable = false)
+    public UserGroup getUserGroup() {
+        return userGroup;
     }
-    public void setTurnOnDate(Date turnOnDate) {
-        this.turnOnDate = turnOnDate;
+    public void setUserGroup(UserGroup userGroup) {
+        this.userGroup = userGroup;
     }
 }

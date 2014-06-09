@@ -1,7 +1,6 @@
 package domain.locations;
 
 import domain.common.implementation.UserVersionedBaseObject;
-import domain.useraccounts.Address;
 
 import javax.persistence.*;
 
@@ -59,7 +58,7 @@ public class Location extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -68,7 +67,7 @@ public class Location extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "latitude")
+    @Column(name = "latitude", nullable = false)
     public double getLatitude() {
         return latitude;
     }
@@ -77,7 +76,7 @@ public class Location extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "longitude")
+    @Column(name = "longitude", nullable = false)
     public double getLongitude() {
         return longitude;
     }
@@ -86,7 +85,7 @@ public class Location extends UserVersionedBaseObject {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     public Status getStatus() {
         return status;
     }

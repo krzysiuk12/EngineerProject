@@ -1,7 +1,7 @@
 package services.implementation;
 
 import domain.locations.Location;
-import domain.useraccounts.Address;
+import domain.locations.Address;
 import org.springframework.transaction.annotation.Transactional;
 import repository.interfaces.ILocationManagementRepository;
 import services.interfaces.ILocationManagementService;

@@ -1,0 +1,104 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="USERACCOUNTS-1101" author="kkicinger">
+        <dropColumn columnName="lastsuccessfulsignindate" tableName="useraccounts" schemaName="${schemaName}"/>
+        <dropColumn columnName="lastinvalidsignindate" tableName="useraccounts" schemaName="${schemaName}"/>
+        <dropColumn columnName="lockedoutfrom" tableName="useraccounts" schemaName="${schemaName}"/>
+        <dropColumn columnName="lockedoutto" tableName="useraccounts" schemaName="${schemaName}"/>
+        <dropColumn columnName="activatedfrom" tableName="useraccounts" schemaName="${schemaName}"/>
+        <dropColumn columnName="activatedto" tableName="useraccounts" schemaName="${schemaName}"/>
+        <dropColumn columnName="turnoffdate" tableName="useraccounts" schemaName="${schemaName}"/>
+        <dropColumn columnName="turnondate" tableName="useraccounts" schemaName="${schemaName}"/>
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-1102" author="kkicinger">
+        <addColumn tableName="useraccounts" schemaName="${schemaName}">
+            <column name="token" type="${shortVarchar}" />
+        </addColumn>
+        <addColumn tableName="useraccounts" schemaName="${schemaName}">
+            <column name="usergroupid" type="${long}" />
+        </addColumn>
+        <addColumn tableName="useraccounts" schemaName="${schemaName}">
+            <column name="email" type="${shortVarchar}" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-1103" author="kkicinger">
+        <createTable tableName="usergroups" schemaName="${schemaName}">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="securityprofileid" type="${long}" />
+            <column name="name" type="${shortVarchar}" />
+            <column name="description" type="${longVarchar}" />
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="USERACCOUNTS-1104" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="useraccounts" baseColumnNames="usergroupid" constraintName="fk_usergroupid_useraccounts"
+                                 referencedTableName="usergroups" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-1105" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="usergroups" baseColumnNames="securityprofileid" constraintName="fk_securityprofileid_usergroups"
+                                 referencedTableName="securityprofiles" referencedColumnNames="id" />
+    </changeSet>
+
+
+    <changeSet id="USERACCOUNTS-1106" author="kkicinger">
+        <dropColumn columnName="identitycardnumber" tableName="individuals" schemaName="${schemaName}"/>
+        <dropColumn columnName="pesel" tableName="individuals" schemaName="${schemaName}"/>
+        <dropColumn columnName="preferredphone" tableName="individuals" schemaName="${schemaName}"/>
+        <dropColumn columnName="privatemobile" tableName="individuals" schemaName="${schemaName}"/>
+        <dropColumn columnName="workmobile" tableName="individuals" schemaName="${schemaName}"/>
+        <dropColumn columnName="preferredemail" tableName="individuals" schemaName="${schemaName}"/>
+        <dropColumn columnName="privateemail" tableName="individuals" schemaName="${schemaName}"/>
+        <dropColumn columnName="workemail" tableName="individuals" schemaName="${schemaName}"/>
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-1107" author="kkicinger">
+        <addColumn tableName="individuals" schemaName="${schemaName}">
+            <column name="description" type="${shortVarchar}" />
+        </addColumn>
+        <addColumn tableName="individuals" schemaName="${schemaName}">
+            <column name="facebookaccounturl" type="${shortVarchar}" />
+        </addColumn>
+        <addColumn tableName="individuals" schemaName="${schemaName}">
+            <column name="city" type="${shortVarchar}" />
+        </addColumn>
+        <addColumn tableName="individuals" schemaName="${schemaName}">
+            <column name="country" type="${shortVarchar}" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-1108" author="kkicinger">
+        <addUniqueConstraint tableName="useraccounts" columnNames="email" schemaName="${schemaName}" />
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-1109" author="kkicinger">
+        <addNotNullConstraint tableName="individuals" columnName="firstname" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="individuals" columnName="lastname" schemaName="${schemaName}" />
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-1110" author="kkicinger">
+        <addNotNullConstraint tableName="useraccounts" columnName="token" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccounts" columnName="login" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccounts" columnName="password" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccounts" columnName="status" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccounts" columnName="email" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccounts" columnName="passwordchangerequired" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccounts" columnName="invalidsigninattemptscounter" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccounts" columnName="lockoutcounter" schemaName="${schemaName}" />
+    </changeSet>
+
+    <changeSet id="USERACCOUNTS-1111" author="kkicinger">
+        <addNotNullConstraint tableName="usergroups" columnName="securityprofileid" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="usergroups" columnName="name" schemaName="${schemaName}" />
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,46 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="EVENTS-1101" author="kkicinger">
+        <createTable schemaName="${schemaName}" tableName="useraccountstatusevent">
+            <column name="id" type="${long}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="useraccountid" type="${long}" />
+            <column name="status" type="${enumeratedString}" />
+            <column name="startdate" type="${dateType}" />
+            <column name="enddate" type="${dateType}" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="EVENTS-1102" author="kkicinger">
+        <addForeignKeyConstraint baseTableName="useraccountstatusevent" baseColumnNames="useraccountid" constraintName="fk_useraccountid_useraccountstatusevent"
+                                 referencedTableName="useraccounts" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="EVENTS-1103" author="kkicinger">
+        <addNotNullConstraint tableName="useraccountstatusevent" columnName="useraccountid" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccountstatusevent" columnName="status" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccountstatusevent" columnName="startdate" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccountstatusevent" columnName="enddate" schemaName="${schemaName}" />
+    </changeSet>
+
+    <changeSet id="EVENTS-1104" author="kkicinger">
+        <addNotNullConstraint tableName="logevents" columnName="useraccountid" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="logevents" columnName="generatedon" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="logevents" columnName="sessionid" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="logevents" columnName="ipaddress" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="logevents" columnName="type" schemaName="${schemaName}" />
+    </changeSet>
+
+    <changeSet id="EVENTS-1105" author="kkicinger">
+        <addNotNullConstraint tableName="locationevents" columnName="useraccountid" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="locationevents" columnName="locationid" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="locationevents" columnName="generatedon" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="locationevents" columnName="type" schemaName="${schemaName}" />
+    </changeSet>
+
+</databaseChangeLog>

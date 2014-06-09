@@ -1,0 +1,47 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="SECURITYPROFILES-1101" author="kkicinger">
+        <addColumn tableName="accountsecurityprofiles" schemaName="${schemaName}">
+            <column name="turnedoffperiodindays" type="${int}" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="SECURITYPROFILES-1102" author="kkicinger">
+        <addNotNullConstraint tableName="accountsecurityprofiles" columnName="maximumloginlength" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="accountsecurityprofiles" columnName="minimumloginlength" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="accountsecurityprofiles" columnName="turnedoffperiodindays" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="accountsecurityprofiles" columnName="maximuminvalidloginattempts" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="accountsecurityprofiles" columnName="accountlockoutdurationinminutes" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="accountsecurityprofiles" columnName="accountimmediatelyturnedoff" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="accountsecurityprofiles" columnName="maximumlockoutsbeforeturningoff" schemaName="${schemaName}" />
+    </changeSet>
+
+    <changeSet id="SECURITYPROFILES-1103" author="kkicinger">
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="maximumlength" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="minimumlength" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="periodpasswordchangerequired" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="maximumageindays" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="expirationinfoindays" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="digitrequired" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="lowercaseletterrequired" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="uppercaseletterrequired" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="specialcharacterrequired" schemaName="${schemaName}" />
+    </changeSet>
+
+    <changeSet id="SECURITYPROFILES-1104" author="kkicinger">
+        <addNotNullConstraint tableName="securityprofiles" columnName="name" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="securityprofiles" columnName="passwordsecurityprofileturnedon" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="securityprofiles" columnName="accountsecurityprofileturnedon" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="securityprofiles" columnName="defaultprofile" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="securityprofiles" columnName="status" schemaName="${schemaName}" />
+    </changeSet>
+
+    <changeSet id="SECURITYPROFILES-1105" author="kkicinger">
+        <dropColumn tableName="securityprofiles" columnName="securityprofiletype" schemaName="${schemaName}" />
+    </changeSet>
+
+</databaseChangeLog>

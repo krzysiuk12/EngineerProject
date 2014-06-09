@@ -53,7 +53,7 @@ public class LogEvent extends BaseObject {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "generatedOn")
+    @Column(name = "generatedOn", nullable = false)
     public Date getGeneratedOn() {
         return generatedOn;
     }
@@ -71,7 +71,7 @@ public class LogEvent extends BaseObject {
     }
 
     @Basic
-    @Column(name = "sessionId")
+    @Column(name = "sessionId", nullable = false)
     public String getSessionId() {
         return sessionId;
     }
@@ -80,7 +80,7 @@ public class LogEvent extends BaseObject {
     }
 
     @Basic
-    @Column(name = "ipAddress")
+    @Column(name = "ipAddress", nullable = false)
     public String getIpAddress() {
         return ipAddress;
     }

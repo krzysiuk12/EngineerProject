@@ -63,7 +63,7 @@ public class LocationEvent extends BaseObject {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "generatedOn")
+    @Column(name = "generatedOn", nullable = false)
     public Date getGeneratedOn() {
         return generatedOn;
     }

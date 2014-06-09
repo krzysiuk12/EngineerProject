@@ -1,4 +1,4 @@
-package domain.useraccounts;
+package domain.locations;
 
 import domain.common.implementation.BaseObject;
 
@@ -36,7 +36,7 @@ public class Address extends BaseObject {
     }
 
     @Basic
-    @Column(name = "city")
+    @Column(name = "city", nullable = false)
     public String getCity() {
         return city;
     }
@@ -54,7 +54,7 @@ public class Address extends BaseObject {
     }
 
     @Basic
-    @Column(name = "country")
+    @Column(name = "country", nullable = false)
     public String getCountry() {
         return country;
     }

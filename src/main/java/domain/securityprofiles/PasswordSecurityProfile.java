@@ -38,7 +38,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "maximumLength")
+    @Column(name = "maximumLength", nullable = false)
     public int getMaximumLength() {
         return maximumLength;
     }
@@ -47,7 +47,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "maximumLoginLength")
+    @Column(name = "maximumLoginLength", nullable = false)
     public int getMinimumLength() {
         return minimumLength;
     }
@@ -56,7 +56,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "periodPasswordChangeRequired")
+    @Column(name = "periodPasswordChangeRequired", nullable = false)
     public boolean isPeriodPasswordChangeRequired() {
         return periodPasswordChangeRequired;
     }
@@ -65,7 +65,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "maximumAgeInDays")
+    @Column(name = "maximumAgeInDays", nullable = false)
     public int getMaximumAgeInDays() {
         return maximumAgeInDays;
     }
@@ -74,7 +74,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "expirationInfoInDays")
+    @Column(name = "expirationInfoInDays", nullable = false)
     public int getExpirationInfoInDays() {
         return expirationInfoInDays;
     }
@@ -83,7 +83,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "digitRequired")
+    @Column(name = "digitRequired", nullable = false)
     public boolean isDigitRequired() {
         return digitRequired;
     }
@@ -92,7 +92,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "lowerCaseLetterRequired")
+    @Column(name = "lowerCaseLetterRequired", nullable = false)
     public boolean isLowerCaseLetterRequired() {
         return lowerCaseLetterRequired;
     }
@@ -101,7 +101,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "upperCaseLetterRequired")
+    @Column(name = "upperCaseLetterRequired", nullable = false)
     public boolean isUpperCaseLetterRequired() {
         return upperCaseLetterRequired;
     }
@@ -110,7 +110,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "specialCharacterRequired")
+    @Column(name = "specialCharacterRequired", nullable = false)
     public boolean isSpecialCharacterRequired() {
         return specialCharacterRequired;
     }

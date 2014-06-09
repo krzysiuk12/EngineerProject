@@ -32,7 +32,7 @@ public class AccountSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "maximumLoginLength")
+    @Column(name = "maximumLoginLength", nullable = false)
     public int getMaximumLoginLength() {
         return maximumLoginLength;
     }
@@ -41,7 +41,7 @@ public class AccountSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "minimumLoginLength")
+    @Column(name = "minimumLoginLength", nullable = false)
     public int getMinimumLoginLength() {
         return minimumLoginLength;
     }
@@ -50,7 +50,7 @@ public class AccountSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "maximumInvalidLogInAttempts")
+    @Column(name = "maximumInvalidLogInAttempts", nullable = false)
     public int getMaximumInvalidLogInAttempts() {
         return maximumInvalidLogInAttempts;
     }
@@ -59,7 +59,7 @@ public class AccountSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "accountLockOutDurationInMinutes")
+    @Column(name = "accountLockOutDurationInMinutes", nullable = false)
     public int getAccountLockOutDurationInMinutes() {
         return accountLockOutDurationInMinutes;
     }
@@ -68,7 +68,7 @@ public class AccountSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "accountImmediatelyTurnedOff")
+    @Column(name = "accountImmediatelyTurnedOff", nullable = false)
     public boolean isAccountImmediatelyTurnedOff() {
         return accountImmediatelyTurnedOff;
     }
@@ -77,7 +77,7 @@ public class AccountSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "maximumLockoutsBeforeTurningOff")
+    @Column(name = "maximumLockoutsBeforeTurningOff", nullable = false)
     public int getMaximumLockoutsBeforeTurningOff() {
         return maximumLockoutsBeforeTurningOff;
     }
