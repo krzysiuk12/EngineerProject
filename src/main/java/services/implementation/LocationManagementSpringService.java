@@ -24,6 +24,7 @@ public class LocationManagementSpringService extends BaseSpringService implement
         location.setName("New Location");
         location.setDescription("Description");
         location.setAddress(new Address("street", "city", "postalcode", "country"));
+        location.setStatus(Location.Status.AVAILABLE);
         locationManagementRepository.saveLocation(location);
     }
 }
