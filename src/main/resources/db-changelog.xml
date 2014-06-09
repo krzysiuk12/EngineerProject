@@ -8,8 +8,11 @@
     <include file="liquibase/db-changelog-1.0.xml" />
     <include file="liquibase/db-changelog-1.1.xml" />
 
-<!--    <changeSet id="dataLoads" author="kkicinger">
-        <sqlFile path="data/locations.sql" />
-    </changeSet>-->
+    <changeSet id="DATALOAD-001" author="kkicinger">
+        <loadData tableName="accountsecurityprofiles" schemaName="${schemaName}" file="data/accountsecurityprofiles.csv" separator="," />
+        <loadData tableName="passwordsecurityprofiles" schemaName="${schemaName}" file="data/passwordsecurityprofiles.csv" separator="," />
+        <loadData tableName="securityprofiles" schemaName="${schemaName}" file="data/securityprofiles.csv" separator="," />
+        <loadData tableName="individuals" schemaName="${schemaName}" file="data/individuals.csv" separator="," />
+    </changeSet>
     
 </databaseChangeLog>

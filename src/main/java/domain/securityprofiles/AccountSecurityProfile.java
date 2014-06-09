@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Table(name = "AccountSecurityProfiles")
 public class AccountSecurityProfile extends BaseObject {
 
+    private String name;
+
     private int maximumLoginLength;
     private int minimumLoginLength;
 
@@ -29,6 +31,15 @@ public class AccountSecurityProfile extends BaseObject {
     @SequenceGenerator(name = "PK_Sequence_AccountSecurityProfiles", sequenceName = "PK_Sequence_AccountSecurityProfiles", initialValue = 1, allocationSize = 1)
     public Long getId() {
         return id;
+    }
+
+    @Basic
+    @Column(name = "name", nullable = false)
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic

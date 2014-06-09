@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Table(name = "PasswordSecurityProfiles")
 public class PasswordSecurityProfile extends BaseObject {
 
+    private String name;
+
     private int maximumLength;
     private int minimumLength;
 
@@ -35,6 +37,15 @@ public class PasswordSecurityProfile extends BaseObject {
     @SequenceGenerator(name = "PK_Sequence_PasswordSecurityProfiles", sequenceName = "PK_Sequence_PasswordSecurityProfiles", initialValue = 1, allocationSize = 1)
     public Long getId() {
         return id;
+    }
+
+    @Basic
+    @Column(name = "name", nullable = false)
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic

@@ -7,6 +7,13 @@
     <changeSet id="SECURITYPROFILES-1101" author="kkicinger">
         <addColumn tableName="accountsecurityprofiles" schemaName="${schemaName}">
             <column name="turnedoffperiodindays" type="${int}" />
+            <column name="name" type="${shortVarchar}" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="SECURITYPROFILES-1106" author="kkicinger">
+        <addColumn tableName="passwordsecurityprofiles" schemaName="${schemaName}">
+            <column name="name" type="${shortVarchar}" />
         </addColumn>
     </changeSet>
 
@@ -18,6 +25,7 @@
         <addNotNullConstraint tableName="accountsecurityprofiles" columnName="accountlockoutdurationinminutes" schemaName="${schemaName}" />
         <addNotNullConstraint tableName="accountsecurityprofiles" columnName="accountimmediatelyturnedoff" schemaName="${schemaName}" />
         <addNotNullConstraint tableName="accountsecurityprofiles" columnName="maximumlockoutsbeforeturningoff" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="accountsecurityprofiles" columnName="name" schemaName="${schemaName}" />
     </changeSet>
 
     <changeSet id="SECURITYPROFILES-1103" author="kkicinger">
@@ -30,6 +38,7 @@
         <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="lowercaseletterrequired" schemaName="${schemaName}" />
         <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="uppercaseletterrequired" schemaName="${schemaName}" />
         <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="specialcharacterrequired" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="passwordsecurityprofiles" columnName="name" schemaName="${schemaName}" />
     </changeSet>
 
     <changeSet id="SECURITYPROFILES-1104" author="kkicinger">
