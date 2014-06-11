@@ -12,6 +12,11 @@
 
     <bean name="locationManagementService" class="services.implementation.LocationManagementSpringService">
         <constructor-arg name="locationManagementRepository" ref="locationManagementRepository" />
+        <constructor-arg name="userManagementService" ref="userManagementService" />
+    </bean>
+
+    <bean name="userManagementService" class="services.implementation.UserManagementSpringService">
+        <constructor-arg name="userManagementRepository" ref="userManagementRepository" />
     </bean>
 
 </beans>

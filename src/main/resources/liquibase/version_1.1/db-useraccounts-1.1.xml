@@ -94,6 +94,7 @@
         <addNotNullConstraint tableName="useraccounts" columnName="passwordchangerequired" schemaName="${schemaName}" />
         <addNotNullConstraint tableName="useraccounts" columnName="invalidsigninattemptscounter" schemaName="${schemaName}" />
         <addNotNullConstraint tableName="useraccounts" columnName="lockoutcounter" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccounts" columnName="versionnumber" schemaName="${schemaName}" />
     </changeSet>
 
     <changeSet id="USERACCOUNTS-1111" author="kkicinger">

@@ -1,7 +1,5 @@
 package domain.locations;
 
-import domain.common.implementation.BaseObject;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -10,7 +8,7 @@ import javax.persistence.Embeddable;
  * Created by Krzysiu on 2014-05-31.
  */
 @Embeddable
-public class Address extends BaseObject {
+public class Address {
 
     private String street;
     private String city;

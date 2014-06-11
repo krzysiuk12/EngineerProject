@@ -48,7 +48,7 @@ public class UserAccountStatusEvent extends BaseObject {
         this.status = status;
     }
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "startDate", nullable = false)
     public Date getStartDate() {
         return startDate;
@@ -57,7 +57,7 @@ public class UserAccountStatusEvent extends BaseObject {
         this.startDate = startDate;
     }
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "endDate", nullable = false)
     public Date getEndDate() {
         return endDate;

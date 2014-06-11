@@ -58,7 +58,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "maximumLoginLength", nullable = false)
+    @Column(name = "minimumLength", nullable = false)
     public int getMinimumLength() {
         return minimumLength;
     }

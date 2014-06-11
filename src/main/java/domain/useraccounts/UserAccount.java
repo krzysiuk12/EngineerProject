@@ -1,6 +1,7 @@
 package domain.useraccounts;
 
 import domain.common.implementation.VersionedBaseObject;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "useraccounts")
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"userGroup"})
 public class UserAccount extends VersionedBaseObject {
 
     public enum Status {
@@ -79,7 +81,7 @@ public class UserAccount extends VersionedBaseObject {
         this.passwordChangeRequired = passwordChangeRequired;
     }
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "lastpasswordchangedate")
     public Date getLastPasswordChangeDate() {
         return lastPasswordChangeDate;
@@ -116,7 +118,7 @@ public class UserAccount extends VersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "lockoutcounter")
+    @Column(name = "token", nullable = false)
     public String getToken() {
         return token;
     }
@@ -125,7 +127,7 @@ public class UserAccount extends VersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "lockoutcounter", unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     public String getEmail() {
         return email;
     }

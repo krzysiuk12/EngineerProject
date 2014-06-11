@@ -9,4 +9,8 @@
         <constructor-arg name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean name="userManagementRepository" class="repository.implementation.UserManagementHibernateRepository">
+        <constructor-arg name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
 </beans>

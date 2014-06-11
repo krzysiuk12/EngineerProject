@@ -2,16 +2,14 @@ package domain.common.implementation;
 
 import domain.common.interfaces.IVersionedBaseObject;
 
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Krzysiu on 2014-05-30.
  */
-public class VersionedBaseObject extends BaseObject implements IVersionedBaseObject {
+@MappedSuperclass
+public abstract class VersionedBaseObject extends BaseObject implements IVersionedBaseObject {
 
     protected int versionNumber;
     protected Date creationDate;
@@ -35,9 +33,12 @@ public class VersionedBaseObject extends BaseObject implements IVersionedBaseObj
     public int getVersionNumber() {
         return versionNumber;
     }
+    public void setVersionNumber(int versionNumber) {
+        this.versionNumber = versionNumber;
+    }
 
     @Override
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creationdate")
     public Date getCreationDate() {
         return creationDate;
@@ -48,7 +49,7 @@ public class VersionedBaseObject extends BaseObject implements IVersionedBaseObj
     }
 
     @Override
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "lastmodificationdate")
     public Date getLastModificationDate() {
         return lastModificationDate;
@@ -59,7 +60,7 @@ public class VersionedBaseObject extends BaseObject implements IVersionedBaseObj
     }
 
     @Override
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "removaldate")
     public Date getRemovalDate() {
         return removalDate;

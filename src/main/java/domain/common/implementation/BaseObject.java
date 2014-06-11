@@ -5,7 +5,7 @@ import domain.common.interfaces.IBaseObject;
 /**
  * Created by Krzysiu on 2014-05-30.
  */
-public class BaseObject implements IBaseObject {
+public abstract class BaseObject implements IBaseObject {
 
     protected Long id;
 

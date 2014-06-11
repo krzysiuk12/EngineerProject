@@ -1,6 +1,6 @@
 package domain.useraccounts;
 
-import domain.common.implementation.VersionedBaseObject;
+import domain.common.implementation.BaseObject;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,7 +10,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "individuals")
-public class Individual extends VersionedBaseObject {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Individual extends BaseObject {
 
     public enum Gender {
         MALE,
@@ -65,7 +66,7 @@ public class Individual extends VersionedBaseObject {
         this.lastName = lastName;
     }
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateOfBirth")
     public Date getDateOfBirth() {
         return dateOfBirth;

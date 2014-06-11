@@ -1,6 +1,6 @@
 package domain.securityprofiles;
 
-import domain.common.implementation.UserVersionedBaseObject;
+import domain.common.implementation.BaseObject;
 
 import javax.persistence.*;
 
@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "SecurityProfiles")
-public class SecurityProfile extends UserVersionedBaseObject {
+public class SecurityProfile extends BaseObject {
 
     public enum Status {
         DRAFT,

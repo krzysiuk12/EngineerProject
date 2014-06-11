@@ -52,7 +52,7 @@ public class LogEvent extends BaseObject {
         this.userAccount = userAccount;
     }
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "generatedOn", nullable = false)
     public Date getGeneratedOn() {
         return generatedOn;

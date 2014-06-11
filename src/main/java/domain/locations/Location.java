@@ -1,6 +1,7 @@
 package domain.locations;
 
 import domain.common.implementation.UserVersionedBaseObject;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Locations")
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "lastModificationByAccount", "removedByAccount", "lastModificationDate", "removalDate"})
 public class Location extends UserVersionedBaseObject {
 
     public enum Status {

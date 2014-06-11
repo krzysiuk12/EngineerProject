@@ -43,7 +43,18 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="annotatedClasses">
             <list>
+                <value>domain.securityprofiles.AccountSecurityProfile</value>
+                <value>domain.securityprofiles.PasswordSecurityProfile</value>
+                <value>domain.securityprofiles.SecurityProfile</value>
+                <value>domain.useraccounts.Individual</value>
+                <value>domain.useraccounts.UserAccount</value>
+                <value>domain.useraccounts.UserGroup</value>
+                <value>domain.locations.Address</value>
                 <value>domain.locations.Location</value>
+                <value>domain.locations.Comment</value><!--
+                <value>domain.eventshistory.LocationEvent</value>
+                <value>domain.eventshistory.UserAccountStatusEvent</value>
+                <value>domain.eventshistory.LogEvent</value>-->
             </list>
         </property>
         <property name="hibernateProperties">

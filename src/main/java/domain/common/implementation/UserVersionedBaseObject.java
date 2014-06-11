@@ -3,16 +3,14 @@ package domain.common.implementation;
 import domain.common.interfaces.IUserVersionedBaseObject;
 import domain.useraccounts.UserAccount;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Krzysiu on 2014-05-31.
  */
-public class UserVersionedBaseObject extends VersionedBaseObject implements IUserVersionedBaseObject {
+@MappedSuperclass
+public abstract class UserVersionedBaseObject extends VersionedBaseObject implements IUserVersionedBaseObject {
 
     protected UserAccount createdByAccount;
     protected UserAccount lastModificationByAccount;
