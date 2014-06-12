@@ -14,7 +14,7 @@
     </changeSet>
 
     <changeSet id="SEQ-1003" author="kkicinger">
-        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_locations" startValue="2" incrementBy="1" />
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_locations" startValue="1" incrementBy="1" />
     </changeSet>
 
     <changeSet id="SEQ-1004" author="kkicinger">
@@ -49,4 +49,7 @@
         <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_useraccountstatusevents" startValue="1" incrementBy="1" />
     </changeSet>
 
+    <changeSet id="SEQ-1201" author="kkicinger">
+        <createSequence schemaName="${schemaName}" sequenceName="pk_sequence_preferences" startValue="1" incrementBy="1" />
+    </changeSet>
 </databaseChangeLog>

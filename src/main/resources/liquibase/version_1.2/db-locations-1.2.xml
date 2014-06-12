@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="LOCATIONS-1201" author="kkicinger">
+        <addColumn tableName="locations" schemaName="${schemaName}">
+            <column name="url" type="${normalVarchar}" />
+            <column name="rating" type="${double}" />
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

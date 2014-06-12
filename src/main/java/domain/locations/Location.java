@@ -37,6 +37,8 @@ public class Location extends UserVersionedBaseObject {
     private double latitude; //In Android side DB too
     private double longitude; //In Android side DB too
     private Status status;
+    private String url;
+    private double rating;
     private Address address;
 
     public Location() {
@@ -93,6 +95,24 @@ public class Location extends UserVersionedBaseObject {
     }
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Basic
+    @Column(name = "url")
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Basic
+    @Column(name = "rating")
+    public double getRating() {
+        return rating;
+    }
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     @Embedded

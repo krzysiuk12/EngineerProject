@@ -1,0 +1,10 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="liquibase/version_1.2/db-locations-1.2.xml" />
+    <include file="liquibase/version_1.2/db-useraccounts-1.2.xml" />
+
+</databaseChangeLog>

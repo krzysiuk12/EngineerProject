@@ -5,7 +5,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="EVENTS-1101" author="kkicinger">
-        <createTable schemaName="${schemaName}" tableName="useraccountstatusevent">
+        <createTable schemaName="${schemaName}" tableName="useraccountstatusevents">
             <column name="id" type="${long}">
                 <constraints primaryKey="true" nullable="false" />
             </column>
@@ -17,15 +17,15 @@
     </changeSet>
 
     <changeSet id="EVENTS-1102" author="kkicinger">
-        <addForeignKeyConstraint baseTableName="useraccountstatusevent" baseColumnNames="useraccountid" constraintName="fk_useraccountid_useraccountstatusevent"
+        <addForeignKeyConstraint baseTableName="useraccountstatusevents" baseColumnNames="useraccountid" constraintName="fk_useraccountid_useraccountstatusevent"
                                  referencedTableName="useraccounts" referencedColumnNames="id" />
     </changeSet>
 
     <changeSet id="EVENTS-1103" author="kkicinger">
-        <addNotNullConstraint tableName="useraccountstatusevent" columnName="useraccountid" schemaName="${schemaName}" />
-        <addNotNullConstraint tableName="useraccountstatusevent" columnName="status" schemaName="${schemaName}" />
-        <addNotNullConstraint tableName="useraccountstatusevent" columnName="startdate" schemaName="${schemaName}" />
-        <addNotNullConstraint tableName="useraccountstatusevent" columnName="enddate" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccountstatusevents" columnName="useraccountid" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccountstatusevents" columnName="status" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccountstatusevents" columnName="startdate" schemaName="${schemaName}" />
+        <addNotNullConstraint tableName="useraccountstatusevents" columnName="enddate" schemaName="${schemaName}" />
     </changeSet>
 
     <changeSet id="EVENTS-1104" author="kkicinger">

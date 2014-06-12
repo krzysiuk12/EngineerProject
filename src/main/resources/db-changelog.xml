@@ -7,6 +7,7 @@
     <include file="liquibase/db-sequences.xml" />
     <include file="liquibase/db-changelog-1.0.xml" />
     <include file="liquibase/db-changelog-1.1.xml" />
+    <include file="liquibase/db-changelog-1.2.xml" />
 
     <changeSet id="DATALOAD-001" author="kkicinger">
         <loadData tableName="accountsecurityprofiles" schemaName="${schemaName}" file="data/accountsecurityprofiles.csv" separator="," />

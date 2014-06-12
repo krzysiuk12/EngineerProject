@@ -49,12 +49,13 @@
                 <value>domain.useraccounts.Individual</value>
                 <value>domain.useraccounts.UserAccount</value>
                 <value>domain.useraccounts.UserGroup</value>
+                <value>domain.useraccounts.Preferences</value>
                 <value>domain.locations.Address</value>
                 <value>domain.locations.Location</value>
-                <value>domain.locations.Comment</value><!--
+                <value>domain.locations.Comment</value>
                 <value>domain.eventshistory.LocationEvent</value>
                 <value>domain.eventshistory.UserAccountStatusEvent</value>
-                <value>domain.eventshistory.LogEvent</value>-->
+                <value>domain.eventshistory.LogEvent</value>
             </list>
         </property>
         <property name="hibernateProperties">
