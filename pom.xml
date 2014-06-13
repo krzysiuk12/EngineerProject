@@ -23,6 +23,10 @@
         <liquibase-slf4j.version>1.2.1</liquibase-slf4j.version>
         <slf4j-api.version>1.7.7</slf4j-api.version>
         <aspectj.version>1.8.0</aspectj.version>
+        <javamail.version>1.5.2</javamail.version>
+        <junit.version>4.11</junit.version>
+        <velocity.version>1.7</velocity.version>
+        <velocitytools.version>2.0</velocitytools.version>
     </properties>
 
     <dependencies>
@@ -52,6 +56,12 @@
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
 
         <!-- Hibernate Dependency -->
         <dependency>
@@ -109,6 +119,32 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>${aspectj.version}</version>
+        </dependency>
+
+        <!-- JavaMail API -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>${javamail.version}</version>
+        </dependency>
+
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+
+        <!-- Velocity Templates -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>${velocity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-tools</artifactId>
+            <version>${velocitytools.version}</version>
         </dependency>
 
 

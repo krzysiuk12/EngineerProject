@@ -4,18 +4,21 @@ import domain.useraccounts.UserAccount;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import repository.interfaces.IUserManagementRepository;
+import services.interfaces.IMailSenderService;
 import services.interfaces.IUserManagementService;
 
 /**
  * Created by Krzysiu on 2014-06-09.
  */
 @Repository
-public class UserManagementSpringService extends BaseSpringService implements IUserManagementService {
+public class UserManagementSpringService implements IUserManagementService {
 
     private IUserManagementRepository userManagementRepository;
+    private IMailSenderService mailSenderService;
 
-    public UserManagementSpringService(IUserManagementRepository userManagementRepository) {
+    public UserManagementSpringService(IUserManagementRepository userManagementRepository, IMailSenderService mailSenderService) {
         this.userManagementRepository = userManagementRepository;
+        this.mailSenderService = mailSenderService;
     }
 
     @Override
@@ -27,7 +30,9 @@ public class UserManagementSpringService extends BaseSpringService implements IU
     @Override
     @Transactional(readOnly = true)
     public UserAccount getUserAccountById(Long id) {
-        return userManagementRepository.getUserAccountById(id);
+        UserAccount userAccount = userManagementRepository.getUserAccountById(id);
+        mailSenderService.sendAccountActivationMessage(userAccount);
+        return userAccount;
     }
 
     @Override

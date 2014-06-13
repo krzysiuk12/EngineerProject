@@ -8,6 +8,7 @@
             <list>
                 <value>classpath:database.properties</value>
                 <value>classpath:hibernate.properties</value>
+                <value>classpath:javaMail.properties</value>
             </list>
         </property>
     </bean>

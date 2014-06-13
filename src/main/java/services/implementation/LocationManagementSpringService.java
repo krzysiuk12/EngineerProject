@@ -11,7 +11,7 @@ import services.interfaces.IUserManagementService;
  * Created by Krzysiu on 2014-05-25.
  */
 @Repository
-public class LocationManagementSpringService extends BaseSpringService implements ILocationManagementService {
+public class LocationManagementSpringService implements ILocationManagementService {
 
     private ILocationManagementRepository locationManagementRepository;
     private IUserManagementService userManagementService;

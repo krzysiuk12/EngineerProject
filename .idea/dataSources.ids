@@ -2295,6 +2295,340 @@
       <column name="viewowner" sqlType="name" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="definition" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
     </table>
+    <table name="accountsecurityprofiles" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="maximumloginlength" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="minimumloginlength" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="maximuminvalidloginattempts" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="accountlockoutdurationinminutes" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="accountimmediatelyturnedoff" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="maximumlockoutsbeforeturningoff" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="turnedoffperiodindays" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="pk_accountsecurityprofiles" columns="id"/>
+      <exported-key name="fk_accountsecurityprofileid_securityprofiles" table="securityprofiles" schema="public" catalog="EngineerProject" columns="accountsecurityprofileid"/>
+    </table>
+    <table name="comment" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="useraccountid" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="locationid" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="rating" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="message" sqlType="varchar" precision="500" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="pk_comment" columns="id"/>
+      <foreign-key name="fk_locationid_comment" columns="locationid" ref-table="locations" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_useraccountid_comment" columns="useraccountid" ref-table="useraccounts" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="databasechangelog" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="varchar" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="author" sqlType="varchar" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="filename" sqlType="varchar" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dateexecuted" sqlType="timestamptz" precision="35" scale="6" nullable="false" jdbcType="93"/>
+      <column name="orderexecuted" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="exectype" sqlType="varchar" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="md5sum" sqlType="varchar" precision="35" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="comments" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tag" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="liquibase" sqlType="varchar" precision="20" scale="0" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="databasechangeloglock" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="locked" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="lockgranted" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="lockedby" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="pk_databasechangeloglock" columns="id"/>
+    </table>
+    <table name="individuals" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="firstname" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="middlename" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="lastname" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dateofbirth" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="gender" sqlType="varchar" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="facebookaccounturl" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="country" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="pk_individuals" columns="id"/>
+      <exported-key name="fk_individualid_useraccounts" table="useraccounts" schema="public" catalog="EngineerProject" columns="individualid"/>
+    </table>
+    <table name="locationevents" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="useraccountid" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="locationid" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="generatedon" sqlType="timestamptz" precision="35" scale="6" nullable="false" jdbcType="93"/>
+      <column name="type" sqlType="varchar" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="pk_locationevents" columns="id"/>
+      <foreign-key name="fk_locationid_locationevents" columns="locationid" ref-table="locations" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_useraccountid_locationevents" columns="useraccountid" ref-table="useraccounts" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="locations" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="name" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="varchar" precision="500" scale="0" nullable="true" jdbcType="12"/>
+      <column name="latitude" sqlType="float8" precision="17" scale="17" nullable="false" jdbcType="8"/>
+      <column name="longitude" sqlType="float8" precision="17" scale="17" nullable="false" jdbcType="8"/>
+      <column name="status" sqlType="varchar" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="street" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="city" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="postalcode" sqlType="varchar" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="country" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="versionnumber" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="creationdate" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="createdbyaccountid" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="lastmodificationdate" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="lastmodificationbyid" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="removaldate" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="removedbyid" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="url" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="rating" sqlType="float8" precision="17" scale="17" nullable="true" jdbcType="8"/>
+      <primary-key name="pk_locations" columns="id"/>
+      <foreign-key name="fk_created_by_account_id_locations" columns="createdbyaccountid" ref-table="useraccounts" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_last_modifications_by_account_id_locations" columns="lastmodificationbyid" ref-table="useraccounts" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_removed_by_account_id_locations" columns="removedbyid" ref-table="useraccounts" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_locationid_comment" table="comment" schema="public" catalog="EngineerProject" columns="locationid"/>
+      <exported-key name="fk_locationid_locationevents" table="locationevents" schema="public" catalog="EngineerProject" columns="locationid"/>
+    </table>
+    <table name="logevents" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="useraccountid" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="generatedon" sqlType="timestamptz" precision="35" scale="6" nullable="false" jdbcType="93"/>
+      <column name="type" sqlType="varchar" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="sessionid" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="ipaddress" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="pk_logevents" columns="id"/>
+      <foreign-key name="fk_useraccountid_logevents" columns="useraccountid" ref-table="useraccounts" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="passwordsecurityprofiles" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="maximumlength" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="minimumlength" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="periodpasswordchangerequired" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="maximumageindays" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="expirationinfoindays" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="digitrequired" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="lowercaseletterrequired" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="uppercaseletterrequired" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="specialcharacterrequired" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="name" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="pk_passwordsecurityprofiles" columns="id"/>
+      <exported-key name="fk_passwordsecurityprofileid_securityprofiles" table="securityprofiles" schema="public" catalog="EngineerProject" columns="passwordsecurityprofileid"/>
+    </table>
+    <table name="pk_sequence_accountsecurityprofiles" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_comments" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_individuals" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_locationevents" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_locations" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_logevents" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_passwordsecurityprofiles" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_preferences" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_securityprofiles" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_useraccounts" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_useraccountstatusevents" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="pk_sequence_usergroups" schema="public" catalog="EngineerProject" type="SEQUENCE">
+      <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="increment_by" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="max_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="min_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="cache_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="preferences" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="useraccountid" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="wizarddone" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="maptype" sqlType="varchar" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="language" sqlType="varchar" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="pk_preferences" columns="id"/>
+    </table>
+    <table name="securityprofiles" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="name" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="defaultprofile" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="passwordsecurityprofileturnedon" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="accountsecurityprofileturnedon" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="status" sqlType="varchar" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="passwordsecurityprofileid" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="accountsecurityprofileid" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="pk_securityprofiles" columns="id"/>
+      <foreign-key name="fk_accountsecurityprofileid_securityprofiles" columns="accountsecurityprofileid" ref-table="accountsecurityprofiles" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_passwordsecurityprofileid_securityprofiles" columns="passwordsecurityprofileid" ref-table="passwordsecurityprofiles" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_securityprofileid_usergroups" table="usergroups" schema="public" catalog="EngineerProject" columns="securityprofileid"/>
+    </table>
+    <table name="useraccounts" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="login" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="varchar" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="individualid" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="passwordchangerequired" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="lastpasswordchangedate" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="invalidsigninattemptscounter" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="lockoutcounter" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="versionnumber" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="creationdate" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="lastmodificationdate" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="removaldate" sqlType="timestamptz" precision="35" scale="6" nullable="true" jdbcType="93"/>
+      <column name="token" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="usergroupid" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="email" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="pk_useraccounts" columns="id"/>
+      <foreign-key name="fk_individualid_useraccounts" columns="individualid" ref-table="individuals" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_usergroupid_useraccounts" columns="usergroupid" ref-table="usergroups" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_useraccountid_comment" table="comment" schema="public" catalog="EngineerProject" columns="useraccountid"/>
+      <exported-key name="fk_useraccountid_locationevents" table="locationevents" schema="public" catalog="EngineerProject" columns="useraccountid"/>
+      <exported-key name="fk_created_by_account_id_locations" table="locations" schema="public" catalog="EngineerProject" columns="createdbyaccountid"/>
+      <exported-key name="fk_last_modifications_by_account_id_locations" table="locations" schema="public" catalog="EngineerProject" columns="lastmodificationbyid"/>
+      <exported-key name="fk_removed_by_account_id_locations" table="locations" schema="public" catalog="EngineerProject" columns="removedbyid"/>
+      <exported-key name="fk_useraccountid_logevents" table="logevents" schema="public" catalog="EngineerProject" columns="useraccountid"/>
+      <exported-key name="fk_useraccountid_useraccountstatusevent" table="useraccountstatusevents" schema="public" catalog="EngineerProject" columns="useraccountid"/>
+      <index name="useraccounts_email_key" unique="true" columns="email"/>
+    </table>
+    <table name="useraccountstatusevents" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="useraccountid" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="status" sqlType="varchar" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="startdate" sqlType="timestamptz" precision="35" scale="6" nullable="false" jdbcType="93"/>
+      <column name="enddate" sqlType="timestamptz" precision="35" scale="6" nullable="false" jdbcType="93"/>
+      <primary-key name="pk_useraccountstatusevents" columns="id"/>
+      <foreign-key name="fk_useraccountid_useraccountstatusevent" columns="useraccountid" ref-table="useraccounts" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="usergroups" schema="public" catalog="EngineerProject" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="securityprofileid" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="name" sqlType="varchar" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="varchar" precision="500" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="pk_usergroups" columns="id"/>
+      <foreign-key name="fk_securityprofileid_usergroups" columns="securityprofileid" ref-table="securityprofiles" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_usergroupid_useraccounts" table="useraccounts" schema="public" catalog="EngineerProject" columns="usergroupid"/>
+    </table>
     <procedure name="_pg_char_max_length" schema="information_schema" catalog="EngineerProject" type="2">
       <prototype>
         <parameter name="typid" sqlType="oid" precision="0" scale="0" nullable="true" jdbcType="-5" type="1" index="1"/>
