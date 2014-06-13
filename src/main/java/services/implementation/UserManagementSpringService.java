@@ -1,6 +1,7 @@
 package services.implementation;
 
 import domain.useraccounts.UserAccount;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import repository.interfaces.IUserManagementRepository;
 import services.interfaces.IUserManagementService;
@@ -8,6 +9,7 @@ import services.interfaces.IUserManagementService;
 /**
  * Created by Krzysiu on 2014-06-09.
  */
+@Repository
 public class UserManagementSpringService extends BaseSpringService implements IUserManagementService {
 
     private IUserManagementRepository userManagementRepository;
@@ -23,13 +25,13 @@ public class UserManagementSpringService extends BaseSpringService implements IU
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserAccount getUserAccountById(Long id) {
         return userManagementRepository.getUserAccountById(id);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserAccount getUserAccountByIdAllData(Long id) {
         return userManagementRepository.getUserAccountByIdAllData(id);
     }

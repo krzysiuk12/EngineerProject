@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <import resource="applicationContext.xml" />
+
+    <context:component-scan base-package="controllers.rest" />
+    <mvc:annotation-driven />
+    <aop:aspectj-autoproxy />
+
+    <bean id="authorizationAspect" class="aspects.AuthorizationAspect">
+        <constructor-arg name="userManagementService" ref="userManagementService"/>
+    </bean>
+
+    <bean id="loggerAspect" class="aspects.LoggerAspect">
+        <constructor-arg name="loggerService" ref="loggerService" />
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="authorizationPointcut" expression="!@annotation(annotations.NotAuthorized) and within(controllers.rest.*)" />
+        <aop:pointcut id="loggingPointcut" expression="within(controllers.rest.*)" />
+
+        <aop:aspect id="loggerAspect" ref="loggerAspect" order="1">
+            <aop:before method="beforeLogger" pointcut-ref="loggingPointcut"/>
+            <aop:after method="afterReturningLogger" pointcut-ref="loggingPointcut"/>
+        </aop:aspect>
+
+        <aop:aspect id="authorizationAspect" ref="authorizationAspect" order="2">
+            <aop:around method="authorize" pointcut-ref="authorizationPointcut" />
+        </aop:aspect>
+
+
+
+    </aop:config>
+
+</beans>

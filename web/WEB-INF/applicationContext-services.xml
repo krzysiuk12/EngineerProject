@@ -19,4 +19,8 @@
         <constructor-arg name="userManagementRepository" ref="userManagementRepository" />
     </bean>
 
+    <bean name="loggerService" class="services.implementation.LoggerLog4jService">
+        <constructor-arg name="tag" value="[Main Logger]" />
+    </bean>
+
 </beans>

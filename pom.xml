@@ -22,6 +22,7 @@
         <liquibase.version>3.1.1</liquibase.version>
         <liquibase-slf4j.version>1.2.1</liquibase-slf4j.version>
         <slf4j-api.version>1.7.7</slf4j-api.version>
+        <aspectj.version>1.8.0</aspectj.version>
     </properties>
 
     <dependencies>
@@ -97,6 +98,19 @@
             <artifactId>liquibase-slf4j</artifactId>
             <version>${liquibase-slf4j.version}</version>
         </dependency>
+
+        <!-- AspectJ - Tools and JRT -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+
 
     </dependencies>
 

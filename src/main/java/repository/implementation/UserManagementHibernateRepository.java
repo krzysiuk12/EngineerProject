@@ -29,9 +29,8 @@ public class UserManagementHibernateRepository extends BaseHibernateRepository i
     @Override
     public UserAccount getUserAccountByIdAllData(Long id) {
         Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
-        criteria.setFetchMode("individual", FetchMode.JOIN);
-        criteria.setFetchMode("userGroup", FetchMode.JOIN);
         criteria.add(Restrictions.eq("id", id));
-        return (UserAccount)criteria.uniqueResult();
+        criteria.setFetchMode("individual", FetchMode.JOIN);
+        return (UserAccount)criteria.list().get(0);
     }
 }

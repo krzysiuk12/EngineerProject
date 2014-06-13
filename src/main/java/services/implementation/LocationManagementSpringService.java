@@ -1,6 +1,7 @@
 package services.implementation;
 
 import domain.locations.Location;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import repository.interfaces.ILocationManagementRepository;
 import services.interfaces.ILocationManagementService;
@@ -9,6 +10,7 @@ import services.interfaces.IUserManagementService;
 /**
  * Created by Krzysiu on 2014-05-25.
  */
+@Repository
 public class LocationManagementSpringService extends BaseSpringService implements ILocationManagementService {
 
     private ILocationManagementRepository locationManagementRepository;

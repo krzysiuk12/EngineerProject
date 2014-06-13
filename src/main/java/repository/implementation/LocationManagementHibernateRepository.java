@@ -32,9 +32,6 @@ public class LocationManagementHibernateRepository extends BaseHibernateReposito
         criteria.add(Restrictions.eq("id", id));
         criteria.setFetchMode("createdByAccount", FetchMode.JOIN);
         criteria.setFetchMode("createdByAccount.individual", FetchMode.JOIN);
-        //criteria.setFetchMode("lastModificationByAccount", FetchMode.JOIN);
-        //criteria.setFetchMode("removedByAccount", FetchMode.JOIN);
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return (Location)criteria.list().get(0);
     }
 }
