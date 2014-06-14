@@ -1,0 +1,14 @@
+#parse("Header.vm")
+    <div style="font-family: Verdana; font-size: 15px; line-height: 24px; color: #000000;">
+        Welcome!
+        <br /><br />
+        You have recently created an account at ${mainAddress}. Your login: <b>${userAccount.login}</b>.
+        <br /><br />
+        To activate your account please enter the following address: ${activationLink}.
+        <br /><br />
+        Do not hesitate to contact us if you have any problems.
+        <br /><br />
+        Sincerely,<br />
+        ${emailSign}
+    </div>
+#parse("Footer.vm")

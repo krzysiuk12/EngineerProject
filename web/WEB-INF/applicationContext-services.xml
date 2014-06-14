@@ -25,9 +25,10 @@
         <constructor-arg name="tag" value="[Main Logger]" />
     </bean>
 
-    <bean name="mailSenderService" class="services.implementation.MailSenderService">
+    <bean name="mailSenderService" class="services.implementation.MailSenderSpringService">
         <constructor-arg name="from" value="${mail.from}" />
         <constructor-arg name="javaMailSender" ref="mailSender" />
+        <constructor-arg name="velocityEngine" ref="velocityEngine" />
     </bean>
 
 </beans>

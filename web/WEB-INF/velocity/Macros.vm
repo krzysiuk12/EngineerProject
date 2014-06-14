@@ -1,0 +1,21 @@
+#macro(headerMacro $mailTitle)
+    <html>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        </head>
+        <body style="width: 500px">
+            <div style="width: 500px;">
+                <img src="logo.png" alt="TourTrip" width="400px" height="auto"/>
+            </div>
+            <div style="font-family: Verdana; font-size: 18px; font-weight: bold; color: #000000; padding: 15px">
+                Tytuł wiadomości
+            </div>
+            <div style="font-family: ; font-size: 12px; font-weight: bold; line-height: 24px; color: #000000; padding: 15px">
+                Treść wiadomości.Wiadomość wygenerowana automatycznie przez system. &copy; by TripTour. Wszystkie prawa zastrzeżone..Wiadomość wygenerowana automatycznie przez system. &copy; by TripTour. Wszystkie prawa zastrzeżone..Wiadomość wygenerowana automatycznie przez system. &copy; by TripTour. Wszystkie prawa zastrzeżone..Wiadomość wygenerowana automatycznie przez system. &copy; by TripTour. Wszystkie prawa zastrzeżone.Wiadomość wygenerowana automatycznie przez system. &copy; by TripTour. Wszystkie prawa zastrzeżone.
+            </div>
+            <div style="width: 500px; height: auto; padding-top: 20px; padding-left: 10px; padding-right: 10px; padding-bottom: 15px; font-family: Verdana; font-size: 9px; text-align: left; color: #dddddd; border-top: 1px solid #dddddd;">
+                Wiadomość wygenerowana automatycznie przez system. &copy; by TripTour. Wszystkie prawa zastrzeżone.
+            </div>
+        </body>
+    <html>
+#end
