@@ -7,6 +7,8 @@ import repository.interfaces.ILocationManagementRepository;
 import services.interfaces.ILocationManagementService;
 import services.interfaces.IUserManagementService;
 
+import java.util.List;
+
 /**
  * Created by Krzysiu on 2014-05-25.
  */
@@ -24,12 +26,28 @@ public class LocationManagementSpringService implements ILocationManagementServi
     @Override
     @Transactional(readOnly = true)
     public Location getLocationById(Long id) {
-        return locationManagementRepository.getLocationById(id);
+        Location location = locationManagementRepository.getLocationById(id);
+        location.setCreatedByAccount(null);
+        return location;
     }
 
     @Override
     @Transactional(readOnly = true)
     public Location getLocationByIdAllData(Long id) {
         return locationManagementRepository.getLocationByIdAllData(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Location> getAllLocations() {
+        List<Location> locationsList = locationManagementRepository.getAllLocations();
+        locationsList.forEach((location) -> location.setCreatedByAccount(null));
+        return locationsList;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Location> getAllUsersPrivateLocations(Long userId) {
+        return locationManagementRepository.getAllUsersPrivateLocations(userId);
     }
 }

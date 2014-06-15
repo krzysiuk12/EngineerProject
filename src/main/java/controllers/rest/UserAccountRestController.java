@@ -1,10 +1,12 @@
 package controllers.rest;
 
 import annotations.NotAuthorized;
+import domain.locations.Location;
 import domain.useraccounts.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import services.interfaces.ILocationManagementService;
 import services.interfaces.IUserManagementService;
 
 import java.util.List;
@@ -17,10 +19,12 @@ import java.util.List;
 public class UserAccountRestController {
 
     private IUserManagementService userManagementService;
+    private ILocationManagementService locationManagementService;
 
     @Autowired
-    public UserAccountRestController(IUserManagementService userManagementService) {
+    public UserAccountRestController(IUserManagementService userManagementService, ILocationManagementService locationManagementService) {
         this.userManagementService = userManagementService;
+        this.locationManagementService = locationManagementService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -36,15 +40,20 @@ public class UserAccountRestController {
         return null;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public @ResponseBody UserAccount getUserAccountById(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) {
-        UserAccount userAccount = userManagementService.getUserAccountById(id);
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public @ResponseBody UserAccount getUserAccountById(@RequestHeader(value = "authorization") String token, @PathVariable("userId") Long userId) {
+        UserAccount userAccount = userManagementService.getUserAccountById(userId);
         userAccount.setIndividual(null);
         return userAccount;
     }
 
-    @RequestMapping(value = "/{id}/all", method = RequestMethod.GET)
-    public @ResponseBody UserAccount getUserAccountByIdAllData(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) {
-        return userManagementService.getUserAccountByIdAllData(id);
+    @RequestMapping(value = "/{userId}/all", method = RequestMethod.GET)
+    public @ResponseBody UserAccount getUserAccountByIdAllData(@RequestHeader(value = "authorization") String token, @PathVariable("userId") Long userId) {
+        return userManagementService.getUserAccountByIdAllData(userId);
+    }
+
+    @RequestMapping(value = "/{userId}/locations", method = RequestMethod.GET)
+    public @ResponseBody List<Location> getAllUsersPrivateLocations(@RequestHeader(value = "authorization") String token, @PathVariable("userId") Long userId) {
+        return locationManagementService.getAllUsersPrivateLocations(userId);
     }
 }

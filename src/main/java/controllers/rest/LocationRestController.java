@@ -24,8 +24,7 @@ public class LocationRestController {
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Location> getAllLocations(@RequestHeader(value = "authorization") String token) {
-        //TODO: Return all localizations, method only accessed by administrator
-        return null;
+        return locationManagementService.getAllLocations();
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -36,9 +35,7 @@ public class LocationRestController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public @ResponseBody Location getLocationById(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) {
-        Location location = locationManagementService.getLocationById(id);
-        location.setCreatedByAccount(null);
-        return location;
+        return locationManagementService.getLocationById(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)

@@ -8,6 +8,7 @@
         <addColumn tableName="locations" schemaName="${schemaName}">
             <column name="url" type="${normalVarchar}" />
             <column name="rating" type="${double}" />
+            <column name="isusersprivate" type="${boolean}" />
         </addColumn>
     </changeSet>
 

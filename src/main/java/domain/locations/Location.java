@@ -37,6 +37,7 @@ public class Location extends UserVersionedBaseObject {
     private double latitude; //In Android side DB too
     private double longitude; //In Android side DB too
     private Status status;
+    private boolean usersPrivate;
     private String url;
     private double rating;
     private Address address;
@@ -104,6 +105,15 @@ public class Location extends UserVersionedBaseObject {
     }
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Basic
+    @Column(name = "isUsersPrivate")
+    public boolean isUsersPrivate() {
+        return usersPrivate;
+    }
+    public void setUsersPrivate(boolean usersPrivate) {
+        this.usersPrivate = usersPrivate;
     }
 
     @Basic

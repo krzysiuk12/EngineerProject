@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import repository.interfaces.ILocationManagementRepository;
 
+import java.util.List;
+
 /**
  * Created by Krzysiu on 2014-05-25.
  */
@@ -33,5 +35,17 @@ public class LocationManagementHibernateRepository extends BaseHibernateReposito
         criteria.setFetchMode("createdByAccount", FetchMode.JOIN);
         criteria.setFetchMode("createdByAccount.individual", FetchMode.JOIN);
         return (Location)criteria.list().get(0);
+    }
+
+    @Override
+    public List<Location> getAllLocations() {
+        return getCurrentSession().createCriteria(Location.class).list();
+    }
+
+    @Override
+    public List<Location> getAllUsersPrivateLocations(Long userId) {
+        Criteria criteria = getCurrentSession().createCriteria(Location.class);
+        criteria.add(Restrictions.eq("createdByAccount.id", userId));
+        return criteria.list();
     }
 }
