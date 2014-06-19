@@ -48,6 +48,17 @@ public class LocationManagementSpringService implements ILocationManagementServi
     @Override
     @Transactional(readOnly = true)
     public List<Location> getAllUsersPrivateLocations(Long userId) {
-        return locationManagementRepository.getAllUsersPrivateLocations(userId);
+        List<Location> privateLocationsList = locationManagementRepository.getAllUsersPrivateLocations(userId);
+        privateLocationsList.forEach((location) -> location.setCreatedByAccount(null));
+        return privateLocationsList;
+    }
+
+    @Override
+    @Transactional
+    public Location changeLocationStatus(Long locationId, Location.Status status) {
+        Location location = getLocationByIdAllData(locationId);
+        location.setStatus(status);
+        locationManagementRepository.saveOrUpdateLocation(location);
+        return location;
     }
 }

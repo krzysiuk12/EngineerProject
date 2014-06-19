@@ -38,15 +38,14 @@ public class LocationRestController {
         return locationManagementService.getLocationById(id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-    public @ResponseBody Location updateLocationById(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id, @RequestBody String locationData) {
-        //TODO: Create service + repositry method for saving
-        return null;
+    @RequestMapping(value = "/{locationId}/status", method = RequestMethod.PUT)
+    public @ResponseBody Location changeLocationStatusById(@RequestHeader(value = "authorization") String token, @PathVariable("locationId") Long locationId, @RequestBody Location.Status status) {
+        return locationManagementService.changeLocationStatus(locationId, status);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public @ResponseBody Location updateLocationByIdAllData(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id, @RequestBody Location location) {
-        //TODO: Create service + repositry method for saving
+    @RequestMapping(value = "/{locationId}", method = RequestMethod.PUT)
+    public @ResponseBody Location updateLocationByIdAllData(@RequestHeader(value = "authorization") String token, @PathVariable("locationId") Long id, @RequestBody Location location) {
+        //TODO: Create service + repository method for saving
         return null;
     }
 

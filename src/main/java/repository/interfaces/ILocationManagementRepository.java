@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ILocationManagementRepository {
 
-    public void saveLocation(Location location);
+    public void saveOrUpdateLocation(Location location);
 
     public Location getLocationById(Long id);
     public Location getLocationByIdAllData(Long id);

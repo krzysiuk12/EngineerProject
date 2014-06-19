@@ -32,10 +32,10 @@ public class Location extends UserVersionedBaseObject {
         REMOVED
     }
 
-    private String name; //In Android side DB too
-    private String description; //In Android side DB too
-    private double latitude; //In Android side DB too
-    private double longitude; //In Android side DB too
+    private String name;
+    private String description;
+    private double latitude;
+    private double longitude;
     private Status status;
     private boolean usersPrivate;
     private String url;

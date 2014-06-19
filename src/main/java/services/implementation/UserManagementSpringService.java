@@ -40,4 +40,10 @@ public class UserManagementSpringService implements IUserManagementService {
     public UserAccount getUserAccountByIdAllData(Long id) {
         return userManagementRepository.getUserAccountByIdAllData(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean authenticateUserAccountByToken(String token) {
+        return userManagementRepository.authenticateUserAccountByToken(token);
+    }
 }

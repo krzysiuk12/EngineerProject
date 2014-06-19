@@ -1,4 +1,12 @@
-id,name,description,latitude,longitude,status,url,rating,isusersprivate,street,city,postalcode,country,versionnumber,creationdate,createdbyaccountid,lastmodificationdate,lastmodificationbyid,removaldate,removedbyid
-1,Zamek Królewski na Wawelu,NULL,50.055315,19.9379379,AVAILABLE,NULL,0,FALSE,NULL,Cracow,NULL,Poland,1,2014-06-01,1,NULL,NULL,NULL,NULL
-2,Sukiennice,NULL,50.061640,19.937326,AVAILABLE,NULL,0,FALSE,NULL,Cracow,NULL,Poland,1,2014-06-02,1,NULL,NULL,NULL,NULL
-3,Kościół Mariacki,NULL,50.06299008029149,19.9407392802915,AVAILABLE,NULL,0,FALSE,NULL,Cracow,NULL,Poland,1,2014-06-03,1,NULL,NULL,NULL,NULL
+id,name,description,latitude,longitude,status,url,rating,street,city,postalcode,country,versionnumber,creationdate,createdbyaccountid,isusersprivate,lastmodificationdate,lastmodificationbyid,removaldate,removedbyid
+1,Zamek Królewski na Wawelu,NULL,50.054053,19.935399,AVAILABLE,http://www.wawel.krakow.pl/,7.0,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+2,Sukiennice,NULL,50.061640,19.937326,AVAILABLE,NULL,7.1,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+3,Kościół Mariacki,NULL,50.061644,19.939387,AVAILABLE,http://www.mariacki.com/index.php,7.2,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+4,Smocza Jama,NULL,50.053775,19.933142,UNAVAILABLE,NULL,7.3,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+5,Smok Wawelski,NULL,50.053024,19.933560,DRAFT,NULL,7.4,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+6,Rynek Główny,NULL,50.061894,19.936735,AVAILABLE,NULL,7.5,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+7,Pomnik Adama Mickiewicza,NULL,50.061463,19.937986,AVAILABLE,NULL,7.6,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+8,Barbakan,NULL,50.065489,19.941650,UNAVAILABLE,http://www.mhk.pl/oddzialy/barbakan,7.7,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+9,Brama Floriańska,NULL,50.064780,19.941328,AVAILABLE,NULL,7.8,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+10,Muzeum Książąt Czartoryskich,NULL,50.064702,19.939843,UNAVAILABLE,http://www.muzeum-czartoryskich.krakow.pl/,7.9,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL
+11,Collegium Maius UJ,NULL,50.061567,19.933920,AVAILABLE,http://www.maius.uj.edu.pl/,8.0,NULL,Kraków,NULL,Polska,1,2014-06-01,1,FALSE,NULL,NULL,NULL,NULL

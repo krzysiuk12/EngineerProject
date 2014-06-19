@@ -5,6 +5,7 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import repository.interfaces.ILocationManagementRepository;
 
 import java.util.List;
@@ -19,8 +20,8 @@ public class LocationManagementHibernateRepository extends BaseHibernateReposito
     }
 
     @Override
-    public void saveLocation(Location location) {
-        getCurrentSession().save(location);
+    public void saveOrUpdateLocation(Location location) {
+        getCurrentSession().saveOrUpdate(location);
     }
 
     @Override
@@ -45,7 +46,9 @@ public class LocationManagementHibernateRepository extends BaseHibernateReposito
     @Override
     public List<Location> getAllUsersPrivateLocations(Long userId) {
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
+        criteria.createAlias("createdByAccount", "createdByAccount", JoinType.INNER_JOIN);
         criteria.add(Restrictions.eq("createdByAccount.id", userId));
+        criteria.add(Restrictions.eq("usersPrivate", true));
         return criteria.list();
     }
 }

@@ -33,4 +33,13 @@ public class UserManagementHibernateRepository extends BaseHibernateRepository i
         criteria.setFetchMode("individual", FetchMode.JOIN);
         return (UserAccount)criteria.list().get(0);
     }
+
+    @Override
+    public boolean authenticateUserAccountByToken(String token) {
+        Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
+        criteria.add(Restrictions.eq("token", token));
+        criteria.add(Restrictions.eq("status", UserAccount.Status.ACTIVE));
+        UserAccount account = (UserAccount)criteria.list().get(0);
+        return account != null ? true : false;
+    }
 }

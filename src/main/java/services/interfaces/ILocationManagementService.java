@@ -15,4 +15,6 @@ public interface ILocationManagementService {
     public List<Location> getAllLocations();
     public List<Location> getAllUsersPrivateLocations(Long userId);
 
+    public Location changeLocationStatus(Long locationId, Location.Status status);
+
 }

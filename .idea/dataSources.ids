@@ -2383,6 +2383,7 @@
       <column name="removedbyid" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="url" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="rating" sqlType="float8" precision="17" scale="17" nullable="true" jdbcType="8"/>
+      <column name="isusersprivate" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
       <primary-key name="pk_locations" columns="id"/>
       <foreign-key name="fk_created_by_account_id_locations" columns="createdbyaccountid" ref-table="useraccounts" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="fk_last_modifications_by_account_id_locations" columns="lastmodificationbyid" ref-table="useraccounts" ref-schema="public" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>

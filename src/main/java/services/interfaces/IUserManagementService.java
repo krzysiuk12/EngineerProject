@@ -12,4 +12,5 @@ public interface IUserManagementService {
     public UserAccount getUserAccountById(Long id);
     public UserAccount getUserAccountByIdAllData(Long id);
 
+    public boolean authenticateUserAccountByToken(String token);
 }

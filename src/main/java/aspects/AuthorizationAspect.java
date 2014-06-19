@@ -15,7 +15,9 @@ public class AuthorizationAspect {
     }
 
     public Object authorize(ProceedingJoinPoint joinPoint) throws Exception {
-        String token = (String)joinPoint.getArgs()[0];
+        if(!userManagementService.authenticateUserAccountByToken((String)joinPoint.getArgs()[0])) {
+            return null;
+        }
         try {
             return joinPoint.proceed();
         } catch (Throwable throwable) {
