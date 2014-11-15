@@ -1,11 +1,14 @@
 package repository.implementation;
 
 import domain.locations.Location;
+import org.aspectj.weaver.Iterators;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import repository.interfaces.ILocationManagementRepository;
 
 import java.util.List;
@@ -13,8 +16,10 @@ import java.util.List;
 /**
  * Created by Krzysiu on 2014-05-25.
  */
+@Repository
 public class LocationManagementHibernateRepository extends BaseHibernateRepository implements ILocationManagementRepository {
 
+    @Autowired
     public LocationManagementHibernateRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
@@ -49,6 +54,14 @@ public class LocationManagementHibernateRepository extends BaseHibernateReposito
         criteria.createAlias("createdByAccount", "createdByAccount", JoinType.INNER_JOIN);
         criteria.add(Restrictions.eq("createdByAccount.id", userId));
         criteria.add(Restrictions.eq("usersPrivate", true));
+        return criteria.list();
+    }
+
+    @Override
+    public List<Location> getLocationsInScope(double latitude, double longitude, double degreeScope) {
+        Criteria criteria = getCurrentSession().createCriteria(Location.class);
+        criteria.add(Restrictions.between("latitude", latitude - degreeScope, latitude + degreeScope));
+        criteria.add(Restrictions.between("longitude", longitude - degreeScope, longitude + degreeScope));
         return criteria.list();
     }
 }

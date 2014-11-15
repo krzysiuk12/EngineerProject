@@ -5,19 +5,25 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import repository.interfaces.IUserManagementRepository;
+
+import java.util.List;
 
 /**
  * Created by Krzysiu on 2014-06-09.
  */
+@Repository
 public class UserManagementHibernateRepository extends BaseHibernateRepository implements IUserManagementRepository {
 
+    @Autowired
     public UserManagementHibernateRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
     @Override
-    public void saveUserAccount(UserAccount account) {
+    public void saveOrUpdateUserAccount(UserAccount account) {
         getCurrentSession().save(account);
     }
 
@@ -31,15 +37,29 @@ public class UserManagementHibernateRepository extends BaseHibernateRepository i
         Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
         criteria.add(Restrictions.eq("id", id));
         criteria.setFetchMode("individual", FetchMode.JOIN);
-        return (UserAccount)criteria.list().get(0);
+        return returnSingleOrNull(criteria.list());
     }
 
     @Override
-    public boolean authenticateUserAccountByToken(String token) {
+    public UserAccount getUserAccountByLogin(String login) {
+        Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
+        criteria.add(Restrictions.eq("login", login));
+        return returnSingleOrNull(criteria.list());
+    }
+
+    @Override
+    public UserAccount getUserAccountByToken(String token) {
         Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
         criteria.add(Restrictions.eq("token", token));
-        criteria.add(Restrictions.eq("status", UserAccount.Status.ACTIVE));
-        UserAccount account = (UserAccount)criteria.list().get(0);
-        return account != null ? true : false;
+        return returnSingleOrNull(criteria.list());
+    }
+
+    @Override
+    public List<UserAccount> getAllUserAccounts() {
+        return getCurrentSession().createCriteria(UserAccount.class).list();
+    }
+
+    private UserAccount returnSingleOrNull(List<UserAccount> accounts) {
+        return accounts != null && accounts.size() == 1 ? accounts.get(0) : null;
     }
 }

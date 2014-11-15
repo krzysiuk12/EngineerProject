@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Locations")
-@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "lastModificationByAccount", "removedByAccount", "lastModificationDate", "removalDate"})
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "lastModificationByAccount", "removedByAccount", "lastModificationDate", "removalDate" })
 public class Location extends UserVersionedBaseObject {
 
     public enum Status {

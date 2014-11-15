@@ -17,4 +17,6 @@ public interface ILocationManagementRepository {
     public List<Location> getAllLocations();
     public List<Location> getAllUsersPrivateLocations(Long userId);
 
+    public List<Location> getLocationsInScope(double longitude, double latitude, double scope);
+
 }

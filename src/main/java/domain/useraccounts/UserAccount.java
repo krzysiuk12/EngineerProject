@@ -136,7 +136,7 @@ public class UserAccount extends VersionedBaseObject {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "usergroupid", nullable = false)
+    @JoinColumn(name = "usergroupid")
     public UserGroup getUserGroup() {
         return userGroup;
     }

@@ -1,11 +1,11 @@
 package controllers.rest;
 
 import domain.locations.Location;
+import jsonserializers.common.ResponseSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import services.interfaces.ILocationManagementService;
 
 import java.util.List;
 
@@ -16,10 +16,17 @@ import java.util.List;
 @RequestMapping(value = "/coordinates")
 public class CoordinatesRestController {
 
+    private static final double DEFAULT_KM_SCOPE = 50.0;
+    private ILocationManagementService locationManagementService;
+
+    @Autowired
+    public CoordinatesRestController(ILocationManagementService locationManagementService) {
+        this.locationManagementService = locationManagementService;
+    }
+
     @RequestMapping(value = "/{latitude}/{longitude}", method = RequestMethod.GET)
-    public @ResponseBody List<Location> getAllLocationsForCoordinates(@RequestHeader(value = "authorization") String token) {
-        //TODO: Implementacja z wykorzystanie Hibernate Spatial
-        return null;
+    public @ResponseBody ResponseSerializer<List<Location>> getAllLocationsForCoordinates(@RequestHeader(value = "authorization") String token, @PathVariable("latitude") double latitude, @PathVariable("longitude") double longitude) {
+        return new ResponseSerializer(locationManagementService.getLocationInScope(latitude, longitude, DEFAULT_KM_SCOPE));
     }
 
 
