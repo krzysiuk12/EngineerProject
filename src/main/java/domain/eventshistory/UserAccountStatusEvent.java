@@ -31,7 +31,7 @@ public class UserAccountStatusEvent extends BaseObject {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "userAccountId", nullable = false)
+    @JoinColumn(name = "id_useraccount", nullable = false)
     public UserAccount getUserAccount() {
         return userAccount;
     }
@@ -40,7 +40,7 @@ public class UserAccountStatusEvent extends BaseObject {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", length = 50, nullable = false)
     public UserAccount.Status getStatus() {
         return status;
     }

@@ -40,7 +40,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 200, nullable = false)
     public String getName() {
         return name;
     }
@@ -49,7 +49,7 @@ public class PasswordSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "maximumLength", nullable = false)
+    @Column(name = "maximumLength", length = 500, nullable = false)
     public int getMaximumLength() {
         return maximumLength;
     }

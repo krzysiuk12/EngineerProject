@@ -1,16 +1,15 @@
 package services.implementation;
 
+import builders.PathBuilder;
 import domain.useraccounts.UserAccount;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import services.interfaces.IMailSenderService;
 import tools.ConfigurationTools;
-import tools.PathTools;
 
 import javax.mail.internet.MimeMessage;
 import java.util.HashMap;
@@ -103,7 +102,7 @@ public class MailSenderSpringService implements IMailSenderService {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("mailTitle", MailType.ACCOUNT_ACTIVATION.getSubject());
         parameters.put("mainAddress", ConfigurationTools.MAIN_PAGE);
-        parameters.put("activationLink", PathTools.getUserAccountActivationPath(userAccount.getId()));
+        parameters.put("activationLink", PathBuilder.getUserAccountActivationPath(userAccount.getId()));
         parameters.put("emailSign", ConfigurationTools.PROJECT_NAME);
         parameters.put("userAccount", userAccount);
         String body = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, MailType.ACCOUNT_ACTIVATION.getTemplateName(), "UTF-8", parameters);

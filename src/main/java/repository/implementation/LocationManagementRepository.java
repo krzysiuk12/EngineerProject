@@ -1,7 +1,6 @@
 package repository.implementation;
 
 import domain.locations.Location;
-import org.aspectj.weaver.Iterators;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
@@ -17,10 +16,10 @@ import java.util.List;
  * Created by Krzysiu on 2014-05-25.
  */
 @Repository
-public class LocationManagementHibernateRepository extends BaseHibernateRepository implements ILocationManagementRepository {
+public class LocationManagementRepository extends BaseHibernateRepository implements ILocationManagementRepository {
 
     @Autowired
-    public LocationManagementHibernateRepository(SessionFactory sessionFactory) {
+    public LocationManagementRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 

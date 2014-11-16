@@ -109,7 +109,7 @@ public class UserAccount extends VersionedBaseObject {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "individualid", unique = true, nullable = false)
+    @JoinColumn(name = "id_individual", unique = true, nullable = false)
     public Individual getIndividual() {
         return individual;
     }
@@ -136,7 +136,7 @@ public class UserAccount extends VersionedBaseObject {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "usergroupid")
+    @JoinColumn(name = "id_usergroup", foreignKey = @ForeignKey(name = "FK_useraccount_usergroup_usergroup"), nullable = true)
     public UserGroup getUserGroup() {
         return userGroup;
     }

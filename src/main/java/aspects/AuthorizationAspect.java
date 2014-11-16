@@ -3,16 +3,12 @@ package aspects;
 import exceptions.ErrorMessages;
 import jsonserializers.common.ResponseSerializer;
 import jsonserializers.common.ResponseStatus;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import services.interfaces.ILoggerService;
 import services.interfaces.IUserManagementService;
 
 /**
@@ -33,7 +29,7 @@ public class AuthorizationAspect {
     @Around("aspects.pointcuts.PointcutDefinitions.userAuthorization()")
     public Object authorizeUser(ProceedingJoinPoint joinPoint) throws Exception {
         if(!userManagementService.authenticateUserAccountByToken((String)joinPoint.getArgs()[0])) {
-            return new ResponseSerializer<>(ResponseStatus.REQUEST_DENIED, ErrorMessages.INVALID_TOKEN.name(), null);
+            return new ResponseSerializer<>(ResponseStatus.REQUEST_DENIED, ErrorMessages.INVALID_TOKEN);
         }
         try {
             return joinPoint.proceed();
@@ -49,7 +45,7 @@ public class AuthorizationAspect {
             if(userManagementService.authenticateUserAccountByToken((String)joinPoint.getArgs()[0])) {
                 return new ResponseSerializer<>(ResponseStatus.ACCESS_DENIED, null, null);
             }
-            return new ResponseSerializer<>(ResponseStatus.REQUEST_DENIED, ErrorMessages.INVALID_TOKEN.name(), null);
+            return new ResponseSerializer<>(ResponseStatus.REQUEST_DENIED, ErrorMessages.INVALID_TOKEN);
         }
         try {
             return joinPoint.proceed();

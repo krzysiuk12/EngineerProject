@@ -4,18 +4,663 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <include file="liquibase/db-sequences.xml" />
-    <include file="liquibase/db-changelog-1.0.xml" />
-    <include file="liquibase/db-changelog-1.1.xml" />
-    <include file="liquibase/db-changelog-1.2.xml" />
+    <!--<include file="liquibase/db-sequences.xml" />-->
+    <!--<include file="liquibase/db-changelog-1.0.xml" />-->
+    <!--<include file="liquibase/db-changelog-1.1.xml" />-->
+    <!--<include file="liquibase/db-changelog-1.2.xml" />-->
+
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-1">
+        <createSequence sequenceName="pk_sequence_accountsecurityprofiles"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-2">
+        <createSequence sequenceName="pk_sequence_individuals"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-3">
+        <createSequence sequenceName="pk_sequence_locationevents"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-4">
+        <createSequence sequenceName="pk_sequence_locations"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-5">
+        <createSequence sequenceName="pk_sequence_logevents"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-6">
+        <createSequence sequenceName="pk_sequence_passwordsecurityprofiles"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-7">
+        <createSequence sequenceName="pk_sequence_preferences"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-8">
+        <createSequence sequenceName="pk_sequence_securityprofiles"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-9">
+        <createSequence sequenceName="pk_sequence_trip"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-10">
+        <createSequence sequenceName="pk_sequence_tripday"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-11">
+        <createSequence sequenceName="pk_sequence_tripdaylocation"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-12">
+        <createSequence sequenceName="pk_sequence_tripdirection"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-13">
+        <createSequence sequenceName="pk_sequence_tripstep"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-14">
+        <createSequence sequenceName="pk_sequence_useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-15">
+        <createSequence sequenceName="pk_sequence_useraccountstatusevents"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-16">
+        <createSequence sequenceName="pk_sequence_usergroups"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-17">
+        <createTable tableName="accountsecurityprofiles">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="accountimmediatelyturnedoff" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="accountlockoutdurationinminutes" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="maximuminvalidloginattempts" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="maximumlockoutsbeforeturningoff" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="maximumloginlength" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="minimumloginlength" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-18">
+        <createTable tableName="individuals">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="country" type="VARCHAR(255)"/>
+            <column name="dateofbirth" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="facebookaccounturl" type="VARCHAR(255)"/>
+            <column name="firstname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="lastname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middlename" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-19">
+        <createTable tableName="locationevents">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="generatedon" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_location" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_useraccount" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-20">
+        <createTable tableName="locations">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="lastmodificationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="removaldate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="versionnumber" type="INT4"/>
+            <column name="city" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postalcode" type="VARCHAR(255)"/>
+            <column name="street" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(500)"/>
+            <column name="latitude" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rating" type="FLOAT8"/>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="VARCHAR(255)"/>
+            <column name="isusersprivate" type="BOOL"/>
+            <column name="createdbyaccountid" type="INT8"/>
+            <column name="lastmodificationbyid" type="INT8"/>
+            <column name="removedbyid" type="INT8"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-21">
+        <createTable tableName="logevents">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="generatedon" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ipaddress" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sessionid" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_useraccount" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-22">
+        <createTable tableName="passwordsecurityprofiles">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="digitrequired" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expirationinfoindays" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lowercaseletterrequired" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="maximumageindays" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="maximumlength" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="minimumlength" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="periodpasswordchangerequired" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="specialcharacterrequired" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uppercaseletterrequired" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-23">
+        <createTable tableName="preferences">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language" type="VARCHAR(255)"/>
+            <column name="maptype" type="VARCHAR(255)"/>
+            <column name="wizarddone" type="BOOL"/>
+            <column name="useraccountid" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-24">
+        <createTable tableName="securityprofiles">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="accountsecurityprofileturnedon" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="defaultprofile" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(500)"/>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="passwordsecurityprofileturnedon" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="id_accountsecurityprofile" type="INT8"/>
+            <column name="id_passwordsecurityprofile" type="INT8"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-25">
+        <createTable tableName="trip">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="lastmodificationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="removaldate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="versionnumber" type="INT4"/>
+            <column name="description" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enddate" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tripname" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="startdate" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_useraccount" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-26">
+        <createTable tableName="tripdaylocations">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="lastmodificationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="removaldate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="versionnumber" type="INT4"/>
+            <column name="ordinal" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_location" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tripday" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-27">
+        <createTable tableName="tripdays">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="lastmodificationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="removaldate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="versionnumber" type="INT4"/>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="daynumber" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="plannedstarttime" type="TIME WITHOUT TIME ZONE"/>
+            <column name="id_trip" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-28">
+        <createTable tableName="tripdirections">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="lastmodificationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="removaldate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="versionnumber" type="INT4"/>
+            <column name="distance" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duration" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="endlatitude" type="FLOAT8"/>
+            <column name="endlongitude" type="FLOAT8"/>
+            <column name="instruction" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ordinal" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="startlatitude" type="FLOAT8"/>
+            <column name="startlongitude" type="FLOAT8"/>
+            <column name="travelmode" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tripstep" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-29">
+        <createTable tableName="tripsteps">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="lastmodificationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="removaldate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="versionnumber" type="INT4"/>
+            <column name="distance" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distanceunit" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duration" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_endlocation" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_startlocation" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tripday" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-30">
+        <createTable tableName="useraccounts">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="lastmodificationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="removaldate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="versionnumber" type="INT4"/>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="invalidsigninattemptscounter" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastpasswordchangedate" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="lockoutcounter" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="passwordchangerequired" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_individual" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_usergroup" type="INT8"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-31">
+        <createTable tableName="useraccountstatusevents">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enddate" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="startdate" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_useraccount" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-32">
+        <createTable tableName="usergroups">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(500)"/>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_securityprofile" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-33">
+        <addPrimaryKey columnNames="id" constraintName="accountsecurityprofiles_pkey"
+                       tableName="accountsecurityprofiles"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-34">
+        <addPrimaryKey columnNames="id" constraintName="individuals_pkey" tableName="individuals"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-35">
+        <addPrimaryKey columnNames="id" constraintName="locationevents_pkey" tableName="locationevents"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-36">
+        <addPrimaryKey columnNames="id" constraintName="locations_pkey" tableName="locations"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-37">
+        <addPrimaryKey columnNames="id" constraintName="logevents_pkey" tableName="logevents"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-38">
+        <addPrimaryKey columnNames="id" constraintName="passwordsecurityprofiles_pkey"
+                       tableName="passwordsecurityprofiles"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-39">
+        <addPrimaryKey columnNames="id" constraintName="preferences_pkey" tableName="preferences"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-40">
+        <addPrimaryKey columnNames="id" constraintName="securityprofiles_pkey" tableName="securityprofiles"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-41">
+        <addPrimaryKey columnNames="id" constraintName="trip_pkey" tableName="trip"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-42">
+        <addPrimaryKey columnNames="id" constraintName="tripdaylocations_pkey" tableName="tripdaylocations"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-43">
+        <addPrimaryKey columnNames="id" constraintName="tripdays_pkey" tableName="tripdays"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-44">
+        <addPrimaryKey columnNames="id" constraintName="tripdirections_pkey" tableName="tripdirections"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-45">
+        <addPrimaryKey columnNames="id" constraintName="tripsteps_pkey" tableName="tripsteps"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-46">
+        <addPrimaryKey columnNames="id" constraintName="useraccounts_pkey" tableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-47">
+        <addPrimaryKey columnNames="id" constraintName="useraccountstatusevents_pkey"
+                       tableName="useraccountstatusevents"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-48">
+        <addPrimaryKey columnNames="id" constraintName="usergroups_pkey" tableName="usergroups"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-49">
+        <addUniqueConstraint columnNames="email" constraintName="uk_8ky8m25eaocycfvvg96ipvg5t" deferrable="false"
+                             disabled="false" initiallyDeferred="false" tableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-50">
+        <addUniqueConstraint columnNames="useraccountid" constraintName="uk_nocqw9ps044vh3llgrfjmb2in"
+                             deferrable="false" disabled="false" initiallyDeferred="false" tableName="preferences"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-51">
+        <addUniqueConstraint columnNames="id_individual" constraintName="uk_ojynn85ad5isym0lvq932ccn2"
+                             deferrable="false" disabled="false" initiallyDeferred="false" tableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-52">
+        <addForeignKeyConstraint baseColumnNames="removedbyid" baseTableName="locations"
+                                 constraintName="fk_60x1favnleklmqxnwexl7xsgo" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-53">
+        <addForeignKeyConstraint baseColumnNames="id_useraccount" baseTableName="logevents"
+                                 constraintName="fk_c4wny9gf6rdfme1sd1tes2btc" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-54">
+        <addForeignKeyConstraint baseColumnNames="createdbyaccountid" baseTableName="locations"
+                                 constraintName="fk_lis2q4tlt8v45ry06onot2bwn" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-55">
+        <addForeignKeyConstraint baseColumnNames="lastmodificationbyid" baseTableName="locations"
+                                 constraintName="fk_lo38wmdutek44fvggnjwa3pbg" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-56">
+        <addForeignKeyConstraint baseColumnNames="id_useraccount" baseTableName="useraccountstatusevents"
+                                 constraintName="fk_no6lbhatjygalcjrgwlqmfm62" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-57">
+        <addForeignKeyConstraint baseColumnNames="useraccountid" baseTableName="preferences"
+                                 constraintName="fk_nocqw9ps044vh3llgrfjmb2in" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-58">
+        <addForeignKeyConstraint baseColumnNames="id_individual" baseTableName="useraccounts"
+                                 constraintName="fk_ojynn85ad5isym0lvq932ccn2" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="individuals"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-59">
+        <addForeignKeyConstraint baseColumnNames="id_useraccount" baseTableName="locationevents"
+                                 constraintName="fk_p7scmdqhbyyqbnq4b3v8j09ro" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-60">
+        <addForeignKeyConstraint baseColumnNames="id_location" baseTableName="locationevents"
+                                 constraintName="fk_ql6yec5x53dkww2756bhtoolu" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="locations"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-61">
+        <addForeignKeyConstraint baseColumnNames="id_accountsecurityprofile" baseTableName="securityprofiles"
+                                 constraintName="fk_securityprofile_accountsecurityprofile" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="accountsecurityprofiles"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-62">
+        <addForeignKeyConstraint baseColumnNames="id_passwordsecurityprofile" baseTableName="securityprofiles"
+                                 constraintName="fk_securityprofile_passwordsecurityprofile" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="passwordsecurityprofiles"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-63">
+        <addForeignKeyConstraint baseColumnNames="id_useraccount" baseTableName="trip"
+                                 constraintName="fk_trip_useraccount_author" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-64">
+        <addForeignKeyConstraint baseColumnNames="id_trip" baseTableName="tripdays"
+                                 constraintName="fk_tripday_trip_trip" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="trip"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-65">
+        <addForeignKeyConstraint baseColumnNames="id_location" baseTableName="tripdaylocations"
+                                 constraintName="fk_tripdaylocation_location_location" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="locations"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-66">
+        <addForeignKeyConstraint baseColumnNames="id_tripday" baseTableName="tripdaylocations"
+                                 constraintName="fk_tripdaylocation_tripday_tripday" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="tripdays"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-67">
+        <addForeignKeyConstraint baseColumnNames="id_tripstep" baseTableName="tripdirections"
+                                 constraintName="fk_tripdirection_tripstep_tripstep" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="tripsteps"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-68">
+        <addForeignKeyConstraint baseColumnNames="id_endlocation" baseTableName="tripsteps"
+                                 constraintName="fk_tripstep_location_endlocation" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="locations"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-69">
+        <addForeignKeyConstraint baseColumnNames="id_startlocation" baseTableName="tripsteps"
+                                 constraintName="fk_tripstep_location_startlocation" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="locations"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-70">
+        <addForeignKeyConstraint baseColumnNames="id_tripday" baseTableName="tripsteps"
+                                 constraintName="fk_tripstep_tripday_tripday" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="tripdays"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-71">
+        <addForeignKeyConstraint baseColumnNames="id_usergroup" baseTableName="useraccounts"
+                                 constraintName="fk_useraccount_usergroup_usergroup" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="usergroups"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416149024683-72">
+        <addForeignKeyConstraint baseColumnNames="id_securityprofile" baseTableName="usergroups"
+                                 constraintName="fk_usergroup_securityprofile_securityprofile" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="securityprofiles"/>
+    </changeSet>
+
 
     <changeSet id="DATALOAD-001" author="kkicinger">
-        <loadData tableName="accountsecurityprofiles" schemaName="${schemaName}" file="data/accountsecurityprofiles.csv" separator="," />
-        <loadData tableName="passwordsecurityprofiles" schemaName="${schemaName}" file="data/passwordsecurityprofiles.csv" separator="," />
-        <loadData tableName="securityprofiles" schemaName="${schemaName}" file="data/securityprofiles.csv" separator="," />
-        <loadData tableName="individuals" schemaName="${schemaName}" file="data/individuals.csv" separator="," />
-        <loadData tableName="useraccounts" schemaName="${schemaName}" file="data/users.csv" separator="," />
-        <loadData tableName="locations" schemaName="${schemaName}" file="data/locations.csv" separator="," />
+        <!--        <loadData tableName="accountsecurityprofiles" schemaName="${schemaName}" file="data/accountsecurityprofiles.csv"
+                          separator=","/>
+                <loadData tableName="passwordsecurityprofiles" schemaName="${schemaName}"
+                          file="data/passwordsecurityprofiles.csv" separator=","/>
+                <loadData tableName="securityprofiles" schemaName="${schemaName}" file="data/securityprofiles.csv"
+                          separator=","/>-->
+        <loadData tableName="individuals" schemaName="${schemaName}" file="data/individuals.csv" separator=","/>
+        <loadData tableName="useraccounts" schemaName="${schemaName}" file="data/users.csv" separator=","/>
+        <loadData tableName="locations" schemaName="${schemaName}" file="data/locations.csv" separator=","/>
     </changeSet>
-    
+
 </databaseChangeLog>

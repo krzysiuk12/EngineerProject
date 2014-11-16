@@ -39,7 +39,7 @@ public class SecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 200, nullable = false)
     public String getName() {
         return name;
     }
@@ -48,7 +48,7 @@ public class SecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", length = 500)
     public String getDescription() {
         return description;
     }
@@ -84,7 +84,7 @@ public class SecurityProfile extends BaseObject {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", length = 50)
     public Status getStatus() {
         return status;
     }
@@ -93,7 +93,7 @@ public class SecurityProfile extends BaseObject {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "passwordSecurityProfileId", nullable = true)
+    @JoinColumn(name = "id_passwordsecurityprofile", foreignKey = @ForeignKey(name = "FK_securityprofile_passwordsecurityprofile"), nullable = true)
     public PasswordSecurityProfile getPasswordSecurityProfile() {
         return passwordSecurityProfile;
     }
@@ -102,7 +102,7 @@ public class SecurityProfile extends BaseObject {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "accountSecurityProfileId", nullable = true)
+    @JoinColumn(name = "id_accountsecurityprofile", foreignKey = @ForeignKey(name = "FK_securityprofile_accountsecurityprofile"), nullable = true)
     public AccountSecurityProfile getAccountSecurityProfile() {
         return accountSecurityProfile;
     }

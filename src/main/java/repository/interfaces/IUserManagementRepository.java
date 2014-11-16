@@ -1,5 +1,6 @@
 package repository.interfaces;
 
+import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface IUserManagementRepository {
 
     public void saveOrUpdateUserAccount(UserAccount account);
+    public void saveOrUpdateIndividual(Individual individual);
 
     public UserAccount getUserAccountById(Long id);
     public UserAccount getUserAccountByIdAllData(Long id);

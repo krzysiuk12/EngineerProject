@@ -33,7 +33,6 @@ public class GoogleDirectionsService implements IGoogleDirectionsService {
                 pathBuilder.addWaypointsParam(waypoints);
             }
             RestTemplate restTemplate = new RestTemplate();
-            //restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             return restTemplate.getForObject(pathBuilder.build(), GoogleDirectionsSerializer.class);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

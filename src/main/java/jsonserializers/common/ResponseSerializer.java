@@ -1,5 +1,9 @@
 package jsonserializers.common;
 
+import exceptions.ErrorMessages;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -8,7 +12,7 @@ import java.util.List;
 public class ResponseSerializer<T> {
 
     private ResponseStatus status;
-    private String errorMessage;
+    private List<ErrorMessages> errorMessage;
     private T result;
 
     public ResponseSerializer() {
@@ -18,12 +22,17 @@ public class ResponseSerializer<T> {
         this.result = result;
     }
 
-    public ResponseSerializer(ResponseStatus status, String errorMessage) {
+    public ResponseSerializer(ResponseStatus status, ErrorMessages errorMessage) {
+        this.status = status;
+        this.errorMessage = new ArrayList<>(Arrays.asList(errorMessage));
+    }
+
+    public ResponseSerializer(ResponseStatus status, List<ErrorMessages> errorMessage) {
         this.status = status;
         this.errorMessage = errorMessage;
     }
 
-    public ResponseSerializer(ResponseStatus status, String errorMessage, T result) {
+    public ResponseSerializer(ResponseStatus status, List<ErrorMessages> errorMessage, T result) {
         this.status = status;
         this.errorMessage = errorMessage;
         this.result = result;
@@ -37,11 +46,11 @@ public class ResponseSerializer<T> {
         this.status = status;
     }
 
-    public String getErrorMessage() {
+    public List<ErrorMessages> getErrorMessage() {
         return errorMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
+    public void setErrorMessage(List<ErrorMessages> errorMessage) {
         this.errorMessage = errorMessage;
     }
 

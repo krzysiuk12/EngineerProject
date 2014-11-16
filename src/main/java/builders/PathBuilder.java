@@ -1,5 +1,7 @@
 package builders;
 
+import tools.ConfigurationTools;
+
 /**
  * Created by Krzysiu on 2014-09-14.
  */
@@ -34,4 +36,12 @@ public class PathBuilder {
     public String build() {
         return pathBuilder.toString();
     }
+
+    public static final String getUserAccountActivationPath(Long id) {
+        StringBuilder builder = new StringBuilder(ConfigurationTools.MAIN_PAGE);
+        builder.append("/users/").append(id);
+        builder.append("/activation");
+        return builder.toString();
+    }
+
 }

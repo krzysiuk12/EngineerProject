@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ILocationManagementService {
 
-    public void saveLocation(Location location);
+    public void saveLocation(Location location) throws Exception;
 
     public Location getLocationById(Long id);
     public Location getLocationByIdAllData(Long id);

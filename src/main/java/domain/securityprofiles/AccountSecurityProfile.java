@@ -34,7 +34,7 @@ public class AccountSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 200, nullable = false)
     public String getName() {
         return name;
     }
@@ -43,7 +43,7 @@ public class AccountSecurityProfile extends BaseObject {
     }
 
     @Basic
-    @Column(name = "maximumLoginLength", nullable = false)
+    @Column(name = "maximumLoginLength", length = 500, nullable = false)
     public int getMaximumLoginLength() {
         return maximumLoginLength;
     }

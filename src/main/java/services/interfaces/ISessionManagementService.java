@@ -5,8 +5,8 @@ package services.interfaces;
  */
 public interface ISessionManagementService {
 
-    public String loginUser(String login, String password) throws Exception;
+    public String loginUser(String login, String password, String ipAddress, String sessionId) throws Exception;
 
-    public void logoutUser(String token);
+    public void logoutUser(String token, String ipAddress, String sessionId) throws Exception;
 
 }

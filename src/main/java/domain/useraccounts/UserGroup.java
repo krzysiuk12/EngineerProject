@@ -28,7 +28,7 @@ public class UserGroup extends BaseObject {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "securityProfileId", nullable = false)
+    @JoinColumn(name = "id_securityprofile", foreignKey = @ForeignKey(name = "FK_usergroup_securityprofile_securityprofile"), nullable = false)
     public SecurityProfile getSecurityProfile() {
         return securityProfile;
     }
@@ -37,7 +37,7 @@ public class UserGroup extends BaseObject {
     }
 
     @Basic
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 100, nullable = false)
     public String getName() {
         return name;
     }
@@ -46,7 +46,7 @@ public class UserGroup extends BaseObject {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", length = 500)
     public String getDescription() {
         return description;
     }

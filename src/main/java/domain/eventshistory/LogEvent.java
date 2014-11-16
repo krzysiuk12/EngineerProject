@@ -44,7 +44,7 @@ public class LogEvent extends BaseObject {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "userAccountId", nullable = false)
+    @JoinColumn(name = "id_useraccount", nullable = false)
     public UserAccount getUserAccount() {
         return userAccount;
     }
@@ -62,7 +62,7 @@ public class LogEvent extends BaseObject {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", length = 50, nullable = false)
     public Type getType() {
         return type;
     }

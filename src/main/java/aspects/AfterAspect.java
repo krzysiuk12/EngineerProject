@@ -1,11 +1,11 @@
 package aspects;
 
+import exceptions.ErrorMessages;
 import exceptions.FormValidationError;
 import jsonserializers.common.ResponseSerializer;
 import jsonserializers.common.ResponseStatus;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
@@ -31,9 +31,9 @@ public class AfterAspect {
         try {
             return joinPoint.proceed();
         } catch (FormValidationError ex) {
-            return new ResponseSerializer<>(ResponseStatus.VALIDATION_ERROR, ex.getMessage());
+            return new ResponseSerializer<>(ResponseStatus.VALIDATION_ERROR, ex.getErrorMessages());
         } catch (Throwable ex) {
-            return new ResponseSerializer<>(ResponseStatus.UNKNOWN_ERROR, ex.getMessage());
+            return new ResponseSerializer<>(ResponseStatus.UNKNOWN_ERROR, ErrorMessages.SERVER_SIDE_ERROR);
         }
     }
 

@@ -28,7 +28,7 @@ public abstract class UserVersionedBaseObject extends VersionedBaseObject implem
 
     @Override
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "createdByAccountId", nullable = false)
+    @JoinColumn(name = "createdByAccountId")
     public UserAccount getCreatedByAccount() {
         return createdByAccount;
     }
@@ -39,7 +39,7 @@ public abstract class UserVersionedBaseObject extends VersionedBaseObject implem
 
     @Override
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "lastModificationById", nullable = false)
+    @JoinColumn(name = "lastModificationById")
     public UserAccount getLastModificationByAccount() {
         return lastModificationByAccount;
     }

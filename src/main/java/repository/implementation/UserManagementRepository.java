@@ -1,5 +1,6 @@
 package repository.implementation;
 
+import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -15,16 +16,21 @@ import java.util.List;
  * Created by Krzysiu on 2014-06-09.
  */
 @Repository
-public class UserManagementHibernateRepository extends BaseHibernateRepository implements IUserManagementRepository {
+public class UserManagementRepository extends BaseHibernateRepository implements IUserManagementRepository {
 
     @Autowired
-    public UserManagementHibernateRepository(SessionFactory sessionFactory) {
+    public UserManagementRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
     @Override
     public void saveOrUpdateUserAccount(UserAccount account) {
-        getCurrentSession().save(account);
+        getCurrentSession().saveOrUpdate(account);
+    }
+
+    @Override
+    public void saveOrUpdateIndividual(Individual individual) {
+        getCurrentSession().saveOrUpdate(individual);
     }
 
     @Override

@@ -35,7 +35,7 @@ public class Comment extends BaseObject {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "useraccountid", nullable = false)
+    @JoinColumn(name = "id_useraccount", nullable = false)
     public UserAccount getUserAccount() {
         return userAccount;
     }
@@ -44,7 +44,7 @@ public class Comment extends BaseObject {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "locationid", nullable = false)
+    @JoinColumn(name = "id_location", nullable = false)
     public Location getLocation() {
         return location;
     }

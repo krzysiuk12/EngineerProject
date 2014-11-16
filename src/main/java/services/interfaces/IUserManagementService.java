@@ -1,5 +1,6 @@
 package services.interfaces;
 
+import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
 
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.List;
  */
 public interface IUserManagementService {
 
-    public void saveUserAccount(UserAccount account);
+    public void saveUserAccount(UserAccount account) throws Exception;
+    public void saveIndividual(Individual individual) throws Exception;
 
     public UserAccount getUserAccountById(Long id);
     public UserAccount getUserAccountByIdAllData(Long id);

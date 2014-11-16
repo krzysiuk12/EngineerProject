@@ -3,41 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:database.properties</value>
-                <value>classpath:hibernate.properties</value>
-                <value>classpath:javaMail.properties</value>
-            </list>
-        </property>
-    </bean>
-
     <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
-    </bean>
-
-    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
-        <property name="dataSource" ref="dataSource" />
-        <property name="changeLog" value="classpath:db-changelog.xml" />
-        <property name="contexts" value="test, production" />
-        <property name="changeLogParameters">
-            <map>
-                <entry key="schemaName" value="${jdbc.schemaName}" />
-                <entry key="shortVarchar" value="varchar(100)" />
-                <entry key="normalVarchar" value="varchar(255)" />
-                <entry key="longVarchar" value="varchar(500)" />
-                <entry key="double" value="float8" />
-                <entry key="int" value="int4" />
-                <entry key="long" value="int8" />
-                <entry key="dateType" value="timestamp with time zone" />
-                <entry key="enumeratedString" value="varchar(25)" />
-                <entry key="boolean" value="bool" />
-            </map>
-        </property>
     </bean>
 
     <bean name="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -57,6 +27,12 @@
                 <value>domain.eventshistory.LocationEvent</value>
                 <value>domain.eventshistory.UserAccountStatusEvent</value>
                 <value>domain.eventshistory.LogEvent</value>
+                <value>domain.trips.Coordinate</value>
+                <value>domain.trips.Trip</value>
+                <value>domain.trips.TripDay</value>
+                <value>domain.trips.TripDayLocation</value>
+                <value>domain.trips.TripStep</value>
+                <value>domain.trips.TripDirection</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -74,4 +50,47 @@
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
+    <beans profile="default">
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="locations">
+                <list>
+                    <value>classpath:hibernate.properties</value>
+                    <value>classpath:database.properties</value>
+                    <value>classpath:javaMail.properties</value>
+                </list>
+            </property>
+        </bean>
+        <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+            <property name="dataSource" ref="dataSource" />
+            <property name="changeLog" value="classpath:db-changelog.xml" />
+            <property name="contexts" value="test, production" />
+            <property name="changeLogParameters">
+                <map>
+                    <entry key="schemaName" value="${jdbc.schemaName}" />
+                    <entry key="shortVarchar" value="varchar(100)" />
+                    <entry key="normalVarchar" value="varchar(255)" />
+                    <entry key="longVarchar" value="varchar(500)" />
+                    <entry key="double" value="float8" />
+                    <entry key="int" value="int4" />
+                    <entry key="long" value="int8" />
+                    <entry key="dateType" value="timestamp with time zone" />
+                    <entry key="enumeratedString" value="varchar(25)" />
+                    <entry key="boolean" value="bool" />
+                </map>
+            </property>
+        </bean>
+    </beans>
+
+    <beans profile="test">
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="locations">
+                <list>
+                    <value>classpath:hibernateTest.properties</value>
+                    <value>classpath:databaseTest.properties</value>
+                    <value>classpath:javaMail.properties</value>
+                </list>
+            </property>
+        </bean>
+    </beans>
 </beans>

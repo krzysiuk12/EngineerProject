@@ -1,6 +1,8 @@
 package services.implementation;
 
+import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
+import exceptions.ErrorMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,35 +10,40 @@ import repository.interfaces.IUserManagementRepository;
 import services.interfaces.IMailSenderService;
 import services.interfaces.IUserManagementService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Krzysiu on 2014-06-09.
  */
 @Service
-public class UserManagementSpringService implements IUserManagementService {
+public class UserManagementService implements IUserManagementService {
 
     private IUserManagementRepository userManagementRepository;
     private IMailSenderService mailSenderService;
 
     @Autowired
-    public UserManagementSpringService(IUserManagementRepository userManagementRepository, IMailSenderService mailSenderService) {
+    public UserManagementService(IUserManagementRepository userManagementRepository, IMailSenderService mailSenderService)  {
         this.userManagementRepository = userManagementRepository;
         this.mailSenderService = mailSenderService;
     }
 
     @Override
     @Transactional
-    public void saveUserAccount(UserAccount account) {
+    public void saveUserAccount(UserAccount account) throws Exception {
         userManagementRepository.saveOrUpdateUserAccount(account);
+    }
+
+    @Override
+    @Transactional
+    public void saveIndividual(Individual individual) throws Exception {
+        userManagementRepository.saveOrUpdateIndividual(individual);
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserAccount getUserAccountById(Long id) {
-        UserAccount userAccount = userManagementRepository.getUserAccountById(id);
-        mailSenderService.sendAccountActivationMessage(userAccount);
-        return userAccount;
+        return userManagementRepository.getUserAccountById(id);
     }
 
     @Override
@@ -81,5 +88,34 @@ public class UserManagementSpringService implements IUserManagementService {
         return userAccount != null && userAccount.getStatus() == UserAccount.Status.ACTIVE && userAccount.getLogin().equals("admin");
     }
 
+    private List<ErrorMessages> validateUserAccount(UserAccount userAccount) {
+        List<ErrorMessages> errorMessages = new ArrayList<>();
+        if(userAccount.getLogin() == null) {
+            errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
+        }
+        if(userAccount.getPassword() == null) {
+            errorMessages.add(ErrorMessages.INVALID_USER_PASSWORD);
+        }
+        if(userAccount.getStatus() == null) {
+            errorMessages.add(ErrorMessages.INVALID_USER_STATUS);
+        }
+        if(userAccount.getToken() == null) {
+            errorMessages.add(ErrorMessages.INVALID_USER_TOKEN);
+        }
+        if(userAccount.getEmail() == null) {
+            errorMessages.add(ErrorMessages.INVALID_USER_EMAIL);
+        }
+        return errorMessages;
+    }
 
+    private List<ErrorMessages> validateIndividual(Individual individual) {
+        List<ErrorMessages> errorMessages = new ArrayList<>();
+        if(individual.getFirstName() == null) {
+            errorMessages.add(ErrorMessages.INVALID_INDIVIDUAL_FIRST_NAME);
+        }
+        if(individual.getLastName() == null) {
+            errorMessages.add(ErrorMessages.INVALID_INDIVIDUAL_LAST_NAME);
+        }
+        return errorMessages;
+    }
 }

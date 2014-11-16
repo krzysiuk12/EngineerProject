@@ -54,7 +54,7 @@ public class Location extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", length = 500)
     public String getDescription() {
         return description;
     }
@@ -63,7 +63,7 @@ public class Location extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 200, nullable = false)
     public String getName() {
         return name;
     }

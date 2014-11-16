@@ -63,7 +63,6 @@ public class GoogleGeocodingService implements IGoogleGeocodingService {
                 pathBuilder.addComponentsParam(components);
             }
             RestTemplate restTemplate = new RestTemplate();
-            //restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             return restTemplate.getForObject(pathBuilder.build(), GoogleGeocodingSerializer.class);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -93,8 +92,8 @@ public class GoogleGeocodingService implements IGoogleGeocodingService {
                     location.getAddress().setCountry(addressComponent.getLong_name());
                 }
             }
-            location.setLatitude(serializer.getResults().get(0).getGeometry().getLocation().getLat());
-            location.setLongitude(serializer.getResults().get(0).getGeometry().getLocation().getLng());
+            location.setLatitude(serializer.getResults().get(0).getGeometry().getLocation().getLatitude());
+            location.setLongitude(serializer.getResults().get(0).getGeometry().getLocation().getLongitude());
             location.setName(aIC.getEstablishment() != null ? aIC.getEstablishment() : location.getAddress().getCity());
             location.setDescription(aIC.getEstablishment() != null ? aIC.getEstablishment() : location.getAddress().getCity());
             location.getAddress().setStreet(aIC.getRoute() + (aIC.getStreetNumber() != null ? " " + aIC.getStreetNumber() : ""));
