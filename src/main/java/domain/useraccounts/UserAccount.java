@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "useraccounts")
-@JsonIgnoreProperties(ignoreUnknown = true, value = {"token", "userGroup"})
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "token", "userGroup"})
 public class UserAccount extends VersionedBaseObject {
 
     public enum Status {
@@ -40,7 +40,7 @@ public class UserAccount extends VersionedBaseObject {
     @Override
     @Id
     @GeneratedValue(generator = "PK_Sequence_UserAccounts", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "PK_Sequence_UserAccounts", sequenceName = "PK_Sequence_UserAccounts", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "PK_Sequence_UserAccounts", sequenceName = "PK_Sequence_UserAccounts", initialValue = 5, allocationSize = 1)
     public Long getId() {
         return id;
     }
@@ -118,7 +118,7 @@ public class UserAccount extends VersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "token", nullable = false)
+    @Column(name = "token", length = 20)
     public String getToken() {
         return token;
     }

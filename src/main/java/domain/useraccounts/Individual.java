@@ -34,7 +34,7 @@ public class Individual extends BaseObject {
     @Override
     @Id
     @GeneratedValue(generator = "PK_Sequence_Individuals", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "PK_Sequence_Individuals", sequenceName = "PK_Sequence_Individuals", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "PK_Sequence_Individuals", sequenceName = "PK_Sequence_Individuals", initialValue = 5, allocationSize = 1)
     public Long getId() {
         return super.getId();
     }

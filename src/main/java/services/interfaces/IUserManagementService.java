@@ -13,6 +13,8 @@ public interface IUserManagementService {
     public void saveUserAccount(UserAccount account) throws Exception;
     public void saveIndividual(Individual individual) throws Exception;
 
+    public void addUserAccount(String login, String password, String email, String firstName, String lastName) throws Exception;
+
     public UserAccount getUserAccountById(Long id);
     public UserAccount getUserAccountByIdAllData(Long id);
     public UserAccount getUserAccountByLogin(String login);

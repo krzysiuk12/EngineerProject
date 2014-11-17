@@ -53,7 +53,7 @@ public class SessionManagementService implements ISessionManagementService {
     @Transactional
     public void logoutUser(String token, String ipAddress, String sessionId) throws Exception {
         UserAccount userAccount = userManagementService.getUserAccountByToken(token);
-        userAccount.setToken(null);
+        // userAccount.setToken(null);
         userManagementService.saveUserAccount(userAccount);
         eventsService.saveLogoutEvent(userAccount, sessionId, ipAddress);
     }

@@ -1,22 +1,21 @@
 package controllers.rest;
 
 import domain.locations.Location;
+import jsonserializers.common.ResponseSerializer;
 import jsonserializers.google.directions.GoogleDirectionsSerializer;
 import jsonserializers.google.geocoding.GoogleGeocodingSerializer;
+import jsonserializers.google.request.GoogleGeocodeSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import services.interfaces.IGoogleDirectionsService;
 import services.interfaces.IGoogleGeocodingService;
 
 /**
  * Created by Krzysztof Kicinger on 2014-11-15.
  */
-@Controller(value = "googleRestController")
-@RequestMapping(value = "/google")
+@Controller
+@RequestMapping(value = "/googleapi")
 public class GoogleRestController {
 
     private IGoogleGeocodingService googleGeocodingService;
@@ -40,5 +39,19 @@ public class GoogleRestController {
         destination.setLongitude(18.850237);
         GoogleDirectionsSerializer directionsSerializer = googleDirectionsService.getTripDescription(origin, destination, null, null, null);
         System.out.println("HERE");
+    }
+
+    @RequestMapping(value = "/geocode/location", method = RequestMethod.POST)
+    public @ResponseBody
+    ResponseSerializer<Location> getLocationByAddress(@RequestHeader(value = "authorization") String token, @RequestBody GoogleGeocodeSerializer data) throws Exception {
+        GoogleGeocodingSerializer geoSerializer = googleGeocodingService.getLocationDescription(data.getAddress(), data.getRegion(), data.getComponents());
+        return new ResponseSerializer<>(googleGeocodingService.deserializeLocationDescription(geoSerializer));
+    }
+
+    @RequestMapping(value = "/geocode/coordinates", method = RequestMethod.POST)
+    public @ResponseBody
+    ResponseSerializer<Location> getCoordniatesByAddress(@RequestHeader(value = "authorization") String token, @RequestBody GoogleGeocodeSerializer data) throws Exception {
+        GoogleGeocodingSerializer geoSerializer = googleGeocodingService.getLocationDescription(data.getAddress(), data.getRegion(), data.getComponents());
+        return new ResponseSerializer<>(googleGeocodingService.deserializeLocationForLatLng(geoSerializer));
     }
 }

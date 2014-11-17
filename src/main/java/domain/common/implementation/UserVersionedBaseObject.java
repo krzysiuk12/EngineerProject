@@ -58,4 +58,15 @@ public abstract class UserVersionedBaseObject extends VersionedBaseObject implem
     public void setRemovedByAccount(UserAccount removedByAccount) {
         this.removedByAccount = removedByAccount;
     }
+
+    @Transient
+    public void updateInformation(UserAccount executor) {
+        if(getId() == null) {
+            setCreatedByAccount(executor);
+            setCreationDate(new Date());
+        }
+        setLastModificationByAccount(executor);
+        setLastModificationDate(new Date());
+    }
+
 }

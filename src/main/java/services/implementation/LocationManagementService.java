@@ -2,12 +2,15 @@ package services.implementation;
 
 import domain.locations.Address;
 import domain.locations.Location;
+import domain.useraccounts.UserAccount;
 import exceptions.ErrorMessages;
+import exceptions.FormValidationError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.interfaces.ILocationManagementRepository;
 import services.interfaces.ILocationManagementService;
+import services.interfaces.ILoggerService;
 import services.interfaces.IUserManagementService;
 
 import java.util.ArrayList;
@@ -23,17 +26,49 @@ public class LocationManagementService implements ILocationManagementService {
 
     private ILocationManagementRepository locationManagementRepository;
     private IUserManagementService userManagementService;
+    private ILoggerService loggerService;
 
     @Autowired
-    public LocationManagementService(ILocationManagementRepository locationManagementRepository, IUserManagementService userManagementService) {
+    public LocationManagementService(ILocationManagementRepository locationManagementRepository, IUserManagementService userManagementService, ILoggerService loggerService) {
         this.locationManagementRepository = locationManagementRepository;
         this.userManagementService = userManagementService;
+        this.loggerService = loggerService;
     }
 
     @Override
     @Transactional
     public void saveLocation(Location location) throws Exception {
-        locationManagementRepository.saveOrUpdateLocation(location);
+        try {
+            List<ErrorMessages> errorMessages = validateLocation(location);
+            if (!errorMessages.isEmpty()) {
+                throw new FormValidationError(errorMessages);
+            }
+            locationManagementRepository.saveOrUpdateLocation(location);
+        } catch (Exception ex) {
+            loggerService.error("Failed to save Location: " + ex.getMessage());
+            throw ex;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void addNewLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception {
+        try {
+            UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
+            Location location = createLocation(name, latitude, longitude, false, createAddress(addressCity, addressCountry), createdBy);
+            saveLocation(location);
+        } catch(Exception ex) {
+            loggerService.error("Failed to addNewLocation:" + ex.getMessage());
+            throw ex;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void addNewPrivateLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception {
+        UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
+        Location location = createLocation(name, latitude, longitude, true, createAddress(addressCity, addressCountry), createdBy);
+        saveLocation(location);
     }
 
     @Override
@@ -74,7 +109,10 @@ public class LocationManagementService implements ILocationManagementService {
 
     @Override
     @Transactional
-    public Location changeLocationStatus(Long locationId, Location.Status status) {
+    public Location changeLocationStatus(Long locationId, Location.Status status) throws Exception {
+        if(status == null) {
+            throw new FormValidationError(ErrorMessages.INVALID_LOCATION_CURRENT_STATUS);
+        }
         Location location = getLocationByIdAllData(locationId);
         location.setStatus(status);
         locationManagementRepository.saveOrUpdateLocation(location);
@@ -88,7 +126,7 @@ public class LocationManagementService implements ILocationManagementService {
     }
 
     private List<ErrorMessages> validateLocation(Location location) {
-        List<ErrorMessages> errorMessages = new ArrayList<>();
+        List<ErrorMessages> errorMessages = new ArrayList<ErrorMessages>();
         if(location.getName() == null) {
             errorMessages.add(ErrorMessages.INVALID_LOCATION_NAME);
         }
@@ -98,11 +136,14 @@ public class LocationManagementService implements ILocationManagementService {
         if(location.getLongitude()) {
             errorMessages.add(ErrorMessages.INVALID_LOCATION_LONGITUDE);
         }*/
+        if(location.getStatus() == null) {
+            errorMessages.add(ErrorMessages.INVALID_LOCATION_STATUS);
+        }
         if(location.getAddress() == null) {
             errorMessages.add(ErrorMessages.INVALID_LOCATION_ADDRESS);
         }
-        if(location.getStatus() == null) {
-            errorMessages.add(ErrorMessages.INVALID_LOCATION_STATUS);
+        if(location.getAddress() != null) {
+            errorMessages.addAll(validateAddress(location.getAddress()));
         }
         return errorMessages;
     }
@@ -117,4 +158,24 @@ public class LocationManagementService implements ILocationManagementService {
         }
         return errorMessages;
     }
+
+    protected Address createAddress(String city, String country) {
+        Address address = new Address();
+        address.setCity(city);
+        address.setCountry(country);
+        return address;
+    }
+
+    private Location createLocation(String name, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy) {
+        Location location = new Location();
+        location.setName(name);
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        location.setStatus(Location.Status.AVAILABLE);
+        location.setUsersPrivate(usersPrivate);
+        location.setAddress(address);
+        location.updateInformation(createdBy);
+        return location;
+    }
+
 }

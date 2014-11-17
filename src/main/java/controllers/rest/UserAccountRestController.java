@@ -5,6 +5,7 @@ import annotations.NotAuthorized;
 import domain.locations.Location;
 import domain.useraccounts.UserAccount;
 import jsonserializers.common.ResponseSerializer;
+import jsonserializers.users.UserRegistrationSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by Krzysiu on 2014-06-12.
  */
-@Controller(value = "userAccountRestController")
+@Controller
 @RequestMapping(value = "/users")
 public class UserAccountRestController {
 
@@ -31,15 +32,15 @@ public class UserAccountRestController {
 
     @NotAuthorized
     @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody ResponseSerializer addNewUserAccount(@RequestBody UserAccount data) throws Exception {
-        //TODO: Create Service and repository method
-        return null;
+    public @ResponseBody ResponseSerializer addNewUserAccount(@RequestBody UserRegistrationSerializer data) throws Exception {
+        userManagementService.addUserAccount(data.getLogin(), data.getPassword(), data.getEmail(), data.getFirstName(), data.getLastName());
+        return new ResponseSerializer();
     }
 
     @AdminAuthorized
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public @ResponseBody ResponseSerializer<UserAccount> getUserAccountById(@RequestHeader(value = "authorization") String token, @PathVariable("userId") Long userId) throws Exception {
-        UserAccount userAccount = userManagementService.getUserAccountById(userId);
+        UserAccount userAccount =  userManagementService.getUserAccountById(userId);
         userAccount.setIndividual(null);
         return new ResponseSerializer(userAccount);
     }
@@ -56,20 +57,20 @@ public class UserAccountRestController {
         return new ResponseSerializer(userManagementService.getAllUserAccounts());
     }
 
-    @RequestMapping(value = "/users/my", method = RequestMethod.GET)
+    @RequestMapping(value = "/my", method = RequestMethod.GET)
     public @ResponseBody ResponseSerializer<UserAccount> getMyUserAccountData(@RequestHeader(value = "authorization") String token) throws Exception {
-        UserAccount userAccount = userManagementService.getUserAccountByToken(token);
+        UserAccount userAccount =  userManagementService.getUserAccountByToken(token);
         userAccount.setIndividual(null);
         return new ResponseSerializer(userAccount);
     }
 
-    @RequestMapping(value = "/users/my/all", method = RequestMethod.GET)
-    public @ResponseBody ResponseSerializer<UserAccount> getMyUserAccountAllData(@RequestHeader(value = "authorization") String token, @PathVariable("userId") Long userId) throws Exception {
-        return new ResponseSerializer(userManagementService.getUserAccountByIdAllData(userId));
+    @RequestMapping(value = "/my/all", method = RequestMethod.GET)
+    public @ResponseBody ResponseSerializer<UserAccount> getMyUserAccountAllData(@RequestHeader(value = "authorization") String token) throws Exception {
+        return new ResponseSerializer(userManagementService.getUserAccountByIdAllData(userManagementService.getUserAccountByToken(token).getId()));
     }
 
-    @RequestMapping(value = "/{userId}/locations", method = RequestMethod.GET)
-    public @ResponseBody ResponseSerializer<List<Location>> getAllUsersPrivateLocations(@RequestHeader(value = "authorization") String token, @PathVariable("userId") Long userId) throws Exception {
-        return new ResponseSerializer(locationManagementService.getAllUsersPrivateLocations(userId));
+    @RequestMapping(value = "/my/locations", method = RequestMethod.GET)
+    public @ResponseBody ResponseSerializer<List<Location>> getAllUsersPrivateLocations(@RequestHeader(value = "authorization") String token) throws Exception {
+        return new ResponseSerializer(locationManagementService.getAllUsersPrivateLocations(userManagementService.getUserAccountByToken(token).getId()));
     }
 }

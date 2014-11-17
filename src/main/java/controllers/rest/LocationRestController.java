@@ -2,6 +2,8 @@ package controllers.rest;
 
 import domain.locations.Location;
 import jsonserializers.common.ResponseSerializer;
+import jsonserializers.locations.LocationSerializer;
+import jsonserializers.locations.LocationStatusChangeSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +14,7 @@ import java.util.List;
 /**
  * Created by Krzysiu on 2014-05-25.
  */
-@Controller(value = "locationRestController")
+@Controller
 @RequestMapping("/locations")
 public class LocationRestController {
 
@@ -23,6 +25,27 @@ public class LocationRestController {
         this.locationManagementService = locationManagementService;
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public
+    @ResponseBody
+    ResponseSerializer addNewLocation(@RequestHeader(value = "authorization") String token, @RequestBody LocationSerializer data) throws Exception {
+        try {
+            locationManagementService.addNewLocation(data.getName(), data.getLongitude(), data.getLatitude(), data.getAddressCity(), data.getAddressCountry(), token);
+            return new ResponseSerializer();
+        } catch(Exception ex) {
+            System.out.println(ex);
+            throw ex;
+        }
+    }
+
+    @RequestMapping(value = "/private", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    ResponseSerializer addNewPrivateLocation(@RequestHeader(value = "authorization") String token, @RequestBody LocationSerializer data) throws Exception {
+        locationManagementService.addNewPrivateLocation(data.getName(), data.getLongitude(), data.getLatitude(), data.getAddressCity(), data.getAddressCountry(), token);
+        return new ResponseSerializer();
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public
     @ResponseBody
@@ -30,19 +53,13 @@ public class LocationRestController {
         return new ResponseSerializer(locationManagementService.getAllLocations());
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public
-    @ResponseBody
-    ResponseSerializer addNewLocation(@RequestHeader(value = "authorization") String token, @RequestBody Location location) throws Exception {
-        locationManagementService.saveLocation(location);
-        return new ResponseSerializer();
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public
     @ResponseBody
     ResponseSerializer<Location> getLocationById(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) throws Exception {
-        return new ResponseSerializer(locationManagementService.getLocationById(id));
+        Location location = locationManagementService.getLocationById(id);
+        location.setCreatedByAccount(null);
+        return new ResponseSerializer(location);
     }
 
     @RequestMapping(value = "/{id}/all", method = RequestMethod.GET)
@@ -55,8 +72,10 @@ public class LocationRestController {
     @RequestMapping(value = "/{locationId}/status", method = RequestMethod.PUT)
     public
     @ResponseBody
-    Location changeLocationStatusById(@RequestHeader(value = "authorization") String token, @PathVariable("locationId") Long locationId, @RequestBody Location.Status status) throws Exception {
-        return locationManagementService.changeLocationStatus(locationId, status);
+    ResponseSerializer<Location> changeLocationStatusById(@RequestHeader(value = "authorization") String token, @PathVariable("locationId") Long locationId, @RequestBody LocationStatusChangeSerializer locationStatusChangeSerializer) throws Exception {
+        Location location = locationManagementService.changeLocationStatus(locationId, locationStatusChangeSerializer.getCurrentStatus());
+        location.setCreatedByAccount(null);
+        return new ResponseSerializer<>(location);
     }
 
     @RequestMapping(value = "/{locationId}", method = RequestMethod.PUT)
@@ -70,7 +89,7 @@ public class LocationRestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public
     @ResponseBody
-    ResponseSerializer deleteLocationById(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) {
+    ResponseSerializer deleteLocationById(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) throws Exception {
         locationManagementService.changeLocationStatus(id, Location.Status.REMOVED);
         return new ResponseSerializer();
     }

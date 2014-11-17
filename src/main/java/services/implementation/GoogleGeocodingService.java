@@ -1,7 +1,13 @@
 package services.implementation;
 
 import builders.GoogleGeocodingApiPathBuilder;
+import domain.locations.Address;
 import domain.locations.Location;
+import exceptions.ErrorMessages;
+import exceptions.FormValidationError;
+import jsonserializers.google.geocoding.GoogleGeocodingAddressComponent;
+import jsonserializers.google.geocoding.GoogleGeocodingAddressComponentType;
+import jsonserializers.google.geocoding.GoogleGeocodingResult;
 import jsonserializers.google.geocoding.GoogleGeocodingSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -55,6 +61,9 @@ public class GoogleGeocodingService implements IGoogleGeocodingService {
     @Override
     public GoogleGeocodingSerializer getLocationDescription(String address, String region, String components) throws Exception {
         try {
+            if(address == null) {
+                throw new FormValidationError(ErrorMessages.INVALID_GOOGLE_GEOCODE_ADDRESS);
+            }
             GoogleGeocodingApiPathBuilder pathBuilder = new GoogleGeocodingApiPathBuilder(address);
             if (region != null) {
                 pathBuilder.addRegionParam(region);
@@ -73,31 +82,31 @@ public class GoogleGeocodingService implements IGoogleGeocodingService {
     @Override
     public Location deserializeLocationDescription(GoogleGeocodingSerializer serializer) throws Exception {
         Location location = new Location();
-/*        location.setAddress(new Address());
+        location.setAddress(new Address());
         AddressInformationComponents aIC = new AddressInformationComponents();
         if (serializer != null && serializer.getResults() != null && !serializer.getResults().isEmpty()) {
-            Result result = serializer.getResults().get(0);
-            for (AddressComponent addressComponent : result.getAddress_components()) {
-                if (addressComponent.getTypes().contains(AddressComponentType.establishment)) {
+            GoogleGeocodingResult result = serializer.getResults().get(0);
+            for (GoogleGeocodingAddressComponent addressComponent : result.getAddress_components()) {
+                if (addressComponent.getTypes().contains(GoogleGeocodingAddressComponentType.establishment)) {
                     aIC.setEstablishment(addressComponent.getLong_name());
-                } else if (addressComponent.getTypes().contains(AddressComponentType.street_number)) {
+                } else if (addressComponent.getTypes().contains(GoogleGeocodingAddressComponentType.street_number)) {
                     aIC.setStreetNumber(addressComponent.getLong_name());
-                } else if (addressComponent.getTypes().contains(AddressComponentType.route)) {
+                } else if (addressComponent.getTypes().contains(GoogleGeocodingAddressComponentType.route)) {
                     aIC.setRoute(addressComponent.getLong_name());
-                } else if (addressComponent.getTypes().contains(AddressComponentType.locality)) {
+                } else if (addressComponent.getTypes().contains(GoogleGeocodingAddressComponentType.locality)) {
                     location.getAddress().setCity(addressComponent.getLong_name());
-                } else if (addressComponent.getTypes().contains(AddressComponentType.postal_code)) {
+                } else if (addressComponent.getTypes().contains(GoogleGeocodingAddressComponentType.postal_code)) {
                     location.getAddress().setPostalCode(addressComponent.getLong_name());
-                } else if (addressComponent.getTypes().contains(AddressComponentType.country)) {
+                } else if (addressComponent.getTypes().contains(GoogleGeocodingAddressComponentType.country)) {
                     location.getAddress().setCountry(addressComponent.getLong_name());
                 }
             }
-            location.setLatitude(serializer.getResults().get(0).getGeometry().getLocation().getLatitude());
-            location.setLongitude(serializer.getResults().get(0).getGeometry().getLocation().getLongitude());
+            location.setLatitude(serializer.getResults().get(0).getGeometry().getLocation().getLat());
+            location.setLongitude(serializer.getResults().get(0).getGeometry().getLocation().getLng());
             location.setName(aIC.getEstablishment() != null ? aIC.getEstablishment() : location.getAddress().getCity());
             location.setDescription(aIC.getEstablishment() != null ? aIC.getEstablishment() : location.getAddress().getCity());
             location.getAddress().setStreet(aIC.getRoute() + (aIC.getStreetNumber() != null ? " " + aIC.getStreetNumber() : ""));
-        }*/
+        }
         return location;
     }
 

@@ -16,27 +16,4 @@
     <context:component-scan base-package="controllers.rest" />
     <context:component-scan base-package="aspects" />
 
-    <!--<bean id="authorizationAspect" class="aspects.AuthorizationAspect">-->
-        <!--<constructor-arg name="userManagementService" ref="userManagementSpringService"/>-->
-    <!--</bean>-->
-
-<!--    <bean id="loggerAspect" class="aspects.LoggerAspect">
-        <constructor-arg name="loggerService" ref="loggerService" />
-    </bean>-->
-
-<!--    <aop:config>
-        <aop:pointcut id="authorizationPointcut" expression="!@annotation(annotations.NotAuthorized) and within(controllers.rest.*)" />
-        <aop:pointcut id="loggingPointcut" expression="within(controllers.rest.*)" />
-
-        <aop:aspect id="loggerAspect" ref="loggerAspect" order="1">
-            <aop:before method="beforeLogger" pointcut-ref="loggingPointcut"/>
-            <aop:after method="afterReturningLogger" pointcut-ref="loggingPointcut"/>
-        </aop:aspect>
-
-        <aop:aspect id="authorizationAspect" ref="authorizationAspect" order="2">
-            <aop:around method="authorize" pointcut-ref="authorizationPointcut" />
-        </aop:aspect>
-
-    </aop:config>-->
-
 </beans>
