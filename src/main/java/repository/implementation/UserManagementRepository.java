@@ -65,6 +65,20 @@ public class UserManagementRepository extends BaseHibernateRepository implements
         return getCurrentSession().createCriteria(UserAccount.class).list();
     }
 
+    @Override
+    public boolean validateUniqueLogin(String login) {
+        Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
+        criteria.add(Restrictions.eq("login", login));
+        return criteria.list().isEmpty();
+    }
+
+    @Override
+    public boolean validateUniqueEmail(String email) {
+        Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
+        criteria.add(Restrictions.eq("email", email));
+        return criteria.list().isEmpty();
+    }
+
     private UserAccount returnSingleOrNull(List<UserAccount> accounts) {
         return accounts != null && accounts.size() == 1 ? accounts.get(0) : null;
     }

@@ -12,6 +12,7 @@ import repository.interfaces.ILocationManagementRepository;
 import services.interfaces.ILocationManagementService;
 import services.interfaces.ILoggerService;
 import services.interfaces.IUserManagementService;
+import tools.ValidationTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,29 +39,19 @@ public class LocationManagementService implements ILocationManagementService {
     @Override
     @Transactional
     public void saveLocation(Location location) throws Exception {
-        try {
-            List<ErrorMessages> errorMessages = validateLocation(location);
-            if (!errorMessages.isEmpty()) {
-                throw new FormValidationError(errorMessages);
-            }
-            locationManagementRepository.saveOrUpdateLocation(location);
-        } catch (Exception ex) {
-            loggerService.error("Failed to save Location: " + ex.getMessage());
-            throw ex;
+        List<ErrorMessages> errorMessages = validateLocation(location);
+        if (!errorMessages.isEmpty()) {
+            throw new FormValidationError(errorMessages);
         }
+        locationManagementRepository.saveOrUpdateLocation(location);
     }
 
     @Override
     @Transactional
     public void addNewLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception {
-        try {
-            UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
-            Location location = createLocation(name, latitude, longitude, false, createAddress(addressCity, addressCountry), createdBy);
-            saveLocation(location);
-        } catch(Exception ex) {
-            loggerService.error("Failed to addNewLocation:" + ex.getMessage());
-            throw ex;
-        }
+        UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
+        Location location = createLocation(name, latitude, longitude, false, createAddress(addressCity, addressCountry), createdBy);
+        saveLocation(location);
     }
 
     @Override
@@ -75,7 +66,7 @@ public class LocationManagementService implements ILocationManagementService {
     @Transactional(readOnly = true)
     public Location getLocationById(Long id) {
         Location location = locationManagementRepository.getLocationById(id);
-        if(location != null) {
+        if (location != null) {
             location.setCreatedByAccount(null);
         }
         return location;
@@ -91,7 +82,7 @@ public class LocationManagementService implements ILocationManagementService {
     @Transactional(readOnly = true)
     public List<Location> getAllLocations() {
         List<Location> resultList = locationManagementRepository.getAllLocations();
-        for(Location location : resultList) {
+        for (Location location : resultList) {
             location.setCreatedByAccount(null);
         }
         return resultList;
@@ -101,7 +92,7 @@ public class LocationManagementService implements ILocationManagementService {
     @Transactional(readOnly = true)
     public List<Location> getAllUsersPrivateLocations(Long userId) {
         List<Location> resultList = locationManagementRepository.getAllUsersPrivateLocations(userId);
-        for(Location location : resultList) {
+        for (Location location : resultList) {
             location.setCreatedByAccount(null);
         }
         return resultList;
@@ -110,7 +101,7 @@ public class LocationManagementService implements ILocationManagementService {
     @Override
     @Transactional
     public Location changeLocationStatus(Long locationId, Location.Status status) throws Exception {
-        if(status == null) {
+        if (status == null) {
             throw new FormValidationError(ErrorMessages.INVALID_LOCATION_CURRENT_STATUS);
         }
         Location location = getLocationByIdAllData(locationId);
@@ -121,39 +112,61 @@ public class LocationManagementService implements ILocationManagementService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Location> getLocationInScope(double latitude, double longitude, double kmScope) {
+    public List<Location> getLocationInScope(double latitude, double longitude, double kmScope) throws Exception {
+        List<ErrorMessages> errorMessages = validateCoordinates(latitude, longitude);
+        if (!errorMessages.isEmpty()) {
+            throw new FormValidationError(errorMessages);
+        }
         return locationManagementRepository.getLocationsInScope(latitude, longitude, kmScope / DEGREE_KILOMETERS_RATIO);
     }
 
+    @Override
+    @Transactional
+    public Location getMyLocationByIdAllData(Long id, String userToken) {
+        UserAccount userAccount = userManagementService.getUserAccountByIdAllData(userManagementService.getUserAccountByToken(userToken).getId());
+        Location location = locationManagementRepository.getLocationByIdAllData(id);
+        if (location != null && location.isUsersPrivate() && location.getCreatedByAccount().getId() == userAccount.getId()) {
+            return location;
+        }
+        return null;
+    }
+
     private List<ErrorMessages> validateLocation(Location location) {
-        List<ErrorMessages> errorMessages = new ArrayList<ErrorMessages>();
-        if(location.getName() == null) {
+        List<ErrorMessages> errorMessages = new ArrayList<>();
+        if (location.getName() == null) {
             errorMessages.add(ErrorMessages.INVALID_LOCATION_NAME);
         }
-/*        if(location.getLatitude()) {
-            errorMessages.add(ErrorMessages.INVALID_LOCATION_LATITUDE);
-        }
-        if(location.getLongitude()) {
-            errorMessages.add(ErrorMessages.INVALID_LOCATION_LONGITUDE);
-        }*/
-        if(location.getStatus() == null) {
+        if (location.getStatus() == null) {
             errorMessages.add(ErrorMessages.INVALID_LOCATION_STATUS);
         }
-        if(location.getAddress() == null) {
+        if (location.getAddress() == null) {
             errorMessages.add(ErrorMessages.INVALID_LOCATION_ADDRESS);
         }
-        if(location.getAddress() != null) {
+        if (location.getAddress() != null) {
             errorMessages.addAll(validateAddress(location.getAddress()));
+        }
+        errorMessages.addAll(validateCoordinates(location.getLatitude(), location.getLongitude()));
+        return errorMessages;
+    }
+
+    private List<ErrorMessages> validateCoordinates(double latitude, double longitude) {
+        List<ErrorMessages> errorMessages = new ArrayList<ErrorMessages>();
+        if (!ValidationTools.validateLatitude(latitude)) {
+            errorMessages.add(ErrorMessages.INVALID_LOCATION_LATITUDE);
+        }
+        if (!ValidationTools.validateLongitude(longitude)) {
+            errorMessages.add(ErrorMessages.INVALID_LOCATION_LONGITUDE);
         }
         return errorMessages;
     }
 
+
     private List<ErrorMessages> validateAddress(Address address) {
         List<ErrorMessages> errorMessages = new ArrayList<>();
-        if(address.getCity() == null) {
+        if (address.getCity() == null) {
             errorMessages.add(ErrorMessages.INVALID_ADDRESS_CITY);
         }
-        if(address.getCountry() == null) {
+        if (address.getCountry() == null) {
             errorMessages.add(ErrorMessages.INVALID_ADDRESS_COUNTRY);
         }
         return errorMessages;

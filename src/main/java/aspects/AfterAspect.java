@@ -8,8 +8,10 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import services.interfaces.ILoggerService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +26,9 @@ import java.util.List;
 @Component
 public class AfterAspect {
 
+    @Autowired
+    private ILoggerService loggerService;
+
     private static final List<ResponseStatus> resultErrorStatuses = new ArrayList<>(Arrays.asList(ResponseStatus.ACCESS_DENIED, ResponseStatus.REQUEST_DENIED, ResponseStatus.UNKNOWN_ERROR, ResponseStatus.VALIDATION_ERROR));
 
     @Around(value = "aspects.pointcuts.PointcutDefinitions.allControllerMethods()")
@@ -31,8 +36,10 @@ public class AfterAspect {
         try {
             return joinPoint.proceed();
         } catch (FormValidationError ex) {
+            loggerService.error(ex.getMessage(), ex);
             return new ResponseSerializer<>(ResponseStatus.VALIDATION_ERROR, ex.getErrorMessages());
         } catch (Throwable ex) {
+            loggerService.error(ex.getMessage(), ex);
             return new ResponseSerializer<>(ResponseStatus.UNKNOWN_ERROR, ErrorMessages.SERVER_SIDE_ERROR);
         }
     }

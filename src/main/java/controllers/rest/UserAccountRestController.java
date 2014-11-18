@@ -2,7 +2,6 @@ package controllers.rest;
 
 import annotations.AdminAuthorized;
 import annotations.NotAuthorized;
-import domain.locations.Location;
 import domain.useraccounts.UserAccount;
 import jsonserializers.common.ResponseSerializer;
 import jsonserializers.users.UserRegistrationSerializer;
@@ -69,8 +68,4 @@ public class UserAccountRestController {
         return new ResponseSerializer(userManagementService.getUserAccountByIdAllData(userManagementService.getUserAccountByToken(token).getId()));
     }
 
-    @RequestMapping(value = "/my/locations", method = RequestMethod.GET)
-    public @ResponseBody ResponseSerializer<List<Location>> getAllUsersPrivateLocations(@RequestHeader(value = "authorization") String token) throws Exception {
-        return new ResponseSerializer(locationManagementService.getAllUsersPrivateLocations(userManagementService.getUserAccountByToken(token).getId()));
-    }
 }

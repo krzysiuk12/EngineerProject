@@ -11,6 +11,7 @@ import repository.interfaces.IUserManagementRepository;
 import services.interfaces.ICodeGeneratorService;
 import services.interfaces.IMailSenderService;
 import services.interfaces.IUserManagementService;
+import tools.ValidationTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class UserManagementService implements IUserManagementService {
     private IMailSenderService mailSenderService;
 
     @Autowired
-    public UserManagementService(IUserManagementRepository userManagementRepository, IMailSenderService mailSenderService, ICodeGeneratorService codeGeneratorService)  {
+    public UserManagementService(IUserManagementRepository userManagementRepository, IMailSenderService mailSenderService, ICodeGeneratorService codeGeneratorService) {
         this.userManagementRepository = userManagementRepository;
         this.mailSenderService = mailSenderService;
         this.codeGeneratorService = codeGeneratorService;
@@ -36,7 +37,7 @@ public class UserManagementService implements IUserManagementService {
     @Transactional
     public void saveUserAccount(UserAccount account) throws Exception {
         List<ErrorMessages> errorMessages = validateUserAccount(account);
-        if(!errorMessages.isEmpty()) {
+        if (!errorMessages.isEmpty()) {
             throw new FormValidationError(errorMessages);
         }
         userManagementRepository.saveOrUpdateUserAccount(account);
@@ -46,7 +47,7 @@ public class UserManagementService implements IUserManagementService {
     @Transactional
     public void saveIndividual(Individual individual) throws Exception {
         List<ErrorMessages> errorMessages = validateIndividual(individual);
-        if(!errorMessages.isEmpty()) {
+        if (!errorMessages.isEmpty()) {
             throw new FormValidationError(errorMessages);
         }
         userManagementRepository.saveOrUpdateIndividual(individual);
@@ -92,7 +93,7 @@ public class UserManagementService implements IUserManagementService {
     @Transactional(readOnly = true)
     public List<UserAccount> getAllUserAccounts() {
         List<UserAccount> userAccounts = userManagementRepository.getAllUserAccounts();
-        for(UserAccount account : userAccounts) {
+        for (UserAccount account : userAccounts) {
             account.setIndividual(null);
         }
         return userAccounts;
@@ -114,31 +115,49 @@ public class UserManagementService implements IUserManagementService {
 
     private List<ErrorMessages> validateUserAccount(UserAccount userAccount) {
         List<ErrorMessages> errorMessages = new ArrayList<>();
-        if(userAccount.getLogin() == null) {
+        if (userAccount.getLogin() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
         }
-        if(userAccount.getPassword() == null) {
+        if (userAccount.getLogin() != null && !ValidationTools.validateLogin(userAccount.getLogin())) {
+            errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
+        }
+        if (userManagementRepository.validateUniqueLogin(userAccount.getLogin())) {
+            errorMessages.add(ErrorMessages.INVALID_USER_LOGIN_EXISTS_IN_SYSTEM);
+        }
+        if (userAccount.getPassword() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_PASSWORD);
         }
-        if(userAccount.getStatus() == null) {
+        if (userAccount.getStatus() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_STATUS);
         }
-        if(userAccount.getToken() == null) {
+        if (userAccount.getToken() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_TOKEN);
         }
-        if(userAccount.getEmail() == null) {
+        if (userAccount.getEmail() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_EMAIL);
+        }
+        if (userAccount.getEmail() != null && !ValidationTools.validateEmail(userAccount.getEmail())) {
+            errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
+        }
+        if (userManagementRepository.validateUniqueEmail(userAccount.getEmail())) {
+            errorMessages.add(ErrorMessages.INVALID_USER_EMAIL_EXISTS_IN_SYSTEM);
         }
         return errorMessages;
     }
 
     private List<ErrorMessages> validateIndividual(Individual individual) {
         List<ErrorMessages> errorMessages = new ArrayList<>();
-        if(individual.getFirstName() == null) {
+        if (individual.getFirstName() == null) {
             errorMessages.add(ErrorMessages.INVALID_INDIVIDUAL_FIRST_NAME);
         }
-        if(individual.getLastName() == null) {
+        if (individual.getFirstName() != null && !ValidationTools.validateFirstName(individual.getFirstName())) {
+            errorMessages.add(ErrorMessages.INVALID_INDIVIDUAL_FIRST_NAME);
+        }
+        if (individual.getLastName() == null) {
             errorMessages.add(ErrorMessages.INVALID_INDIVIDUAL_LAST_NAME);
+        }
+        if (individual.getLastName() != null && !ValidationTools.validateLastName(individual.getLastName())) {
+            errorMessages.add(ErrorMessages.INVALID_INDIVIDUAL_FIRST_NAME);
         }
         return errorMessages;
     }

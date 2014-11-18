@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import services.interfaces.ILoggerService;
 import services.interfaces.IUserManagementService;
 
 /**
@@ -19,11 +20,13 @@ import services.interfaces.IUserManagementService;
 @Component
 public class AuthorizationAspect {
 
+    private ILoggerService loggerService;
     private IUserManagementService userManagementService;
 
     @Autowired
-    public AuthorizationAspect(IUserManagementService userManagementService) {
+    public AuthorizationAspect(IUserManagementService userManagementService, ILoggerService loggerService) {
         this.userManagementService = userManagementService;
+        this.loggerService = loggerService;
     }
 
     @Around("aspects.pointcuts.PointcutDefinitions.userAuthorization()")
@@ -34,7 +37,7 @@ public class AuthorizationAspect {
         try {
             return joinPoint.proceed();
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+            loggerService.error(throwable.getMessage(), throwable);
         }
         return null;
     }
@@ -50,7 +53,7 @@ public class AuthorizationAspect {
         try {
             return joinPoint.proceed();
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+            loggerService.error(throwable.getMessage(), throwable);
         }
         return null;
     }

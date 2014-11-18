@@ -42,6 +42,12 @@ public class LoggerLog4jService implements ILoggerService {
         logger.error(getMessage(message));
     }
 
+    @Override
+    @NotLogged
+    public void error(String message, Throwable ex) {
+        logger.error(getMessage(message), ex);
+    }
+
     private String getMessage(String message) {
         return new StringBuilder(tag).append(" ").append(message).toString();
     }

@@ -25,7 +25,7 @@ public class CoordinatesRestController {
     }
 
     @RequestMapping(value = "/{latitude}/{longitude}/locations", method = RequestMethod.GET)
-    public @ResponseBody ResponseSerializer<List<Location>> getAllLocationsForCoordinates(@RequestHeader(value = "authorization") String token, @PathVariable("latitude") double latitude, @PathVariable("longitude") double longitude) {
+    public @ResponseBody ResponseSerializer<List<Location>> getAllLocationsForCoordinates(@RequestHeader(value = "authorization") String token, @PathVariable("latitude") double latitude, @PathVariable("longitude") double longitude) throws Exception {
         List<Location> locations = locationManagementService.getLocationInScope(latitude, longitude, DEFAULT_KM_SCOPE);
         for(Location location : locations) {
             location.setCreatedByAccount(null);
@@ -34,7 +34,7 @@ public class CoordinatesRestController {
     }
 
     @RequestMapping(value = "/{latitude}/{longitude}/{scope}/locations", method = RequestMethod.GET)
-    public @ResponseBody ResponseSerializer<List<Location>> getAllLocationsForCoordinates(@RequestHeader(value = "authorization") String token, @PathVariable("latitude") double latitude, @PathVariable("longitude") double longitude, @PathVariable("longitude") double scope) {
+    public @ResponseBody ResponseSerializer<List<Location>> getAllLocationsForCoordinates(@RequestHeader(value = "authorization") String token, @PathVariable("latitude") double latitude, @PathVariable("longitude") double longitude, @PathVariable("longitude") double scope) throws Exception {
         List<Location> locations = locationManagementService.getLocationInScope(latitude, longitude, scope);
         for(Location location : locations) {
             location.setCreatedByAccount(null);

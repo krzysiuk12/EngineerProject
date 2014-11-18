@@ -20,4 +20,7 @@ public interface IUserManagementRepository {
 
     public List<UserAccount> getAllUserAccounts();
 
+    public boolean validateUniqueLogin(String login);
+    public boolean validateUniqueEmail(String email);
+
 }

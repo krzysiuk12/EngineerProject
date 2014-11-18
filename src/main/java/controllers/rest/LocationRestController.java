@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import services.interfaces.ILocationManagementService;
+import services.interfaces.IUserManagementService;
 
 import java.util.List;
 
@@ -18,11 +19,13 @@ import java.util.List;
 @RequestMapping("/locations")
 public class LocationRestController {
 
+    private IUserManagementService userManagementService;
     private ILocationManagementService locationManagementService;
 
     @Autowired
-    public LocationRestController(ILocationManagementService locationManagementService) {
+    public LocationRestController(ILocationManagementService locationManagementService, IUserManagementService userManagementService) {
         this.locationManagementService = locationManagementService;
+        this.userManagementService = userManagementService;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -62,6 +65,17 @@ public class LocationRestController {
         return new ResponseSerializer(location);
     }
 
+    @RequestMapping(value = "/my/{id}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseSerializer<Location> getMyLocationById(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) throws Exception {
+        Location location = locationManagementService.getMyLocationByIdAllData(id, token);
+        if(location != null) {
+            location.setCreatedByAccount(null);
+        }
+        return new ResponseSerializer(location);
+    }
+
     @RequestMapping(value = "/{id}/all", method = RequestMethod.GET)
     public
     @ResponseBody
@@ -92,6 +106,11 @@ public class LocationRestController {
     ResponseSerializer deleteLocationById(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) throws Exception {
         locationManagementService.changeLocationStatus(id, Location.Status.REMOVED);
         return new ResponseSerializer();
+    }
+
+    @RequestMapping(value = "/my", method = RequestMethod.GET)
+    public @ResponseBody ResponseSerializer<List<Location>> getAllUsersPrivateLocations(@RequestHeader(value = "authorization") String token) throws Exception {
+        return new ResponseSerializer(locationManagementService.getAllUsersPrivateLocations(userManagementService.getUserAccountByToken(token).getId()));
     }
 
 }

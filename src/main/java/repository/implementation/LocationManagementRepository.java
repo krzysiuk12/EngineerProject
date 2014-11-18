@@ -30,7 +30,10 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
 
     @Override
     public Location getLocationById(Long id) {
-        return (Location)getCurrentSession().get(Location.class, id);
+        Criteria criteria = getCurrentSession().createCriteria(Location.class);
+        criteria.add(Restrictions.eq("id", id));
+        criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
+        return returnSingleOrNull(criteria.list());
     }
 
     @Override
@@ -39,12 +42,17 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         criteria.add(Restrictions.eq("id", id));
         criteria.setFetchMode("createdByAccount", FetchMode.JOIN);
         criteria.setFetchMode("createdByAccount.individual", FetchMode.JOIN);
-        return (Location)criteria.list().get(0);
+        criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
+        return returnSingleOrNull(criteria.list());
     }
 
     @Override
     public List<Location> getAllLocations() {
-        return getCurrentSession().createCriteria(Location.class).list();
+        Criteria criteria = getCurrentSession().createCriteria(Location.class);
+        criteria.createAlias("createdByAccount", "createdByAccount", JoinType.INNER_JOIN);
+        criteria.add(Restrictions.eq("usersPrivate", false));
+        criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
+        return criteria.list();
     }
 
     @Override
@@ -53,6 +61,7 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         criteria.createAlias("createdByAccount", "createdByAccount", JoinType.INNER_JOIN);
         criteria.add(Restrictions.eq("createdByAccount.id", userId));
         criteria.add(Restrictions.eq("usersPrivate", true));
+        criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
         return criteria.list();
     }
 
@@ -61,6 +70,12 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
         criteria.add(Restrictions.between("latitude", latitude - degreeScope, latitude + degreeScope));
         criteria.add(Restrictions.between("longitude", longitude - degreeScope, longitude + degreeScope));
+        criteria.add(Restrictions.eq("usersPrivate", false));
+        criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
         return criteria.list();
+    }
+
+    private Location returnSingleOrNull(List<Location> locations) {
+        return locations != null && locations.size() == 1 ? locations.get(0) : null;
     }
 }

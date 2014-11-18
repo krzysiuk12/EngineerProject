@@ -14,16 +14,14 @@ public interface ILocationManagementService {
     public void addNewLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception;
     public void addNewPrivateLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception;
 
-
     public Location getLocationById(Long id);
-
     public Location getLocationByIdAllData(Long id);
+    public Location getMyLocationByIdAllData(Long id, String userToken);
 
     public List<Location> getAllLocations();
-
     public List<Location> getAllUsersPrivateLocations(Long userId);
 
-    public List<Location> getLocationInScope(double latitude, double longitude, double kmScope);
+    public List<Location> getLocationInScope(double latitude, double longitude, double kmScope) throws Exception;
 
     public Location changeLocationStatus(Long locationId, Location.Status status) throws Exception;
 
