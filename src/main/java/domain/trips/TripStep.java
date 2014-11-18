@@ -41,7 +41,7 @@ public class TripStep extends VersionedBaseObject {
         this.tripDay = tripDay;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_startlocation", foreignKey = @ForeignKey(name = "FK_tripstep_location_startlocation"), nullable = false)
     public Location getStartLocation() {
         return startLocation;
@@ -50,7 +50,7 @@ public class TripStep extends VersionedBaseObject {
         this.startLocation = startLocation;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_endlocation", foreignKey = @ForeignKey(name = "FK_tripstep_location_endlocation"), nullable = false)
     public Location getEndLocation() {
         return endLocation;

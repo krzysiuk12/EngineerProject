@@ -42,7 +42,7 @@ public class TripDayLocation extends VersionedBaseObject {
         this.tripDay = tripDay;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_location", foreignKey = @ForeignKey(name = "FK_tripdaylocation_location_location"), nullable = false)
     public Location getLocation() {
         return location;

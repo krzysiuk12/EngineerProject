@@ -17,8 +17,6 @@ public class TripDay extends VersionedBaseObject {
     private List<TripDayLocation> locations;
     private List<TripStep> tripSteps;
     private Date date;
-    private int dayNumber;
-    private Date plannedStartTime;
 
     public TripDay() {
     }
@@ -63,24 +61,6 @@ public class TripDay extends VersionedBaseObject {
     }
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    @Basic
-    @Column(name = "daynumber", nullable = false)
-    public int getDayNumber() {
-        return dayNumber;
-    }
-    public void setDayNumber(int dayNumber) {
-        this.dayNumber = dayNumber;
-    }
-
-    @Temporal(TemporalType.TIME)
-    @Column(name = "plannedstarttime")
-    public Date getPlannedStartTime() {
-        return plannedStartTime;
-    }
-    public void setPlannedStartTime(Date plannedStartTime) {
-        this.plannedStartTime = plannedStartTime;
     }
 
 }

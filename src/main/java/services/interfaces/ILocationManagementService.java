@@ -27,4 +27,5 @@ public interface ILocationManagementService {
 
     public Location changeLocationStatus(Long locationId, Location.Status status) throws Exception;
 
+    public List<Location> getAllLocationsByIds(List<Long> locationIds) throws Exception;
 }

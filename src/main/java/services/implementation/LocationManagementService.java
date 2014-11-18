@@ -140,6 +140,12 @@ public class LocationManagementService implements ILocationManagementService {
         return null;
     }
 
+    @Override
+    @Transactional
+    public List<Location> getAllLocationsByIds(List<Long> locationIds) throws Exception {
+        return locationManagementRepository.getAllLocationsByIds(locationIds);
+    }
+
     private List<ErrorMessages> validateLocation(Location location) {
         List<ErrorMessages> errorMessages = new ArrayList<>();
         if (location.getName() == null) {

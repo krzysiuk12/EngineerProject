@@ -81,4 +81,11 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         return criteria.list();
     }
 
+    @Override
+    public List<Location> getAllLocationsByIds(List<Long> locationIds) {
+        Criteria criteria = getCurrentSession().createCriteria(Location.class);
+        criteria.add(Restrictions.in("id", locationIds));
+        return criteria.list();
+    }
+
 }

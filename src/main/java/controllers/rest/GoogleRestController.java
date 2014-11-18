@@ -13,6 +13,8 @@ import services.interfaces.IGoogleDirectionsService;
 import services.interfaces.IGoogleGeocodingService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Krzysztof Kicinger on 2014-11-15.
@@ -43,6 +45,7 @@ public class GoogleRestController {
         destination.setLatitude(50.435275);
         destination.setLongitude(18.850237);
         GoogleDirectionsSerializer directionsSerializer = googleDirectionsService.getTripDescription(origin, destination, null, null, null);
+        googleDirectionsService.deserializeTripDescription(directionsSerializer, origin, destination, new ArrayList<Location>(), new Date());
         System.out.println("HERE");
     }
 

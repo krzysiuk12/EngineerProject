@@ -21,4 +21,6 @@ public interface ILocationManagementRepository {
 
     public List<Location> getLocationsInScope(double longitude, double latitude, double scope);
 
+    public List<Location> getAllLocationsByIds(List<Long> locationIds);
+
 }
