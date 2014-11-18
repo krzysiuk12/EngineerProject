@@ -15,7 +15,8 @@ public class Individual extends BaseObject {
 
     public enum Gender {
         MALE,
-        FEMALE
+        FEMALE,
+        NOT_DEFINED
     }
 
     private String firstName;

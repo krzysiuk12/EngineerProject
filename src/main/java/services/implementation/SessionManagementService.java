@@ -32,21 +32,30 @@ public class SessionManagementService implements ISessionManagementService {
     @Transactional
     public String loginUser(String login, String password, String ipAddress, String sessionId) throws Exception {
         UserAccount userAccount = userManagementService.getUserAccountByLogin(login);
-        if(userAccount == null) {
-            throw new FormValidationError(ErrorMessages.INVALID_LOGIN);
+        try {
+            if(userAccount == null) {
+                throw new FormValidationError(ErrorMessages.INVALID_LOGIN);
+            }
+            if(!userAccount.getPassword().equals(password)) {
+                throw new FormValidationError(ErrorMessages.INVALID_PASSWORD);
+            }
+            if(userAccount.getStatus() != UserAccount.Status.ACTIVE) {
+                throw new FormValidationError(ErrorMessages.USER_ACCOUNT_NOT_ACTIVE);
+            }
+            userAccount.setToken(codeGeneratorService.generateSessionToken());
+            userManagementService.saveUserAccount(userAccount);
+            eventsService.saveSuccessfulLoginEvent(userAccount, sessionId, ipAddress);
+            return userAccount.getToken();
+        } catch(FormValidationError ex) {
+            if(userAccount != null) {
+                eventsService.saveFailedLoginEvent(userAccount, sessionId, ipAddress);
+                userAccount.setInvalidSignInAttemptsCounter(userAccount.getInvalidSignInAttemptsCounter() + 1);
+                //TODO: Test SecurityProfile and lockout account
+                userManagementService.saveUserAccount(userAccount);
+            }
+            throw ex;
         }
-        if(!userAccount.getPassword().equals(password)) {
-            eventsService.saveFailedLoginEvent(userAccount, sessionId, ipAddress);
-            throw new FormValidationError(ErrorMessages.INVALID_PASSWORD);
-        }
-        if(userAccount.getStatus() != UserAccount.Status.ACTIVE) {
-            eventsService.saveFailedLoginEvent(userAccount, sessionId, ipAddress);
-            throw new FormValidationError(ErrorMessages.USER_ACCOUNT_NOT_ACTIVE);
-        }
-        userAccount.setToken(codeGeneratorService.generateSessionToken());
-        userManagementService.saveUserAccount(userAccount);
-        eventsService.saveSuccessfulLoginEvent(userAccount, sessionId, ipAddress);
-        return userAccount.getToken();
+
     }
 
     @Override
