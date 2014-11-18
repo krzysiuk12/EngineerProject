@@ -1,3 +1,0 @@
-id,login,password,status,id_individual,passwordchangerequired,invalidsigninattemptscounter,lockoutcounter,token,email,versionnumber
-1,SYSTEM,SYSTEM,ACTIVE,1,false,0,0,SYSTEM,tourtripsystem@gmail.com,0
-2,admin,admin,ACTIVE,2,false,0,0,admin,tourtripadmin@gmail.com,0

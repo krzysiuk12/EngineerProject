@@ -2,6 +2,7 @@ package repository.implementation;
 
 import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
+import domain.useraccounts.UserGroup;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
@@ -43,21 +44,21 @@ public class UserManagementRepository extends BaseHibernateRepository implements
         Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
         criteria.add(Restrictions.eq("id", id));
         criteria.setFetchMode("individual", FetchMode.JOIN);
-        return returnSingleOrNull(criteria.list());
+        return (UserAccount)returnSingleOrNull(criteria.list());
     }
 
     @Override
     public UserAccount getUserAccountByLogin(String login) {
         Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
         criteria.add(Restrictions.eq("login", login));
-        return returnSingleOrNull(criteria.list());
+        return (UserAccount)returnSingleOrNull(criteria.list());
     }
 
     @Override
     public UserAccount getUserAccountByToken(String token) {
         Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
         criteria.add(Restrictions.eq("token", token));
-        return returnSingleOrNull(criteria.list());
+        return (UserAccount)returnSingleOrNull(criteria.list());
     }
 
     @Override
@@ -69,7 +70,8 @@ public class UserManagementRepository extends BaseHibernateRepository implements
     public boolean validateUniqueLogin(String login) {
         Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
         criteria.add(Restrictions.eq("login", login));
-        return criteria.list().isEmpty();
+        List<UserAccount> list = criteria.list();
+        return list.isEmpty();
     }
 
     @Override
@@ -79,7 +81,22 @@ public class UserManagementRepository extends BaseHibernateRepository implements
         return criteria.list().isEmpty();
     }
 
-    private UserAccount returnSingleOrNull(List<UserAccount> accounts) {
-        return accounts != null && accounts.size() == 1 ? accounts.get(0) : null;
+    @Override
+    public void saveOrUpdateUserGroup(UserGroup userGroup) {
+        getCurrentSession().saveOrUpdate(userGroup);
+    }
+
+    @Override
+    public UserGroup getUserGroupById(Long id) {
+        Criteria criteria = getCurrentSession().createCriteria(UserGroup.class);
+        criteria.add(Restrictions.eq("id", id));
+        return (UserGroup)returnSingleOrNull(criteria.list());
+    }
+
+    @Override
+    public UserGroup getUserGroupByName(String name) {
+        Criteria criteria = getCurrentSession().createCriteria(UserGroup.class);
+        criteria.add(Restrictions.eq("name", name));
+        return (UserGroup)returnSingleOrNull(criteria.list());
     }
 }

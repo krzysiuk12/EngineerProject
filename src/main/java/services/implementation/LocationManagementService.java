@@ -47,6 +47,15 @@ public class LocationManagementService implements ILocationManagementService {
     }
 
     @Override
+    public void saveAddress(Address address) throws Exception {
+        List<ErrorMessages> errorMessages = validateAddress(address);
+        if (!errorMessages.isEmpty()) {
+            throw new FormValidationError(errorMessages);
+        }
+        locationManagementRepository.saveOrUpdateAddress(address);
+    }
+
+    @Override
     @Transactional
     public void addNewLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception {
         UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);

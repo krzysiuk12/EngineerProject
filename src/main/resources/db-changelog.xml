@@ -651,16 +651,16 @@
     </changeSet>
 
 
-    <changeSet id="DATALOAD-001" author="kkicinger">
-        <!--        <loadData tableName="accountsecurityprofiles" schemaName="${schemaName}" file="data/accountsecurityprofiles.csv"
+<!--    <changeSet id="DATALOAD-001" author="kkicinger">
+        &lt;!&ndash;        <loadData tableName="accountsecurityprofiles" schemaName="${schemaName}" file="data/accountsecurityprofiles.csv"
                           separator=","/>
                 <loadData tableName="passwordsecurityprofiles" schemaName="${schemaName}"
                           file="data/passwordsecurityprofiles.csv" separator=","/>
                 <loadData tableName="securityprofiles" schemaName="${schemaName}" file="data/securityprofiles.csv"
-                          separator=","/>-->
+                          separator=","/>&ndash;&gt;
         <loadData tableName="individuals" schemaName="${schemaName}" file="data/individuals.csv" separator=","/>
         <loadData tableName="useraccounts" schemaName="${schemaName}" file="data/users.csv" separator=","/>
         <loadData tableName="locations" schemaName="${schemaName}" file="data/locations.csv" separator=","/>
-    </changeSet>
+    </changeSet>-->
 
 </databaseChangeLog>

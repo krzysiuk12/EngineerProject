@@ -2,6 +2,7 @@ package repository.interfaces;
 
 import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
+import domain.useraccounts.UserGroup;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ public interface IUserManagementRepository {
 
     public void saveOrUpdateUserAccount(UserAccount account);
     public void saveOrUpdateIndividual(Individual individual);
+    public void saveOrUpdateUserGroup(UserGroup userGroup);
 
     public UserAccount getUserAccountById(Long id);
     public UserAccount getUserAccountByIdAllData(Long id);
@@ -22,5 +24,8 @@ public interface IUserManagementRepository {
 
     public boolean validateUniqueLogin(String login);
     public boolean validateUniqueEmail(String email);
+
+    public UserGroup getUserGroupById(Long id);
+    public UserGroup getUserGroupByName(String name);
 
 }

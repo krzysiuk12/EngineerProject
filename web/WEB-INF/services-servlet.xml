@@ -9,7 +9,6 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <import resource="applicationContext.xml" />
     <aop:aspectj-autoproxy />
     <mvc:annotation-driven />
 

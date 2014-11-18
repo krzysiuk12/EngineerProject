@@ -13,16 +13,6 @@
     
     <context:component-scan base-package="services.implementation" />
 
-    <!--<bean name="locationManagementService" class="services.implementation.LocationManagementSpringService">-->
-        <!--<constructor-arg name="locationManagementRepository" ref="locationManagementRepository" />-->
-        <!--<constructor-arg name="userManagementService" ref="userManagementService" />-->
-    <!--</bean>-->
-
-    <!--<bean name="userManagementService" class="services.implementation.UserManagementSpringService">-->
-        <!--<constructor-arg name="userManagementRepository" ref="userManagementRepository" />-->
-        <!--<constructor-arg name="mailSenderService" ref="mailSenderService" />-->
-    <!--</bean>-->
-
     <bean name="loggerService" class="services.implementation.LoggerLog4jService">
         <constructor-arg name="tag" value="[Main Logger]" />
     </bean>

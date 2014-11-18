@@ -1,2 +1,0 @@
-id,name,maximumloginlength,minimumloginlength,maximuminvalidloginattempts,accountlockoutdurationinminutes,accountimmediatelyturnedoff,maximumlockoutsbeforeturningoff
-1,USERS,40,6,5,10,false,3

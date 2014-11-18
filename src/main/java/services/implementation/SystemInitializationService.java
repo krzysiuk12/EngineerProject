@@ -8,11 +8,20 @@ import domain.securityprofiles.SecurityProfile;
 import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
 import domain.useraccounts.UserGroup;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import services.interfaces.ICodeGeneratorService;
+import services.interfaces.IDataGeneratorService;
+import services.interfaces.ILocationManagementService;
+import services.interfaces.IUserManagementService;
+import tools.ConfigurationTools;
 
-import java.util.Date;
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by Krzysztof Kicinger on 2014-11-18.
@@ -20,106 +29,48 @@ import java.util.Date;
 @Service
 public class SystemInitializationService {
 
+    private IDataGeneratorService dataGeneratorService;
+    private IUserManagementService userManagementService;
+    private ILocationManagementService locationManagementService;
+
     @Autowired
-    private ICodeGeneratorService codeGeneratorService;
-
-    private UserGroup createUserGroup(String name, String desc, SecurityProfile securityProfile) {
-        UserGroup userGroup = new UserGroup();
-        userGroup.setName(name);
-        userGroup.setDescription(desc);
-        userGroup.setSecurityProfile(securityProfile);
-        return userGroup;
+    public SystemInitializationService(IDataGeneratorService dataGeneratorService, IUserManagementService userManagementService, ILocationManagementService locationManagementService) {
+        this.dataGeneratorService = dataGeneratorService;
+        this.userManagementService = userManagementService;
+        this.locationManagementService = locationManagementService;
     }
 
-    private AccountSecurityProfile createAccountSecurityProfile(String name, int minLoginLen, int maxLoginLen, int maxInvalidLoginAttemtpts, int lockoutDuration, int maxLockoutsBeforeTurningOff) {
-        AccountSecurityProfile accountSecurityProfile = new AccountSecurityProfile();
-        accountSecurityProfile.setName(name);
-        accountSecurityProfile.setMinimumLoginLength(minLoginLen);
-        accountSecurityProfile.setMaximumLoginLength(maxLoginLen);
-        accountSecurityProfile.setMaximumInvalidLogInAttempts(maxInvalidLoginAttemtpts);
-        accountSecurityProfile.setAccountLockOutDurationInMinutes(lockoutDuration);
-        accountSecurityProfile.setAccountImmediatelyTurnedOff(maxLockoutsBeforeTurningOff == 0);
-        accountSecurityProfile.setMaximumLockoutsBeforeTurningOff(maxLockoutsBeforeTurningOff);
-        return accountSecurityProfile;
+    @PostConstruct
+    public void init() throws Exception {
+        if (userManagementService.getUserAccountByLogin(ConfigurationTools.ADMINISTRATOR_LOGIN) == null) {
+            PasswordSecurityProfile passwordSecurityProfile = dataGeneratorService.createAndSavePasswordSecurityProfile(ConfigurationTools.DEFAULT_PASSWORD_SECURITY_PROFILE_NAME, 4, 32, false, 0, 0, false, false, false, false);
+            AccountSecurityProfile accountSecurityProfile = dataGeneratorService.createAndSaveAccountSecurityProfile(ConfigurationTools.DEFAULT_ACCOUNT_SECURITY_PROFILE_NAME, 4, 32, 3, 30, 3);
+            SecurityProfile securityProfile = dataGeneratorService.createAndSaveSecurityProfile(ConfigurationTools.DEFAULT_SECURITY_PROFILE_NAME, ConfigurationTools.DEFAULT_SECURITY_PROFILE_NAME, true, accountSecurityProfile, passwordSecurityProfile);
+            UserGroup administratorsUserGroup = dataGeneratorService.createAndSaveUserGroup(ConfigurationTools.ADMINISTRATORS_USER_GROUP, ConfigurationTools.ADMINISTRATORS_USER_GROUP, securityProfile);
+            UserGroup simpleUsersUserGroup = dataGeneratorService.createAndSaveUserGroup(ConfigurationTools.SIMPLE_USERS_USER_GROUP, ConfigurationTools.SIMPLE_USERS_USER_GROUP, securityProfile);
+            Individual systemIndividual = dataGeneratorService.createIndividual(ConfigurationTools.SYSTEM_ACCOUNT_LOGIN, null, ConfigurationTools.SYSTEM_ACCOUNT_LOGIN, null, "System Individual", null, null, null);
+            UserAccount systemUserAccount = dataGeneratorService.createAndSaveUserAccount(ConfigurationTools.SYSTEM_ACCOUNT_LOGIN, ConfigurationTools.SYSTEM_ACCOUNT_PASSWORD, ConfigurationTools.SYSTEM_ACCOUNT_EMAIL, systemIndividual, administratorsUserGroup);
+            Individual administratorIndividual = dataGeneratorService.createIndividual(ConfigurationTools.ADMINISTRATOR_LOGIN, null, ConfigurationTools.ADMINISTRATOR_LOGIN, null, "Administrator Individual", null, null, null);
+            UserAccount administratorUserAccount = dataGeneratorService.createAndSaveUserAccount(ConfigurationTools.ADMINISTRATOR_LOGIN, ConfigurationTools.ADMINISTRATOR_PASSWORD, ConfigurationTools.ADMINISTRATOR_EMAIL, administratorIndividual, administratorsUserGroup);
+            initializeLocations(systemUserAccount);
+        }
     }
 
-    private PasswordSecurityProfile createPasswordSecurityProfile(String name, int minLen, int maxLen, boolean periodChangeRequired, int maxAge, int infoDays, boolean digitRequired, boolean lowerCaseRequired, boolean upperCaseRequired, boolean specialRequired) {
-        PasswordSecurityProfile passwordSecurityProfile = new PasswordSecurityProfile();
-        passwordSecurityProfile.setName(name);
-        passwordSecurityProfile.setMinimumLength(minLen);
-        passwordSecurityProfile.setMaximumLength(maxLen);
-        passwordSecurityProfile.setPeriodPasswordChangeRequired(periodChangeRequired);
-        passwordSecurityProfile.setMaximumAgeInDays(maxAge);
-        passwordSecurityProfile.setExpirationInfoInDays(infoDays);
-        passwordSecurityProfile.setDigitRequired(digitRequired);
-        passwordSecurityProfile.setLowerCaseLetterRequired(lowerCaseRequired);
-        passwordSecurityProfile.setUpperCaseLetterRequired(upperCaseRequired);
-        passwordSecurityProfile.setSpecialCharacterRequired(specialRequired);
-        return passwordSecurityProfile;
+    private void initializeLocations(UserAccount createdBy) throws Exception {
+        File locationsFile = new ClassPathResource("data/locations.csv").getFile();
+        CSVParser parser = CSVParser.parse(locationsFile, StandardCharsets.UTF_8, CSVFormat.RFC4180.withHeader());
+        for (CSVRecord csvRecord : parser) {
+            Address address = dataGeneratorService.createAddress(readValue(csvRecord.get("STREET")), readValue(csvRecord.get("CITY")), readValue(csvRecord.get("POSTAL CODE")), readValue(csvRecord.get("COUNTRY")));
+            Location location = dataGeneratorService.createLocation(readValue(csvRecord.get("NAME")), readValue(csvRecord.get("DESCRIPTION")), readValue(csvRecord.get("URL")), Double.valueOf(csvRecord.get("LATITUDE")), Double.valueOf(csvRecord.get("LONGITUDE")), false, address, createdBy);
+            locationManagementService.saveLocation(location);
+        }
     }
 
-    private SecurityProfile createSecurityProfile(String name, String desc, boolean isDedault, AccountSecurityProfile accountSecurityProfile, PasswordSecurityProfile passwordSecurityProfile) {
-        SecurityProfile securityProfile = new SecurityProfile();
-        securityProfile.setName(name);
-        securityProfile.setDescription(desc);
-        securityProfile.setDefaultProfile(isDedault);
-        securityProfile.setStatus(SecurityProfile.Status.ACTIVE);
-        securityProfile.setPasswordSecurityProfile(passwordSecurityProfile);
-        securityProfile.setPasswordSecurityProfileTurnedOn(passwordSecurityProfile != null);
-        securityProfile.setAccountSecurityProfile(accountSecurityProfile);
-        securityProfile.setAccountSecurityProfileTurnedOn(accountSecurityProfile != null);
-        return securityProfile;
-    }
-
-    private UserAccount createUserAccount(String login, String password, String email, Individual individual, UserGroup userGroup) {
-        UserAccount userAccount = new UserAccount();
-        userAccount.setLogin(login);
-        userAccount.setPassword(password);
-        userAccount.setEmail(email);
-        userAccount.setToken(codeGeneratorService.generateSessionToken());
-        userAccount.setStatus(UserAccount.Status.ACTIVE);
-        userAccount.setPasswordChangeRequired(false);
-        userAccount.setInvalidSignInAttemptsCounter(0);
-        userAccount.setLockoutCounter(0);
-        userAccount.setIndividual(individual);
-        userAccount.setUserGroup(userGroup);
-        return userAccount;
-    }
-
-    private Individual createIndividual(String firstName, String middleName, String lastName, Date dateOfBirth, String description, String facebookAccountUrl, String city, String country) {
-        Individual individual = new Individual();
-        individual.setFirstName(firstName);
-        individual.setMiddleName(middleName);
-        individual.setLastName(lastName);
-        individual.setDateOfBirth(dateOfBirth);
-        individual.setDescription(description);
-        individual.setFacebookAccountUrl(facebookAccountUrl);
-        individual.setCity(city);
-        individual.setCountry(country);
-        return individual;
-    }
-
-    protected Address createAddress(String street, String city, String postalCode, String country) {
-        Address address = new Address();
-        address.setStreet(street);
-        address.setCity(city);
-        address.setPostalCode(postalCode);
-        address.setCountry(country);
-        return address;
-    }
-
-    private Location createLocation(String name, String desc, String url, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy) {
-        Location location = new Location();
-        location.setName(name);
-        location.setDescription(desc);
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        location.setStatus(Location.Status.AVAILABLE);
-        location.setUsersPrivate(usersPrivate);
-        location.setAddress(address);
-        location.setUrl(url);
-        location.setRating(0.0);
-        return location;
+    private String readValue(String csvValue) {
+        if(csvValue.isEmpty() || csvValue.equals("NULL")) {
+            return null;
+        }
+        return csvValue;
     }
 
 }

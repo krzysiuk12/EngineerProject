@@ -1,5 +1,6 @@
 package repository.implementation;
 
+import domain.locations.Address;
 import domain.locations.Location;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -29,11 +30,16 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
     }
 
     @Override
+    public void saveOrUpdateAddress(Address address) {
+        getCurrentSession().saveOrUpdate(address);
+    }
+
+    @Override
     public Location getLocationById(Long id) {
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
         criteria.add(Restrictions.eq("id", id));
         criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
-        return returnSingleOrNull(criteria.list());
+        return (Location)returnSingleOrNull(criteria.list());
     }
 
     @Override
@@ -43,7 +49,7 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         criteria.setFetchMode("createdByAccount", FetchMode.JOIN);
         criteria.setFetchMode("createdByAccount.individual", FetchMode.JOIN);
         criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
-        return returnSingleOrNull(criteria.list());
+        return (Location)returnSingleOrNull(criteria.list());
     }
 
     @Override
@@ -75,7 +81,4 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         return criteria.list();
     }
 
-    private Location returnSingleOrNull(List<Location> locations) {
-        return locations != null && locations.size() == 1 ? locations.get(0) : null;
-    }
 }

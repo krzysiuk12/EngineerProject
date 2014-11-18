@@ -1,5 +1,6 @@
 package services.interfaces;
 
+import domain.locations.Address;
 import domain.locations.Location;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface ILocationManagementService {
 
     public void saveLocation(Location location) throws Exception;
+    public void saveAddress(Address address) throws Exception;
 
     public void addNewLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception;
     public void addNewPrivateLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception;

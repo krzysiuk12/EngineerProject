@@ -1,4 +1,0 @@
-id,name,description,defaultprofile,passwordsecurityprofileturnedon,accountsecurityprofileturnedon,status,passwordsecurityprofileid,accountsecurityprofileid
-1,SYSTEM,System Security Policy,false,false,false,ACTIVE,NULL,NULL
-2,ADMINISTRATOR,Administrator System Policy With Password Control,false,true,false,ACTIVE,1,NULL
-3,USERS,Standard Users System Policy With Account and Password Control,true,true,true,ACTIVE,2,1

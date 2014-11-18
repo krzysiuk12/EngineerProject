@@ -2,6 +2,7 @@ package services.implementation;
 
 import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
+import domain.useraccounts.UserGroup;
 import exceptions.ErrorMessages;
 import exceptions.FormValidationError;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +80,7 @@ public class UserManagementService implements IUserManagementService {
     @Transactional(readOnly = true)
     public UserAccount getUserAccountByLogin(String login) {
         UserAccount account = userManagementRepository.getUserAccountByLogin(login);
-        account.setIndividual(null);
+//        account.setIndividual(null);
         return account;
     }
 
@@ -113,6 +114,24 @@ public class UserManagementService implements IUserManagementService {
         return userAccount != null && userAccount.getStatus() == UserAccount.Status.ACTIVE && userAccount.getLogin().equals("admin");
     }
 
+    @Override
+    @Transactional
+    public void saveUserGroup(UserGroup userGroup) throws Exception {
+        userManagementRepository.saveOrUpdateUserGroup(userGroup);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserGroup getUserGroupById(Long id) {
+        return userManagementRepository.getUserGroupById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserGroup getUserGroupByName(String name) {
+        return userManagementRepository.getUserGroupByName(name);
+    }
+
     private List<ErrorMessages> validateUserAccount(UserAccount userAccount) {
         List<ErrorMessages> errorMessages = new ArrayList<>();
         if (userAccount.getLogin() == null) {
@@ -121,7 +140,7 @@ public class UserManagementService implements IUserManagementService {
         if (userAccount.getLogin() != null && !ValidationTools.validateLogin(userAccount.getLogin())) {
             errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
         }
-        if (userManagementRepository.validateUniqueLogin(userAccount.getLogin())) {
+        if (!userManagementRepository.validateUniqueLogin(userAccount.getLogin())) {
             errorMessages.add(ErrorMessages.INVALID_USER_LOGIN_EXISTS_IN_SYSTEM);
         }
         if (userAccount.getPassword() == null) {
@@ -139,7 +158,7 @@ public class UserManagementService implements IUserManagementService {
         if (userAccount.getEmail() != null && !ValidationTools.validateEmail(userAccount.getEmail())) {
             errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
         }
-        if (userManagementRepository.validateUniqueEmail(userAccount.getEmail())) {
+        if (!userManagementRepository.validateUniqueEmail(userAccount.getEmail())) {
             errorMessages.add(ErrorMessages.INVALID_USER_EMAIL_EXISTS_IN_SYSTEM);
         }
         return errorMessages;

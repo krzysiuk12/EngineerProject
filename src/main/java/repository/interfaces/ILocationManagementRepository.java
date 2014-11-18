@@ -1,5 +1,6 @@
 package repository.interfaces;
 
+import domain.locations.Address;
 import domain.locations.Location;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface ILocationManagementRepository {
 
     public void saveOrUpdateLocation(Location location);
+    public void saveOrUpdateAddress(Address address);
 
     public Location getLocationById(Long id);
     public Location getLocationByIdAllData(Long id);
