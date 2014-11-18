@@ -63,6 +63,6 @@ public class GoogleRestController {
     @RequestMapping(value = "/geocode/ip", method = RequestMethod.GET)
     public @ResponseBody
     ResponseSerializer<Location> getLocationByIp(@RequestHeader(value = "authorization") String token, HttpServletRequest request) throws Exception {
-        return new ResponseSerializer<>(freeGeoService.getLocationByIp("87.206.243.190"));//request.getRemoteAddr()));
+        return new ResponseSerializer<>(freeGeoService.getLocationByIp(request.getRemoteAddr()));
     }
 }
