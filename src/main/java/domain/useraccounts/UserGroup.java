@@ -27,7 +27,7 @@ public class UserGroup extends BaseObject {
         return super.getId();
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_securityprofile", foreignKey = @ForeignKey(name = "FK_usergroup_securityprofile_securityprofile"), nullable = false)
     public SecurityProfile getSecurityProfile() {
         return securityProfile;

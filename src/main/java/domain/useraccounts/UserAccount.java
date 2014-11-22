@@ -22,9 +22,9 @@ public class UserAccount extends VersionedBaseObject {
         REMOVED
     }
 
-    private String token;
     private String login;
     private String password;
+    private String token;
     private String email;
     private Status status;
     private boolean passwordChangeRequired;

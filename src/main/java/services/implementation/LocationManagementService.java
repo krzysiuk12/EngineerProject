@@ -1,6 +1,7 @@
 package services.implementation;
 
 import domain.locations.Address;
+import domain.locations.Comment;
 import domain.locations.Location;
 import domain.useraccounts.UserAccount;
 import exceptions.ErrorMessages;
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.interfaces.ILocationManagementRepository;
 import services.interfaces.ILocationManagementService;
-import services.interfaces.ILoggerService;
 import services.interfaces.IUserManagementService;
 import tools.ValidationTools;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,56 +28,76 @@ public class LocationManagementService implements ILocationManagementService {
 
     private ILocationManagementRepository locationManagementRepository;
     private IUserManagementService userManagementService;
-    private ILoggerService loggerService;
 
     @Autowired
-    public LocationManagementService(ILocationManagementRepository locationManagementRepository, IUserManagementService userManagementService, ILoggerService loggerService) {
+    public LocationManagementService(ILocationManagementRepository locationManagementRepository, IUserManagementService userManagementService) {
         this.locationManagementRepository = locationManagementRepository;
         this.userManagementService = userManagementService;
-        this.loggerService = loggerService;
     }
 
+    //<editor-fold desc="Save (Location, Comment)">
     @Override
     @Transactional
-    public void saveLocation(Location location) throws Exception {
+    public void saveLocation(Location location, UserAccount executor) throws Exception {
         List<ErrorMessages> errorMessages = validateLocation(location);
         if (!errorMessages.isEmpty()) {
             throw new FormValidationError(errorMessages);
         }
-        locationManagementRepository.saveOrUpdateLocation(location);
-    }
-
-    @Override
-    public void saveAddress(Address address) throws Exception {
-        List<ErrorMessages> errorMessages = validateAddress(address);
-        if (!errorMessages.isEmpty()) {
-            throw new FormValidationError(errorMessages);
-        }
-        locationManagementRepository.saveOrUpdateAddress(address);
+        location.updateInformation(executor);
+        locationManagementRepository.saveOrUpdate(location);
     }
 
     @Override
     @Transactional
+    public void saveComment(Comment comment) throws Exception {
+        List<ErrorMessages> errorMessages = validateComment(comment);
+        if(!errorMessages.isEmpty()) {
+            throw new FormValidationError(errorMessages);
+        }
+        locationManagementRepository.saveOrUpdate(comment);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Add Locations (Normal, Private)">
+    @Override
+    @Transactional
     public void addNewLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception {
         UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
-        Location location = createLocation(name, latitude, longitude, false, createAddress(addressCity, addressCountry), createdBy);
-        saveLocation(location);
+        Address address = createAddress(addressCity, addressCountry);
+        Location location = createLocation(name, latitude, longitude, false, address, createdBy);
+        saveLocation(location, createdBy);
     }
 
     @Override
     @Transactional
     public void addNewPrivateLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception {
         UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
-        Location location = createLocation(name, latitude, longitude, true, createAddress(addressCity, addressCountry), createdBy);
-        saveLocation(location);
+        Address address = createAddress(addressCity, addressCountry);
+        Location location = createLocation(name, latitude, longitude, true, address, createdBy);
+        saveLocation(location, createdBy);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Add New Comment">
+    @Override
+    @Transactional
+    public void addNewComment(Long locationId, Comment.Rating rating, String commentMessage, String userToken) throws Exception {
+        UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
+        Location location = getLocationByIdAllData(locationId);
+        Comment comment = createComment(location, createdBy, rating, commentMessage);
+        location.setRating(getCurrentLocationRating(location, rating));
+        saveComment(comment);
+        saveLocation(location, createdBy);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get Locations By Id">
     @Override
     @Transactional(readOnly = true)
     public Location getLocationById(Long id) {
         Location location = locationManagementRepository.getLocationById(id);
         if (location != null) {
-            location.setCreatedByAccount(null);
+            preperLocationToNotAllDataRequest(location);
         }
         return location;
     }
@@ -88,11 +109,24 @@ public class LocationManagementService implements ILocationManagementService {
     }
 
     @Override
+    @Transactional
+    public Location getMyLocationByIdAllData(Long id, String userToken) {
+        UserAccount userAccount = userManagementService.getUserAccountByIdAllData(userManagementService.getUserAccountByToken(userToken).getId());
+        Location location = locationManagementRepository.getLocationByIdAllData(id);
+        if (location != null && location.isUsersPrivate() && location.getCreatedByAccount().getId() == userAccount.getId()) {
+            return location;
+        }
+        return null;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get Locations Lists">
+    @Override
     @Transactional(readOnly = true)
     public List<Location> getAllLocations() {
         List<Location> resultList = locationManagementRepository.getAllLocations();
         for (Location location : resultList) {
-            location.setCreatedByAccount(null);
+            preperLocationToNotAllDataRequest(location);
         }
         return resultList;
     }
@@ -100,23 +134,12 @@ public class LocationManagementService implements ILocationManagementService {
     @Override
     @Transactional(readOnly = true)
     public List<Location> getAllUsersPrivateLocations(Long userId) {
-        List<Location> resultList = locationManagementRepository.getAllUsersPrivateLocations(userId);
+        UserAccount createdBy = userManagementService.getUserAccountById(userId);
+        List<Location> resultList = locationManagementRepository.getAllUsersPrivateLocations(createdBy);
         for (Location location : resultList) {
-            location.setCreatedByAccount(null);
+            preperLocationToNotAllDataRequest(location);
         }
         return resultList;
-    }
-
-    @Override
-    @Transactional
-    public Location changeLocationStatus(Long locationId, Location.Status status) throws Exception {
-        if (status == null) {
-            throw new FormValidationError(ErrorMessages.INVALID_LOCATION_CURRENT_STATUS);
-        }
-        Location location = getLocationByIdAllData(locationId);
-        location.setStatus(status);
-        locationManagementRepository.saveOrUpdateLocation(location);
-        return location;
     }
 
     @Override
@@ -131,21 +154,26 @@ public class LocationManagementService implements ILocationManagementService {
 
     @Override
     @Transactional
-    public Location getMyLocationByIdAllData(Long id, String userToken) {
-        UserAccount userAccount = userManagementService.getUserAccountByIdAllData(userManagementService.getUserAccountByToken(userToken).getId());
-        Location location = locationManagementRepository.getLocationByIdAllData(id);
-        if (location != null && location.isUsersPrivate() && location.getCreatedByAccount().getId() == userAccount.getId()) {
-            return location;
-        }
-        return null;
-    }
-
-    @Override
-    @Transactional
     public List<Location> getAllLocationsByIds(List<Long> locationIds) throws Exception {
         return locationManagementRepository.getAllLocationsByIds(locationIds);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Change Location Status">
+    @Override
+    @Transactional
+    public Location changeLocationStatus(Long locationId, Location.Status status) throws Exception {
+        if (status == null) {
+            throw new FormValidationError(ErrorMessages.INVALID_LOCATION_CURRENT_STATUS);
+        }
+        Location location = getLocationByIdAllData(locationId);
+        location.setStatus(status);
+        locationManagementRepository.saveOrUpdate(location);
+        return location;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Validation (Location, Coordinates, Address)">
     private List<ErrorMessages> validateLocation(Location location) {
         List<ErrorMessages> errorMessages = new ArrayList<>();
         if (location.getName() == null) {
@@ -187,6 +215,30 @@ public class LocationManagementService implements ILocationManagementService {
         return errorMessages;
     }
 
+    private List<ErrorMessages> validateComment(Comment comment) {
+        List<ErrorMessages> errorMessages = new ArrayList<>();
+        if(comment.getUserAccount() == null) {
+            errorMessages.add(ErrorMessages.INVALID_USER_ACCOUNT);
+        }
+        if(comment.getLocation() == null) {
+            errorMessages.add(ErrorMessages.INVALID_LOCATION);
+        }
+        if(comment.getRating() == null) {
+            errorMessages.add(ErrorMessages.INVALID_RATING);
+        }
+        if(comment.getDate() == null) {
+            errorMessages.add(ErrorMessages.INVALID_DATE);
+        }
+        return errorMessages;
+    }
+    //</editor-fold>
+
+    private void preperLocationToNotAllDataRequest(Location location) {
+        location.setCreatedByAccount(null);
+        location.setComments(null);
+    }
+
+    //<editor-fold desc="Creation Helper Methods">
     protected Address createAddress(String city, String country) {
         Address address = new Address();
         address.setCity(city);
@@ -206,4 +258,22 @@ public class LocationManagementService implements ILocationManagementService {
         return location;
     }
 
+    private Comment createComment(Location location, UserAccount account, Comment.Rating rating, String commentMessage) {
+        Comment comment = new Comment();
+        comment.setLocation(location);
+        comment.setUserAccount(account);
+        comment.setRating(rating);
+        comment.setComment(commentMessage);
+        comment.setDate(new Date());
+        return comment;
+    }
+
+    private double getCurrentLocationRating(Location location, Comment.Rating rating) {
+        double ratingValue = rating.getValue();
+        double currentRating = location.getRating();
+        double numberOfComments = location.getComments().size() + 1;
+        double difference = (ratingValue - currentRating) / numberOfComments;
+        return location.getRating() + difference;
+    }
+    //</editor-fold>
 }

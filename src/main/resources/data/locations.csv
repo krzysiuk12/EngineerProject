@@ -1,31 +1,31 @@
 ID,NAME,DESCRIPTION,LATITUDE,LONGITUDE,STATUS,URL,RATING,STREET,CITY,POSTAL CODE,COUNTRY
-1,Wawel Royal Castle,NULL,50.054053,19.935399,AVAILABLE,http://wawel.krakow.pl/en/,0.0,Wawel 5,CRACOW,31-001,POLAND
-2,The Cloth Hall,NULL,50.061640,19.937326,AVAILABLE,http://www.muzeum.krakow.pl/The-Sukiennice.56.0.html?L=1,0.0,Rynek Główny 1-3,CRACOW,,POLAND
-3,St. Mary's Basilica,NULL,50.061644,19.939387,AVAILABLE,http://www.mariacki.com/index.php,0.0,plac Mariacki 5,CRACOW,31-042,POLAND
-4,Dragon's Den,NULL,50.053775,19.933142,AVAILABLE,http://wawel.krakow.pl/en/,0.0,,CRACOW,,POLAND
-5,Wawel Dragon,NULL,50.053024,19.933560,AVAILABLE,,0.0,,CRACOW,,POLAND
-6,Main Square,NULL,50.061894,19.936735,AVAILABLE,http://www.krakow-info.com/rynek.htm,0.0,,CRACOW,30-062,POLAND
-7,Adam Mickiewicz Monument,NULL,50.061463,19.937986,AVAILABLE,http://www.cracowonline.com/408-Adam_Mickiewicz_statue-Monument,0.0,Rynek Główny,CRACOW,30-962,POLAND
-8,Barbican,NULL,50.065489,19.941650,AVAILABLE,http://www.mhk.pl/oddzialy/barbakan,0.0,Basztowa,CRACOW,30-547,POLAND
-9,St. Florian's Gate,NULL,50.064780,19.941328,AVAILABLE,http://www.pascal.pl/atrakcja.php?id=28453,0.0,Stare Miasto,CRACOW,,POLAND
-10,The Czartoryski Museum,NULL,50.064702,19.939843,AVAILABLE,http://www.muzeum-czartoryskich.krakow.pl/,0.0,św. Jana 19,CRACOW,31-017,POLAND
-11,The Collegium Maius,NULL,50.061567,19.933920,AVAILABLE,http://www.maius.uj.edu.pl/,0.0,Jagiellońska 15,CRACOW,31-010,POLAND
-12,Palace of Culture and Science,NULL,52.231854,21.006285,AVAILABLE,https://www.warsawtour.pl/en/tourist-attractions/palace-of-culture-and-science-pa-ac-kultury-i-nauki-2036.html,0.0,plac Defilad 1,WARSAW,00-901,POLAND
-13,The Royal Castle,NULL,52.247352,21.016396,AVAILABLE,http://www.zamek-krolewski.pl/en,0.0,plac Zamkowy 4,WARSAW,,POLAND
-14,The Palace on the Water,NULL,52.215196,21.035525,AVAILABLE,http://www.lazienki-krolewskie.pl/,0.0,,WARSAW,01-999,POLAND
-15,Sigismund's Column,NULL,52.247269,21.013807,AVAILABLE,https://www.warsawtour.pl/zabytki-i-inne-atrakcje/kolumna-zygmunta-iii-wazy-2021.html,0.0,plac Zamkowy,WARSAW,,POLAND
-16,The National Museum,NULL,52.231354,21.027540,AVAILABLE,http://www.mnw.art.pl/en/,0.0,Aleje Jerozolimskie 3,WARSAW,,POLAND
-17,Copernicus Science Centre,NULL,52.241814,21.028227,AVAILABLE,http://www.kopernik.org.pl/en/,0.0,Wybrzeże Kościuszkowskie 20,WARSAW,00-390,POLAND
-18,The Złote Tarasy,NULL,52.230087,21.003272,AVAILABLE,http://zlotetarasy.pl/en/index,0.0,Złota 59,WARSAW,00-120,POLAND
-19,The Tomb of the Unknown Soldier,NULL,52.241008,21.011426,AVAILABLE,http://warszawa.wikia.com/wiki/Gr%C3%B3b_Nieznanego_%C5%BBo%C5%82nierza,0.0,plac Marszałka Józefa Piłsudskiego,WARSAW,,POLAND
-20,The Warsaw Upraising Museum,NULL,52.232812,20.981210,AVAILABLE,http://www.1944.pl/en/,0.0,Grzybowska 79,WARSAW,,POLAND
-21,The Mermaid of Warsaw,NULL,52.240273,21.032066,AVAILABLE,https://www.warsawtour.pl/en/warsaw-for-everyone/for-kids/warsaw-legends-3160.html,0.0,,WARSAW,,POLAND
-22,The Wrocław Fountain,NULL,51.108773,17.078955,AVAILABLE,http://www.wroclawskafontanna.pl/,0.0,Wystawowa 1,WROCLAW,,POLAND
-23,The Racławice Panorama,NULL,51.110208,17.044615,AVAILABLE,http://www.panoramaraclawicka.pl/?lang=en,0.0,Jana Ewangelisty Purkyniego 11,WROCLAW,50-155,POLAND
-24,The Centennial Hall,NULL,51.106906,17.077349,AVAILABLE,http://halastulecia.pl/en/,0.0,Wystawowa 1,WROCLAW,51-618,POLAND
-25,The Cathedral of St. John the Baptist,NULL,51.114204,17.046763,AVAILABLE,http://www.katedra.archidiecezja.wroc.pl/,0.0,plac Katedralny 18,WROCLAW,50-329,POLAND
-26,the Japanese Garden,NULL,51.109934,17.080097,AVAILABLE,http://www.wroclaw.pl/en/,0.0,Adama Mickiewicza,WROCLAW,51-618,POLAND
-27,Grunwaldzki Bridge,NULL,51.109548,17.052863,AVAILABLE,http://www.tl.wroclaw.pl/wroclaw/mosty/most_grunwaldzki.htm,0.0,Słowackiego,WROCLAW,50-001,POLAND
-28,Sky Tower,NULL,51.095056,17.019456,AVAILABLE,http://www.skytower.pl/,0.0,Powstańców Polskich 95,WROCLAW,53-332,POLAND
-29,The Wrocław Zoological Garden,NULL,51.104170,17.074208,AVAILABLE,http://www.zoo.wroclaw.pl/index.php?lang=2,0.0,Wróblewskiego 1-5,WROCLAW,51-618,POLAND
-30,The National Ossolinski Institute,NULL,51.113939,17.036637,AVAILABLE,http://www2.oss.wroc.pl/index.php/english/,0.0,Szewska 37,WROCLAW,,POLAND
+1,Wawel Royal Castle,NULL,50.054053,19.935399,AVAILABLE,http://wawel.krakow.pl/en/,0.0,Wawel 5,Kraków,31-001,Polska
+2,The Cloth Hall,NULL,50.061640,19.937326,AVAILABLE,http://www.muzeum.krakow.pl/The-Sukiennice.56.0.html?L=1,0.0,Rynek Główny 1-3,Kraków,,Polska
+3,St. Mary's Basilica,NULL,50.061644,19.939387,AVAILABLE,http://www.mariacki.com/index.php,0.0,plac Mariacki 5,Kraków,31-042,Polska
+4,Dragon's Den,NULL,50.053775,19.933142,AVAILABLE,http://wawel.krakow.pl/en/,0.0,,Kraków,,Polska
+5,Wawel Dragon,NULL,50.053024,19.933560,AVAILABLE,,0.0,,Kraków,,Polska
+6,Main Square,NULL,50.061894,19.936735,AVAILABLE,http://www.krakow-info.com/rynek.htm,0.0,,Kraków,30-062,Polska
+7,Adam Mickiewicz Monument,NULL,50.061463,19.937986,AVAILABLE,http://www.Krakówonline.com/408-Adam_Mickiewicz_statue-Monument,0.0,Rynek Główny,Kraków,30-962,Polska
+8,Barbican,NULL,50.065489,19.941650,AVAILABLE,http://www.mhk.pl/oddzialy/barbakan,0.0,Basztowa,Kraków,30-547,Polska
+9,St. Florian's Gate,NULL,50.064780,19.941328,AVAILABLE,http://www.pascal.pl/atrakcja.php?id=28453,0.0,Stare Miasto,Kraków,,Polska
+10,The Czartoryski Museum,NULL,50.064702,19.939843,AVAILABLE,http://www.muzeum-czartoryskich.krakow.pl/,0.0,św. Jana 19,Kraków,31-017,Polska
+11,The Collegium Maius,NULL,50.061567,19.933920,AVAILABLE,http://www.maius.uj.edu.pl/,0.0,Jagiellońska 15,Kraków,31-010,Polska
+12,Palace of Culture and Science,NULL,52.231854,21.006285,AVAILABLE,https://www.Warszawatour.pl/en/tourist-attractions/palace-of-culture-and-science-pa-ac-kultury-i-nauki-2036.html,0.0,plac Defilad 1,Warszawa,00-901,Polska
+13,The Royal Castle,NULL,52.247352,21.016396,AVAILABLE,http://www.zamek-krolewski.pl/en,0.0,plac Zamkowy 4,Warszawa,,Polska
+14,The Palace on the Water,NULL,52.215196,21.035525,AVAILABLE,http://www.lazienki-krolewskie.pl/,0.0,,Warszawa,01-999,Polska
+15,Sigismund's Column,NULL,52.247269,21.013807,AVAILABLE,https://www.Warszawatour.pl/zabytki-i-inne-atrakcje/kolumna-zygmunta-iii-wazy-2021.html,0.0,plac Zamkowy,Warszawa,,Polska
+16,The National Museum,NULL,52.231354,21.027540,AVAILABLE,http://www.mnw.art.pl/en/,0.0,Aleje Jerozolimskie 3,Warszawa,,Polska
+17,Copernicus Science Centre,NULL,52.241814,21.028227,AVAILABLE,http://www.kopernik.org.pl/en/,0.0,Wybrzeże Kościuszkowskie 20,Warszawa,00-390,Polska
+18,The Złote Tarasy,NULL,52.230087,21.003272,AVAILABLE,http://zlotetarasy.pl/en/index,0.0,Złota 59,Warszawa,00-120,Polska
+19,The Tomb of the Unknown Soldier,NULL,52.241008,21.011426,AVAILABLE,http://warszawa.wikia.com/wiki/Gr%C3%B3b_Nieznanego_%C5%BBo%C5%82nierza,0.0,plac Marszałka Józefa Piłsudskiego,Warszawa,,Polska
+20,The Warszawa Upraising Museum,NULL,52.232812,20.981210,AVAILABLE,http://www.1944.pl/en/,0.0,Grzybowska 79,Warszawa,,Polska
+21,The Mermaid of Warszawa,NULL,52.240273,21.032066,AVAILABLE,https://www.Warszawatour.pl/en/Warszawa-for-everyone/for-kids/Warszawa-legends-3160.html,0.0,,Warszawa,,Polska
+22,The Wrocław Fountain,NULL,51.108773,17.078955,AVAILABLE,http://www.Wrocławskafontanna.pl/,0.0,Wystawowa 1,Wrocław,,Polska
+23,The Racławice Panorama,NULL,51.110208,17.044615,AVAILABLE,http://www.panoramaraclawicka.pl/?lang=en,0.0,Jana Ewangelisty Purkyniego 11,Wrocław,50-155,Polska
+24,The Centennial Hall,NULL,51.106906,17.077349,AVAILABLE,http://halastulecia.pl/en/,0.0,Wystawowa 1,Wrocław,51-618,Polska
+25,The Cathedral of St. John the Baptist,NULL,51.114204,17.046763,AVAILABLE,http://www.katedra.archidiecezja.wroc.pl/,0.0,plac Katedralny 18,Wrocław,50-329,Polska
+26,the Japanese Garden,NULL,51.109934,17.080097,AVAILABLE,http://www.Wrocław.pl/en/,0.0,Adama Mickiewicza,Wrocław,51-618,Polska
+27,Grunwaldzki Bridge,NULL,51.109548,17.052863,AVAILABLE,http://www.tl.Wrocław.pl/Wrocław/mosty/most_grunwaldzki.htm,0.0,Słowackiego,Wrocław,50-001,Polska
+28,Sky Tower,NULL,51.095056,17.019456,AVAILABLE,http://www.skytower.pl/,0.0,Powstańców Polskich 95,Wrocław,53-332,Polska
+29,The Wrocław Zoological Garden,NULL,51.104170,17.074208,AVAILABLE,http://www.zoo.Wrocław.pl/index.php?lang=2,0.0,Wróblewskiego 1-5,Wrocław,51-618,Polska
+30,The National Ossolinski Institute,NULL,51.113939,17.036637,AVAILABLE,http://www2.oss.wroc.pl/index.php/english/,0.0,Szewska 37,Wrocław,,Polska

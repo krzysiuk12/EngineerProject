@@ -1,6 +1,8 @@
 package domain.trips;
 
 import domain.common.implementation.VersionedBaseObject;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -9,6 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "TripDirections")
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "creationDate", "lastModificationDate", "removalDate"})
 public class TripDirection extends VersionedBaseObject {
 
     private int ordinal;
@@ -40,6 +43,7 @@ public class TripDirection extends VersionedBaseObject {
         this.ordinal = ordinal;
     }
 
+    @JsonBackReference("tripstep-tripdirection")
     @ManyToOne
     @JoinColumn(name = "id_tripstep", foreignKey = @ForeignKey(name = "FK_tripdirection_tripstep_tripstep"), nullable = false)
     public TripStep getTripStep() {

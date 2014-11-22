@@ -2,6 +2,8 @@ package domain.trips;
 
 import domain.common.implementation.VersionedBaseObject;
 import domain.useraccounts.UserAccount;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,6 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Trip")
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "creationDate", "lastModificationDate", "removalDate"})
 public class Trip extends VersionedBaseObject {
 
     private String name;
@@ -53,7 +56,7 @@ public class Trip extends VersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "description", length = 100, nullable = false)
+    @Column(name = "description", length = 100)
     public String getDescription() {
         return description;
     }
@@ -70,7 +73,8 @@ public class Trip extends VersionedBaseObject {
         this.author = author;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "trip")
+    @JsonManagedReference("trip-tripday")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "trip")
     public List<TripDay> getDays() {
         return days;
     }

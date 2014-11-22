@@ -12,6 +12,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import services.interfaces.IDataGeneratorService;
@@ -27,6 +28,7 @@ import java.nio.charset.StandardCharsets;
  * Created by Krzysztof Kicinger on 2014-11-18.
  */
 @Service
+@Profile("default")
 public class SystemInitializationService {
 
     private IDataGeneratorService dataGeneratorService;
@@ -43,8 +45,8 @@ public class SystemInitializationService {
     @PostConstruct
     public void init() throws Exception {
         if (userManagementService.getUserAccountByLogin(ConfigurationTools.ADMINISTRATOR_LOGIN) == null) {
-            PasswordSecurityProfile passwordSecurityProfile = dataGeneratorService.createAndSavePasswordSecurityProfile(ConfigurationTools.DEFAULT_PASSWORD_SECURITY_PROFILE_NAME, 4, 32, false, 0, 0, false, false, false, false);
-            AccountSecurityProfile accountSecurityProfile = dataGeneratorService.createAndSaveAccountSecurityProfile(ConfigurationTools.DEFAULT_ACCOUNT_SECURITY_PROFILE_NAME, 4, 32, 3, 30, 3);
+            PasswordSecurityProfile passwordSecurityProfile = dataGeneratorService.createAndSavePasswordSecurityProfile(4, 32, false, 0, 0, false, false, false, false);
+            AccountSecurityProfile accountSecurityProfile = dataGeneratorService.createAndSaveAccountSecurityProfile(4, 32, 3, 30, 3);
             SecurityProfile securityProfile = dataGeneratorService.createAndSaveSecurityProfile(ConfigurationTools.DEFAULT_SECURITY_PROFILE_NAME, ConfigurationTools.DEFAULT_SECURITY_PROFILE_NAME, true, accountSecurityProfile, passwordSecurityProfile);
             UserGroup administratorsUserGroup = dataGeneratorService.createAndSaveUserGroup(ConfigurationTools.ADMINISTRATORS_USER_GROUP, ConfigurationTools.ADMINISTRATORS_USER_GROUP, securityProfile);
             UserGroup simpleUsersUserGroup = dataGeneratorService.createAndSaveUserGroup(ConfigurationTools.SIMPLE_USERS_USER_GROUP, ConfigurationTools.SIMPLE_USERS_USER_GROUP, securityProfile);
@@ -62,7 +64,7 @@ public class SystemInitializationService {
         for (CSVRecord csvRecord : parser) {
             Address address = dataGeneratorService.createAddress(readValue(csvRecord.get("STREET")), readValue(csvRecord.get("CITY")), readValue(csvRecord.get("POSTAL CODE")), readValue(csvRecord.get("COUNTRY")));
             Location location = dataGeneratorService.createLocation(readValue(csvRecord.get("NAME")), readValue(csvRecord.get("DESCRIPTION")), readValue(csvRecord.get("URL")), Double.valueOf(csvRecord.get("LATITUDE")), Double.valueOf(csvRecord.get("LONGITUDE")), false, address, createdBy);
-            locationManagementService.saveLocation(location);
+            locationManagementService.saveLocation(location, createdBy);
         }
     }
 

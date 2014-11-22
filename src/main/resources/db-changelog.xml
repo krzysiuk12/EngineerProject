@@ -9,52 +9,55 @@
     <!--<include file="liquibase/db-changelog-1.1.xml" />-->
     <!--<include file="liquibase/db-changelog-1.2.xml" />-->
 
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-1">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-1">
         <createSequence sequenceName="pk_sequence_accountsecurityprofiles"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-2">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-2">
+        <createSequence sequenceName="pk_sequence_comments"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-3">
         <createSequence sequenceName="pk_sequence_individuals"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-3">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-4">
         <createSequence sequenceName="pk_sequence_locations"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-4">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-5">
         <createSequence sequenceName="pk_sequence_logevents"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-5">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-6">
         <createSequence sequenceName="pk_sequence_passwordsecurityprofiles"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-6">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-7">
         <createSequence sequenceName="pk_sequence_preferences"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-7">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-8">
         <createSequence sequenceName="pk_sequence_securityprofiles"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-8">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-9">
         <createSequence sequenceName="pk_sequence_trip"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-9">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-10">
         <createSequence sequenceName="pk_sequence_tripday"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-10">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-11">
         <createSequence sequenceName="pk_sequence_tripdaylocation"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-11">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-12">
         <createSequence sequenceName="pk_sequence_tripdirection"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-12">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-13">
         <createSequence sequenceName="pk_sequence_tripstep"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-13">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-14">
         <createSequence sequenceName="pk_sequence_useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-14">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-15">
         <createSequence sequenceName="pk_sequence_useraccountstatusevents"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-15">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-16">
         <createSequence sequenceName="pk_sequence_usergroups"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-16">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-17">
         <createTable tableName="accountsecurityprofiles">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -77,12 +80,29 @@
             <column name="minimumloginlength" type="INT4">
                 <constraints nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(200)">
+        </createTable>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-18">
+        <createTable tableName="comments">
+            <column name="id" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="VARCHAR(255)"/>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rating" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_location" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_useraccount" type="INT8">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-17">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-19">
         <createTable tableName="individuals">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -95,14 +115,13 @@
             <column name="firstname" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="gender" type="VARCHAR(255)"/>
             <column name="lastname" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="middlename" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-18">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-20">
         <createTable tableName="locations">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -134,13 +153,15 @@
                 <constraints nullable="false"/>
             </column>
             <column name="url" type="VARCHAR(255)"/>
-            <column name="isusersprivate" type="BOOL"/>
+            <column name="isusersprivate" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
             <column name="createdbyaccountid" type="INT8"/>
             <column name="lastmodificationbyid" type="INT8"/>
             <column name="removedbyid" type="INT8"/>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-19">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-21">
         <createTable tableName="logevents">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -162,7 +183,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-20">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-22">
         <createTable tableName="passwordsecurityprofiles">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -185,9 +206,6 @@
             <column name="minimumlength" type="INT4">
                 <constraints nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(200)">
-                <constraints nullable="false"/>
-            </column>
             <column name="periodpasswordchangerequired" type="BOOL">
                 <constraints nullable="false"/>
             </column>
@@ -199,7 +217,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-21">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-23">
         <createTable tableName="preferences">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -212,7 +230,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-22">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-24">
         <createTable tableName="securityprofiles">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -235,7 +253,7 @@
             <column name="id_passwordsecurityprofile" type="INT8"/>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-23">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-25">
         <createTable tableName="trip">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -244,9 +262,7 @@
             <column name="lastmodificationdate" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="removaldate" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="versionnumber" type="INT4"/>
-            <column name="description" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="description" type="VARCHAR(100)"/>
             <column name="enddate" type="date">
                 <constraints nullable="false"/>
             </column>
@@ -261,7 +277,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-24">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-26">
         <createTable tableName="tripdaylocations">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -281,7 +297,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-25">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-27">
         <createTable tableName="tripdays">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -298,7 +314,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-26">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-28">
         <createTable tableName="tripdirections">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -331,7 +347,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-27">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-29">
         <createTable tableName="tripsteps">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -360,7 +376,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-28">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-30">
         <createTable tableName="useraccounts">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -398,7 +414,7 @@
             <column name="id_usergroup" type="INT8"/>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-29">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-31">
         <createTable tableName="useraccountstatusevents">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -417,7 +433,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-30">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-32">
         <createTable tableName="usergroups">
             <column name="id" type="INT8">
                 <constraints nullable="false"/>
@@ -431,115 +447,124 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-31">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-33">
         <addPrimaryKey columnNames="id" constraintName="accountsecurityprofiles_pkey" tableName="accountsecurityprofiles"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-32">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-34">
+        <addPrimaryKey columnNames="id" constraintName="comments_pkey" tableName="comments"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-35">
         <addPrimaryKey columnNames="id" constraintName="individuals_pkey" tableName="individuals"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-33">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-36">
         <addPrimaryKey columnNames="id" constraintName="locations_pkey" tableName="locations"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-34">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-37">
         <addPrimaryKey columnNames="id" constraintName="logevents_pkey" tableName="logevents"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-35">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-38">
         <addPrimaryKey columnNames="id" constraintName="passwordsecurityprofiles_pkey" tableName="passwordsecurityprofiles"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-36">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-39">
         <addPrimaryKey columnNames="id" constraintName="preferences_pkey" tableName="preferences"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-37">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-40">
         <addPrimaryKey columnNames="id" constraintName="securityprofiles_pkey" tableName="securityprofiles"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-38">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-41">
         <addPrimaryKey columnNames="id" constraintName="trip_pkey" tableName="trip"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-39">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-42">
         <addPrimaryKey columnNames="id" constraintName="tripdaylocations_pkey" tableName="tripdaylocations"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-40">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-43">
         <addPrimaryKey columnNames="id" constraintName="tripdays_pkey" tableName="tripdays"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-41">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-44">
         <addPrimaryKey columnNames="id" constraintName="tripdirections_pkey" tableName="tripdirections"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-42">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-45">
         <addPrimaryKey columnNames="id" constraintName="tripsteps_pkey" tableName="tripsteps"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-43">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-46">
         <addPrimaryKey columnNames="id" constraintName="useraccounts_pkey" tableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-44">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-47">
         <addPrimaryKey columnNames="id" constraintName="useraccountstatusevents_pkey" tableName="useraccountstatusevents"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-45">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-48">
         <addPrimaryKey columnNames="id" constraintName="usergroups_pkey" tableName="usergroups"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-46">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-49">
         <addUniqueConstraint columnNames="email" constraintName="uk_8ky8m25eaocycfvvg96ipvg5t" deferrable="false" disabled="false" initiallyDeferred="false" tableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-47">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-50">
         <addUniqueConstraint columnNames="useraccountid" constraintName="uk_nocqw9ps044vh3llgrfjmb2in" deferrable="false" disabled="false" initiallyDeferred="false" tableName="preferences"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-48">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-51">
         <addUniqueConstraint columnNames="id_individual" constraintName="uk_ojynn85ad5isym0lvq932ccn2" deferrable="false" disabled="false" initiallyDeferred="false" tableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-49">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-52">
+        <addForeignKeyConstraint baseColumnNames="id_useraccount" baseTableName="comments" constraintName="fk_36hrmhqa7oxt5rl7ep155klc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="useraccounts"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-53">
         <addForeignKeyConstraint baseColumnNames="removedbyid" baseTableName="locations" constraintName="fk_60x1favnleklmqxnwexl7xsgo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-50">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-54">
         <addForeignKeyConstraint baseColumnNames="id_useraccount" baseTableName="logevents" constraintName="fk_c4wny9gf6rdfme1sd1tes2btc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-51">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-55">
+        <addForeignKeyConstraint baseColumnNames="id_location" baseTableName="comments" constraintName="fk_fw496nmp280sglfwjadmgao8m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="locations"/>
+    </changeSet>
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-56">
         <addForeignKeyConstraint baseColumnNames="createdbyaccountid" baseTableName="locations" constraintName="fk_lis2q4tlt8v45ry06onot2bwn" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-52">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-57">
         <addForeignKeyConstraint baseColumnNames="lastmodificationbyid" baseTableName="locations" constraintName="fk_lo38wmdutek44fvggnjwa3pbg" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-53">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-58">
         <addForeignKeyConstraint baseColumnNames="id_useraccount" baseTableName="useraccountstatusevents" constraintName="fk_no6lbhatjygalcjrgwlqmfm62" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-54">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-59">
         <addForeignKeyConstraint baseColumnNames="useraccountid" baseTableName="preferences" constraintName="fk_nocqw9ps044vh3llgrfjmb2in" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-55">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-60">
         <addForeignKeyConstraint baseColumnNames="id_individual" baseTableName="useraccounts" constraintName="fk_ojynn85ad5isym0lvq932ccn2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="individuals"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-56">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-61">
         <addForeignKeyConstraint baseColumnNames="id_accountsecurityprofile" baseTableName="securityprofiles" constraintName="fk_securityprofile_accountsecurityprofile" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="accountsecurityprofiles"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-57">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-62">
         <addForeignKeyConstraint baseColumnNames="id_passwordsecurityprofile" baseTableName="securityprofiles" constraintName="fk_securityprofile_passwordsecurityprofile" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="passwordsecurityprofiles"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-58">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-63">
         <addForeignKeyConstraint baseColumnNames="id_useraccount" baseTableName="trip" constraintName="fk_trip_useraccount_author" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="useraccounts"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-59">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-64">
         <addForeignKeyConstraint baseColumnNames="id_trip" baseTableName="tripdays" constraintName="fk_tripday_trip_trip" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="trip"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-60">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-65">
         <addForeignKeyConstraint baseColumnNames="id_location" baseTableName="tripdaylocations" constraintName="fk_tripdaylocation_location_location" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="locations"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-61">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-66">
         <addForeignKeyConstraint baseColumnNames="id_tripday" baseTableName="tripdaylocations" constraintName="fk_tripdaylocation_tripday_tripday" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tripdays"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-62">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-67">
         <addForeignKeyConstraint baseColumnNames="id_tripstep" baseTableName="tripdirections" constraintName="fk_tripdirection_tripstep_tripstep" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tripsteps"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-63">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-68">
         <addForeignKeyConstraint baseColumnNames="id_endlocation" baseTableName="tripsteps" constraintName="fk_tripstep_location_endlocation" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="locations"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-64">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-69">
         <addForeignKeyConstraint baseColumnNames="id_startlocation" baseTableName="tripsteps" constraintName="fk_tripstep_location_startlocation" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="locations"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-65">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-70">
         <addForeignKeyConstraint baseColumnNames="id_tripday" baseTableName="tripsteps" constraintName="fk_tripstep_tripday_tripday" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tripdays"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-66">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-71">
         <addForeignKeyConstraint baseColumnNames="id_usergroup" baseTableName="useraccounts" constraintName="fk_useraccount_usergroup_usergroup" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="usergroups"/>
     </changeSet>
-    <changeSet author="Krzysztof Kicinger (generated)" id="1416348662277-67">
+    <changeSet author="Krzysztof Kicinger (generated)" id="1416610434468-72">
         <addForeignKeyConstraint baseColumnNames="id_securityprofile" baseTableName="usergroups" constraintName="fk_usergroup_securityprofile_securityprofile" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="securityprofiles"/>
     </changeSet>
 </databaseChangeLog>

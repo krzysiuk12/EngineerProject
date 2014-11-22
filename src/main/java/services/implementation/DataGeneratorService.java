@@ -52,9 +52,8 @@ public class DataGeneratorService implements IDataGeneratorService {
     }
 
     @Override
-    public AccountSecurityProfile createAccountSecurityProfile(String name, int minLoginLen, int maxLoginLen, int maxInvalidLoginAttempts, int lockoutDuration, int maxLockoutsBeforeTurningOff) {
+    public AccountSecurityProfile createAccountSecurityProfile(int minLoginLen, int maxLoginLen, int maxInvalidLoginAttempts, int lockoutDuration, int maxLockoutsBeforeTurningOff) {
         AccountSecurityProfile accountSecurityProfile = new AccountSecurityProfile();
-        accountSecurityProfile.setName(name);
         accountSecurityProfile.setMinimumLoginLength(minLoginLen);
         accountSecurityProfile.setMaximumLoginLength(maxLoginLen);
         accountSecurityProfile.setMaximumInvalidLogInAttempts(maxInvalidLoginAttempts);
@@ -66,16 +65,15 @@ public class DataGeneratorService implements IDataGeneratorService {
 
     @Override
     @Transactional
-    public AccountSecurityProfile createAndSaveAccountSecurityProfile(String name, int minLoginLen, int maxLoginLen, int maxInvalidLoginAttempts, int lockoutDuration, int maxLockoutsBeforeTurningOff) throws Exception {
-        AccountSecurityProfile accountSecurityProfile = createAccountSecurityProfile(name, minLoginLen, maxLoginLen, maxInvalidLoginAttempts, lockoutDuration, maxLockoutsBeforeTurningOff);
+    public AccountSecurityProfile createAndSaveAccountSecurityProfile(int minLoginLen, int maxLoginLen, int maxInvalidLoginAttempts, int lockoutDuration, int maxLockoutsBeforeTurningOff) throws Exception {
+        AccountSecurityProfile accountSecurityProfile = createAccountSecurityProfile(minLoginLen, maxLoginLen, maxInvalidLoginAttempts, lockoutDuration, maxLockoutsBeforeTurningOff);
         securityProfileManagementService.saveAccountSecurityProfile(accountSecurityProfile);
         return accountSecurityProfile;
     }
 
     @Override
-    public PasswordSecurityProfile createPasswordSecurityProfile(String name, int minLen, int maxLen, boolean periodChangeRequired, int maxAge, int infoDays, boolean digitRequired, boolean lowerCaseRequired, boolean upperCaseRequired, boolean specialRequired) {
+    public PasswordSecurityProfile createPasswordSecurityProfile(int minLen, int maxLen, boolean periodChangeRequired, int maxAge, int infoDays, boolean digitRequired, boolean lowerCaseRequired, boolean upperCaseRequired, boolean specialRequired) {
         PasswordSecurityProfile passwordSecurityProfile = new PasswordSecurityProfile();
-        passwordSecurityProfile.setName(name);
         passwordSecurityProfile.setMinimumLength(minLen);
         passwordSecurityProfile.setMaximumLength(maxLen);
         passwordSecurityProfile.setPeriodPasswordChangeRequired(periodChangeRequired);
@@ -90,8 +88,8 @@ public class DataGeneratorService implements IDataGeneratorService {
 
     @Override
     @Transactional
-    public PasswordSecurityProfile createAndSavePasswordSecurityProfile(String name, int minLen, int maxLen, boolean periodChangeRequired, int maxAge, int infoDays, boolean digitRequired, boolean lowerCaseRequired, boolean upperCaseRequired, boolean specialRequired) throws Exception {
-        PasswordSecurityProfile passwordSecurityProfile = createPasswordSecurityProfile(name, minLen, maxLen, periodChangeRequired, maxAge, infoDays, digitRequired, lowerCaseRequired, upperCaseRequired, specialRequired);
+    public PasswordSecurityProfile createAndSavePasswordSecurityProfile(int minLen, int maxLen, boolean periodChangeRequired, int maxAge, int infoDays, boolean digitRequired, boolean lowerCaseRequired, boolean upperCaseRequired, boolean specialRequired) throws Exception {
+        PasswordSecurityProfile passwordSecurityProfile = createPasswordSecurityProfile(minLen, maxLen, periodChangeRequired, maxAge, infoDays, digitRequired, lowerCaseRequired, upperCaseRequired, specialRequired);
         securityProfileManagementService.savePasswordSecurityProfile(passwordSecurityProfile);
         return passwordSecurityProfile;
     }
@@ -175,14 +173,6 @@ public class DataGeneratorService implements IDataGeneratorService {
     }
 
     @Override
-    @Transactional
-    public Address createAndSaveAddress(String street, String city, String postalCode, String country) throws Exception {
-        Address address = createAddress(street, city, postalCode, country);
-        locationManagementService.saveAddress(address);
-        return address;
-    }
-
-    @Override
     public Location createLocation(String name, String desc, String url, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy) {
         Location location = new Location();
         location.setName(name);
@@ -194,6 +184,7 @@ public class DataGeneratorService implements IDataGeneratorService {
         location.setAddress(address);
         location.setUrl(url);
         location.setRating(0.0);
+        location.updateInformation(createdBy);
         return location;
     }
 
@@ -201,7 +192,7 @@ public class DataGeneratorService implements IDataGeneratorService {
     @Transactional
     public Location createAndSaveLocation(String name, String desc, String url, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy) throws Exception {
         Location location = createLocation(name, desc, url, latitude, longitude, usersPrivate, address, createdBy);
-        locationManagementService.saveLocation(location);
+        locationManagementService.saveLocation(location, createdBy);
         return location;
     }
 

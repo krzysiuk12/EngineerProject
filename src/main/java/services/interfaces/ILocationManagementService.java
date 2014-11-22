@@ -1,7 +1,8 @@
 package services.interfaces;
 
-import domain.locations.Address;
+import domain.locations.Comment;
 import domain.locations.Location;
+import domain.useraccounts.UserAccount;
 
 import java.util.List;
 
@@ -10,11 +11,12 @@ import java.util.List;
  */
 public interface ILocationManagementService {
 
-    public void saveLocation(Location location) throws Exception;
-    public void saveAddress(Address address) throws Exception;
+    public void saveLocation(Location location, UserAccount executor) throws Exception;
+    public void saveComment(Comment comment) throws Exception;
 
     public void addNewLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception;
     public void addNewPrivateLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception;
+    public void addNewComment(Long locationId, Comment.Rating rating, String comment, String userToken) throws Exception;
 
     public Location getLocationById(Long id);
     public Location getLocationByIdAllData(Long id);

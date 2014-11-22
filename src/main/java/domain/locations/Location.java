@@ -2,8 +2,10 @@ package domain.locations;
 
 import domain.common.implementation.UserVersionedBaseObject;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Krzysiu on 2014-05-25.
@@ -41,6 +43,8 @@ public class Location extends UserVersionedBaseObject {
     private String url;
     private double rating;
     private Address address;
+    @JsonManagedReference("location-comment")
+    private List<Comment> comments;
 
     public Location() {
     }
@@ -54,21 +58,21 @@ public class Location extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "description", length = 500)
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Basic
     @Column(name = "name", length = 200, nullable = false)
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Basic
+    @Column(name = "description", length = 500)
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Basic
@@ -108,7 +112,7 @@ public class Location extends UserVersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "isUsersPrivate")
+    @Column(name = "isUsersPrivate", nullable = false)
     public boolean isUsersPrivate() {
         return usersPrivate;
     }
@@ -131,5 +135,13 @@ public class Location extends UserVersionedBaseObject {
     }
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
+    public List<Comment> getComments() {
+        return comments;
+    }
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

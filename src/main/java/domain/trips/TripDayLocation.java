@@ -2,6 +2,8 @@ package domain.trips;
 
 import domain.common.implementation.VersionedBaseObject;
 import domain.locations.Location;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -10,8 +12,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "TripDayLocations")
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "creationDate", "lastModificationDate", "removalDate"})
 public class TripDayLocation extends VersionedBaseObject {
 
+    @JsonBackReference("tripday-tripdaylocation")
     private TripDay tripDay;
     private Location location;
     private int ordinal;

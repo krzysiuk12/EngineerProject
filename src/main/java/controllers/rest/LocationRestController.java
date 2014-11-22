@@ -2,6 +2,7 @@ package controllers.rest;
 
 import domain.locations.Location;
 import jsonserializers.common.ResponseSerializer;
+import jsonserializers.locations.CommentSerializer;
 import jsonserializers.locations.LocationSerializer;
 import jsonserializers.locations.LocationStatusChangeSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class LocationRestController {
         this.userManagementService = userManagementService;
     }
 
+    //<editor-fold desc="Add new location">
     @RequestMapping(method = RequestMethod.POST)
     public
     @ResponseBody
@@ -35,7 +37,7 @@ public class LocationRestController {
         try {
             locationManagementService.addNewLocation(data.getName(), data.getLongitude(), data.getLatitude(), data.getAddressCity(), data.getAddressCountry(), token);
             return new ResponseSerializer();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
             throw ex;
         }
@@ -48,7 +50,19 @@ public class LocationRestController {
         locationManagementService.addNewPrivateLocation(data.getName(), data.getLongitude(), data.getLatitude(), data.getAddressCity(), data.getAddressCountry(), token);
         return new ResponseSerializer();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Add new comment">
+    @RequestMapping(value = "/{id}/comment", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    ResponseSerializer addNewComment(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id, @RequestBody CommentSerializer commentSerializer) throws Exception {
+        locationManagementService.addNewComment(id, commentSerializer.getRating(), commentSerializer.getComment(), token);
+        return new ResponseSerializer();
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get Locations Lists">
     @RequestMapping(method = RequestMethod.GET)
     public
     @ResponseBody
@@ -56,6 +70,15 @@ public class LocationRestController {
         return new ResponseSerializer(locationManagementService.getAllLocations());
     }
 
+    @RequestMapping(value = "/my", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseSerializer<List<Location>> getAllUsersPrivateLocations(@RequestHeader(value = "authorization") String token) throws Exception {
+        return new ResponseSerializer(locationManagementService.getAllUsersPrivateLocations(userManagementService.getUserAccountByToken(token).getId()));
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get Location By Id">
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public
     @ResponseBody
@@ -70,7 +93,7 @@ public class LocationRestController {
     @ResponseBody
     ResponseSerializer<Location> getMyLocationById(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) throws Exception {
         Location location = locationManagementService.getMyLocationByIdAllData(id, token);
-        if(location != null) {
+        if (location != null) {
             location.setCreatedByAccount(null);
         }
         return new ResponseSerializer(location);
@@ -82,7 +105,9 @@ public class LocationRestController {
     ResponseSerializer<Location> getLocationByIdAllData(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) throws Exception {
         return new ResponseSerializer(locationManagementService.getLocationByIdAllData(id));
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Change status, update, delete location">
     @RequestMapping(value = "/{locationId}/status", method = RequestMethod.PUT)
     public
     @ResponseBody
@@ -107,10 +132,6 @@ public class LocationRestController {
         locationManagementService.changeLocationStatus(id, Location.Status.REMOVED);
         return new ResponseSerializer();
     }
-
-    @RequestMapping(value = "/my", method = RequestMethod.GET)
-    public @ResponseBody ResponseSerializer<List<Location>> getAllUsersPrivateLocations(@RequestHeader(value = "authorization") String token) throws Exception {
-        return new ResponseSerializer(locationManagementService.getAllUsersPrivateLocations(userManagementService.getUserAccountByToken(token).getId()));
-    }
+    //</editor-fold>
 
 }

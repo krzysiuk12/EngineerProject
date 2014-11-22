@@ -25,19 +25,19 @@ public class SecurityProfilesManagementService implements ISecurityProfileManage
     @Override
     @Transactional
     public void saveSecurityProfile(SecurityProfile securityProfile) throws Exception {
-        securityProfilesManagementRepository.saveSecurityProfile(securityProfile);
+        securityProfilesManagementRepository.saveOrUpdate(securityProfile);
     }
 
     @Override
     @Transactional
     public void saveAccountSecurityProfile(AccountSecurityProfile accountSecurityProfile) throws Exception {
-        securityProfilesManagementRepository.saveAccountSecurityProfile(accountSecurityProfile);
+        securityProfilesManagementRepository.saveOrUpdate(accountSecurityProfile);
     }
 
     @Override
     @Transactional
     public void savePasswordSecurityProfile(PasswordSecurityProfile passwordSecurityProfile) throws Exception {
-        securityProfilesManagementRepository.savePasswordSecurityProfile(passwordSecurityProfile);
+        securityProfilesManagementRepository.saveOrUpdate(passwordSecurityProfile);
     }
 
     @Override

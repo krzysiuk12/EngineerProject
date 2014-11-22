@@ -20,11 +20,11 @@ public interface IDataGeneratorService {
 
     public UserGroup createAndSaveUserGroup(String name, String desc, SecurityProfile securityProfile) throws Exception;
 
-    public AccountSecurityProfile createAccountSecurityProfile(String name, int minLoginLen, int maxLoginLen, int maxInvalidLoginAttempts, int lockoutDuration, int maxLockoutsBeforeTurningOff);
-    public AccountSecurityProfile createAndSaveAccountSecurityProfile(String name, int minLoginLen, int maxLoginLen, int maxInvalidLoginAttempts, int lockoutDuration, int maxLockoutsBeforeTurningOff) throws Exception;
+    public AccountSecurityProfile createAccountSecurityProfile(int minLoginLen, int maxLoginLen, int maxInvalidLoginAttempts, int lockoutDuration, int maxLockoutsBeforeTurningOff);
+    public AccountSecurityProfile createAndSaveAccountSecurityProfile(int minLoginLen, int maxLoginLen, int maxInvalidLoginAttempts, int lockoutDuration, int maxLockoutsBeforeTurningOff) throws Exception;
 
-    public PasswordSecurityProfile createPasswordSecurityProfile(String name, int minLen, int maxLen, boolean periodChangeRequired, int maxAge, int infoDays, boolean digitRequired, boolean lowerCaseRequired, boolean upperCaseRequired, boolean specialRequired);
-    public PasswordSecurityProfile createAndSavePasswordSecurityProfile(String name, int minLen, int maxLen, boolean periodChangeRequired, int maxAge, int infoDays, boolean digitRequired, boolean lowerCaseRequired, boolean upperCaseRequired, boolean specialRequired) throws Exception;
+    public PasswordSecurityProfile createPasswordSecurityProfile(int minLen, int maxLen, boolean periodChangeRequired, int maxAge, int infoDays, boolean digitRequired, boolean lowerCaseRequired, boolean upperCaseRequired, boolean specialRequired);
+    public PasswordSecurityProfile createAndSavePasswordSecurityProfile(int minLen, int maxLen, boolean periodChangeRequired, int maxAge, int infoDays, boolean digitRequired, boolean lowerCaseRequired, boolean upperCaseRequired, boolean specialRequired) throws Exception;
 
     public SecurityProfile createSecurityProfile(String name, String desc, boolean isDefault, AccountSecurityProfile accountSecurityProfile, PasswordSecurityProfile passwordSecurityProfile);
     public SecurityProfile createAndSaveSecurityProfile(String name, String desc, boolean isDefault, AccountSecurityProfile accountSecurityProfile, PasswordSecurityProfile passwordSecurityProfile)throws Exception;
@@ -36,8 +36,6 @@ public interface IDataGeneratorService {
     public Individual createAndSaveIndividual(String firstName, String middleName, String lastName, Date dateOfBirth, String description, String facebookAccountUrl, String city, String country) throws Exception;
 
     public Address createAddress(String street, String city, String postalCode, String country);
-    public Address createAndSaveAddress(String street, String city, String postalCode, String country) throws Exception;
-
     public Location createLocation(String name, String desc, String url, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy);
     public Location createAndSaveLocation(String name, String desc, String url, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy) throws Exception;
 

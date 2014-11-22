@@ -2,6 +2,9 @@ package domain.trips;
 
 import domain.common.implementation.VersionedBaseObject;
 import domain.locations.Location;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "TripSteps")
+@JsonIgnoreProperties(ignoreUnknown = true, value = { "versionNumber", "creationDate", "lastModificationDate", "removalDate"})
 public class TripStep extends VersionedBaseObject {
 
     private TripDay tripDay;
@@ -32,6 +36,7 @@ public class TripStep extends VersionedBaseObject {
         return super.getId();
     }
 
+    @JsonBackReference("tripday-tripstep")
     @ManyToOne
     @JoinColumn(name = "id_tripday", foreignKey = @ForeignKey(name = "FK_tripstep_tripday_tripday"), nullable = false)
     public TripDay getTripDay() {
@@ -86,7 +91,8 @@ public class TripStep extends VersionedBaseObject {
         this.duration = duration;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tripStep")
+    @JsonManagedReference("tripstep-tripdirection")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tripStep")
     public List<TripDirection> getDirections() {
         return directions;
     }

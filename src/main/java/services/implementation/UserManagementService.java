@@ -34,6 +34,7 @@ public class UserManagementService implements IUserManagementService {
         this.codeGeneratorService = codeGeneratorService;
     }
 
+    //<editor-fold desc="Save UserAccount, Individual, UserGroup">
     @Override
     @Transactional
     public void saveUserAccount(UserAccount account) throws Exception {
@@ -41,7 +42,7 @@ public class UserManagementService implements IUserManagementService {
         if (!errorMessages.isEmpty()) {
             throw new FormValidationError(errorMessages);
         }
-        userManagementRepository.saveOrUpdateUserAccount(account);
+        userManagementRepository.saveOrUpdate(account);
     }
 
     @Override
@@ -51,19 +52,32 @@ public class UserManagementService implements IUserManagementService {
         if (!errorMessages.isEmpty()) {
             throw new FormValidationError(errorMessages);
         }
-        userManagementRepository.saveOrUpdateIndividual(individual);
+        userManagementRepository.saveOrUpdate(individual);
     }
+
+    @Override
+    @Transactional
+    public void saveUserGroup(UserGroup userGroup) throws Exception {
+        userManagementRepository.saveOrUpdate(userGroup);
+    }
+    //</editor-fold>
 
     @Override
     @Transactional
     public void addUserAccount(String login, String password, String email, String firstName, String lastName) throws Exception {
         Individual individual = createIndividual(firstName, lastName);
-        saveIndividual(individual);
         UserAccount userAccount = createUserAccount(login, password, email);
         userAccount.setIndividual(individual);
+
+        List<ErrorMessages> errorMessages = validateNewUserAccount(userAccount);
+        if (!errorMessages.isEmpty()) {
+            throw new FormValidationError(errorMessages);
+        }
+        saveIndividual(individual);
         saveUserAccount(userAccount);
     }
 
+    //<editor-fold desc="Get UserAccount By ... (Id, Token, Login)">
     @Override
     @Transactional(readOnly = true)
     public UserAccount getUserAccountById(Long id) {
@@ -80,7 +94,6 @@ public class UserManagementService implements IUserManagementService {
     @Transactional(readOnly = true)
     public UserAccount getUserAccountByLogin(String login) {
         UserAccount account = userManagementRepository.getUserAccountByLogin(login);
-//        account.setIndividual(null);
         return account;
     }
 
@@ -89,6 +102,7 @@ public class UserManagementService implements IUserManagementService {
     public UserAccount getUserAccountByToken(String token) {
         return userManagementRepository.getUserAccountByToken(token);
     }
+    //</editor-fold>
 
     @Override
     @Transactional(readOnly = true)
@@ -100,6 +114,7 @@ public class UserManagementService implements IUserManagementService {
         return userAccounts;
     }
 
+    //<editor-fold desc="Authenticate UserAccount">
     @Override
     @Transactional(readOnly = true)
     public boolean authenticateUserAccountByToken(String token) {
@@ -113,13 +128,9 @@ public class UserManagementService implements IUserManagementService {
         UserAccount userAccount = userManagementRepository.getUserAccountByToken(token);
         return userAccount != null && userAccount.getStatus() == UserAccount.Status.ACTIVE && userAccount.getLogin().equals("admin");
     }
+    //</editor-fold>
 
-    @Override
-    @Transactional
-    public void saveUserGroup(UserGroup userGroup) throws Exception {
-        userManagementRepository.saveOrUpdateUserGroup(userGroup);
-    }
-
+    //<editor-fold desc="Get UserGroup By Id, Name">
     @Override
     @Transactional(readOnly = true)
     public UserGroup getUserGroupById(Long id) {
@@ -131,17 +142,24 @@ public class UserManagementService implements IUserManagementService {
     public UserGroup getUserGroupByName(String name) {
         return userManagementRepository.getUserGroupByName(name);
     }
+    //</editor-fold>
 
+    @Override
+    public void changeUserAccountPassword(String newPassword, String currentPassword, String userToken) throws Exception {
+        UserAccount userAccount = getUserAccountByToken(userToken);
+        if(userAccount.getPassword().equals(currentPassword)) {
+            userAccount.setPassword(newPassword);
+            saveUserAccount(userAccount);
+        } else {
+            //throw new FormValidationError()
+        }
+    }
+
+    //<editor-fold desc="Validation UserAccount, Individual">
     private List<ErrorMessages> validateUserAccount(UserAccount userAccount) {
         List<ErrorMessages> errorMessages = new ArrayList<>();
         if (userAccount.getLogin() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
-        }
-        if (userAccount.getLogin() != null && !ValidationTools.validateLogin(userAccount.getLogin())) {
-            errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
-        }
-        if (!userManagementRepository.validateUniqueLogin(userAccount.getLogin())) {
-            errorMessages.add(ErrorMessages.INVALID_USER_LOGIN_EXISTS_IN_SYSTEM);
         }
         if (userAccount.getPassword() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_PASSWORD);
@@ -149,11 +167,22 @@ public class UserManagementService implements IUserManagementService {
         if (userAccount.getStatus() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_STATUS);
         }
-        if (userAccount.getToken() == null) {
+/*        if (userAccount.getToken() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_TOKEN);
-        }
+        }*/
         if (userAccount.getEmail() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_EMAIL);
+        }
+        return errorMessages;
+    }
+
+    private List<ErrorMessages> validateNewUserAccount(UserAccount userAccount) {
+        List<ErrorMessages> errorMessages = new ArrayList<>();
+        if (userAccount.getLogin() != null && !ValidationTools.validateLogin(userAccount.getLogin())) {
+            errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
+        }
+        if (!userManagementRepository.validateUniqueLogin(userAccount.getLogin())) {
+            errorMessages.add(ErrorMessages.INVALID_USER_LOGIN_EXISTS_IN_SYSTEM);
         }
         if (userAccount.getEmail() != null && !ValidationTools.validateEmail(userAccount.getEmail())) {
             errorMessages.add(ErrorMessages.INVALID_USER_LOGIN);
@@ -161,6 +190,7 @@ public class UserManagementService implements IUserManagementService {
         if (!userManagementRepository.validateUniqueEmail(userAccount.getEmail())) {
             errorMessages.add(ErrorMessages.INVALID_USER_EMAIL_EXISTS_IN_SYSTEM);
         }
+        errorMessages.addAll(validateUserAccount(userAccount));
         return errorMessages;
     }
 
@@ -180,7 +210,9 @@ public class UserManagementService implements IUserManagementService {
         }
         return errorMessages;
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Creation Helper Methods">
     private UserAccount createUserAccount(String login, String password, String email) {
         UserAccount userAccount = new UserAccount();
         userAccount.setLogin(login);
@@ -200,5 +232,6 @@ public class UserManagementService implements IUserManagementService {
         individual.setLastName(lastName);
         return individual;
     }
+    //</editor-fold>
 
 }

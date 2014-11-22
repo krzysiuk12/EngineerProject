@@ -1,5 +1,6 @@
 package repository.implementation;
 
+import domain.common.implementation.BaseObject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -20,7 +21,11 @@ public abstract class BaseHibernateRepository {
         return sessionFactory.getCurrentSession();
     }
 
-    protected <T> T returnSingleOrNull(List<T> accounts) {
+    public <T extends BaseObject> void saveOrUpdate(T entity) {
+        getCurrentSession().saveOrUpdate(entity);
+    }
+
+    public <T> T returnSingleOrNull(List<T> accounts) {
         return accounts != null && accounts.size() == 1 ? accounts.get(0) : null;
     }
 

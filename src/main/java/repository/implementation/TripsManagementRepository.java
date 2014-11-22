@@ -3,6 +3,7 @@ package repository.implementation;
 import domain.trips.*;
 import domain.useraccounts.UserAccount;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
@@ -64,7 +65,9 @@ public class TripsManagementRepository extends BaseHibernateRepository implement
         criteria.createAlias("days", "days", JoinType.INNER_JOIN);
         criteria.createAlias("days.locations", "locations", JoinType.INNER_JOIN);
         criteria.createAlias("days.tripSteps", "tripSteps", JoinType.INNER_JOIN);
-        criteria.createAlias("tripSteps.directions", "directions", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("tripSteps.directions", "directions", JoinType.INNER_JOIN);
+        criteria.createAlias("author", "author", JoinType.INNER_JOIN);
+        criteria.createAlias("author.individual", "individual", JoinType.INNER_JOIN);
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return (Trip)returnSingleOrNull(criteria.list());
     }
@@ -91,10 +94,10 @@ public class TripsManagementRepository extends BaseHibernateRepository implement
     public Trip getTripByIdAllData(Long id) {
         Criteria criteria = getCurrentSession().createCriteria(Trip.class);
         criteria.add(Restrictions.eq("id", id));
-        criteria.createAlias("days", "days", JoinType.INNER_JOIN);
-        criteria.createAlias("days.locations", "locations", JoinType.INNER_JOIN);
         criteria.createAlias("days.tripSteps", "tripSteps", JoinType.INNER_JOIN);
-        criteria.createAlias("tripSteps.directions", "directions", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("tripSteps.directions", "directions", JoinType.INNER_JOIN);
+        criteria.createAlias("author", "author", JoinType.INNER_JOIN);
+        criteria.createAlias("author.individual", "individual", JoinType.INNER_JOIN);
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return (Trip)returnSingleOrNull(criteria.list());
     }
@@ -119,9 +122,8 @@ public class TripsManagementRepository extends BaseHibernateRepository implement
     public TripDay getTripDayByIdAllData(Long id) {
         Criteria criteria = getCurrentSession().createCriteria(TripDay.class);
         criteria.add(Restrictions.eq("id", id));
-        criteria.createAlias("locations", "locations", JoinType.INNER_JOIN);
-        criteria.createAlias("tripSteps", "tripSteps", JoinType.INNER_JOIN);
-        criteria.createAlias("tripSteps.directions", "directions", JoinType.LEFT_OUTER_JOIN);
+        criteria.setFetchMode("tripSteps", FetchMode.SELECT);
+        criteria.setFetchMode("tripSteps.directions", FetchMode.SELECT);
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return (TripDay)returnSingleOrNull(criteria.list());
     }

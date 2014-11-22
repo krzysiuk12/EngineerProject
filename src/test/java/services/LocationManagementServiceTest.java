@@ -29,17 +29,17 @@ public class LocationManagementServiceTest extends BaseTestObject {
     public void saveOrUpdateLocationTest() {
         try {
             Location location = createLocation("SaveTest1", 10.0, 10.0, Location.Status.AVAILABLE, createAddress("Krakow", "Polska"));
-            locationManagementService.saveLocation(location);
+            locationManagementService.saveLocation(location, null);
             List<Location> locations = locationManagementService.getAllLocations();
             assertCollectionSize(locations, 1);
 
             Location location2 = createLocation("SaveTest2", 10.0, 10.0, Location.Status.AVAILABLE, createAddress("Krakow", "Polska"));
-            locationManagementService.saveLocation(location2);
+            locationManagementService.saveLocation(location2, null);
             locations = locationManagementService.getAllLocations();
             assertCollectionSize(locations, 2);
 
             Location location3 = createLocation("SaveTest3", 10.0, 10.0, Location.Status.AVAILABLE, createAddress("Krakow", "Polska"));
-            locationManagementService.saveLocation(location3);
+            locationManagementService.saveLocation(location3, null);
             locations = locationManagementService.getAllLocations();
             assertCollectionSize(locations, 3);
         } catch(Exception ex) {
@@ -51,9 +51,9 @@ public class LocationManagementServiceTest extends BaseTestObject {
     public void getLocationByIdTest() {
         try {
             Location location = createLocation("GetLocationByIdTest1", 10.0, 10.0, Location.Status.AVAILABLE, createAddress("Krakow", "Polska"));
-            locationManagementService.saveLocation(location);
+            locationManagementService.saveLocation(location, null);
             Location location2 = createLocation("GetLocationByIdTest2", 10.0, 10.0, Location.Status.AVAILABLE, createAddress("Krakow", "Polska"));
-            locationManagementService.saveLocation(location2);
+            locationManagementService.saveLocation(location2, null);
             Location resultLocation = locationManagementService.getLocationById(location.getId());
             compareLocations(location, resultLocation);
             Location resultLocationAllData = locationManagementService.getLocationByIdAllData(location.getId());
@@ -71,11 +71,11 @@ public class LocationManagementServiceTest extends BaseTestObject {
     public void getAllLocationTest() {
         try {
             Location location = createLocation("GetAllLocationTest1", 10.0, 10.0, Location.Status.AVAILABLE, createAddress("Krakow", "Polska"));
-            locationManagementService.saveLocation(location);
+            locationManagementService.saveLocation(location, null);
             List<Location> locations = locationManagementService.getAllLocations();
 
             Location location2 = createLocation("GetAllLocationTest2", 10.0, 10.0, Location.Status.AVAILABLE, createAddress("Krakow", "Polska"));
-            locationManagementService.saveLocation(location2);
+            locationManagementService.saveLocation(location2, null);
             List<Location> locations2 = locationManagementService.getAllLocations();
             assertCollectionSize(locations2, locations.size() + 1);
         } catch(Exception ex) {

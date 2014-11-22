@@ -13,10 +13,7 @@ import services.interfaces.ILocationManagementService;
 import services.interfaces.ITripsManagementService;
 import services.interfaces.IUserManagementService;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Krzysztof Kicinger on 2014-11-18.
@@ -46,15 +43,15 @@ public class TripsManagementService implements ITripsManagementService {
         tripDay.setLocations(null);
         tripsManagementRepository.saveTripDay(tripDay);
 
-        for(TripDayLocation dayLocation : locations) {
+        for (TripDayLocation dayLocation : locations) {
             tripsManagementRepository.saveTripDayLocation(dayLocation);
         }
 
-        for(TripStep step : tripSteps) {
+        for (TripStep step : tripSteps) {
             List<TripDirection> directions = step.getDirections();
             step.setDirections(null);
             tripsManagementRepository.saveTripStep(step);
-            for(TripDirection direction : directions) {
+            for (TripDirection direction : directions) {
                 tripsManagementRepository.saveTripDirection(direction);
             }
             step.setDirections(directions);
@@ -65,33 +62,81 @@ public class TripsManagementService implements ITripsManagementService {
 
     @Override
     @Transactional
-    public void addNewTrip(String name, String desc, Date startDate, Date endDate, List<TripDayCreationSerializer> daysData, String userToken) throws Exception {
+    public Trip addNewTrip(String name, String desc, Date startDate, TravelMode mode, DistanceUnit unit, List<TripDayCreationSerializer> daysData, String userToken) throws Exception {
         Trip trip = new Trip();
         trip.setName(name);
         trip.setDescription(desc);
         trip.setStartDate(startDate);
-        trip.setEndDate(endDate);
-        trip.setAuthor(userManagementService.getUserAccountByToken(userToken));
-        tripsManagementRepository.saveTrip(trip);
 
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(startDate);
-        for(TripDayCreationSerializer day : daysData) {
-            addNewTripDay(trip, calendar.getTime(), day.getOriginLocationId(), day.getDestinationLocationId(), day.getWaypointLocationIds());
+        calendar.add(Calendar.DAY_OF_MONTH, daysData.size() - 1);
+        trip.setEndDate(calendar.getTime());
+
+        trip.setAuthor(userManagementService.getUserAccountByToken(userToken));
+        tripsManagementRepository.saveTrip(trip);
+
+        calendar.setTime(startDate);
+        trip.setDays(new ArrayList<>());
+        for (TripDayCreationSerializer day : daysData) {
+            trip.getDays().add(addNewTripDay(trip, calendar.getTime(), day.getOriginLocationId(), day.getDestinationLocationId(), day.getWaypointLocationIds(), mode, unit));
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
+
+        return trip;
     }
 
     @Override
     @Transactional
-    public void addNewTripDay(Trip trip, Date day, Long originLocationId, Long destinationLocationId, List<Long> waypointIds) throws Exception {
+    public TripDay addNewTripDay(Trip trip, Date day, Long originLocationId, Long destinationLocationId, List<Long> waypointIds, TravelMode travelMode, DistanceUnit distanceUnit) throws Exception {
         Location originLocation = locationManagementService.getLocationById(originLocationId);
         Location destinationLocation = locationManagementService.getLocationById(destinationLocationId);
         List<Location> waypointLocations = locationManagementService.getAllLocationsByIds(waypointIds);
 
-        GoogleDirectionsSerializer serializer = googleDirectionsService.getTripDescription(originLocation, destinationLocation, null, null, waypointLocations);
+        GoogleDirectionsSerializer serializer = googleDirectionsService.getTripDescription(originLocation, destinationLocation, travelMode, distanceUnit, waypointLocations);
         TripDay tripDay = googleDirectionsService.deserializeTripDescription(serializer, originLocation, destinationLocation, waypointLocations, day);
         tripDay.setTrip(trip);
         saveTripDay(tripDay);
+        return tripDay;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Trip> getAllUsersTrips(String token) {
+        return tripsManagementRepository.getAllUsersTrips(userManagementService.getUserAccountByToken(token));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Trip getTripById(Long id) {
+        return tripsManagementRepository.getTripById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Trip getTripByIdAllData(Long id) {
+        return tripsManagementRepository.getTripByIdAllData(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Trip> getAllTrips() {
+        return tripsManagementRepository.getAllTrips();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public TripDay getTripDayById(Long id) {
+        return tripsManagementRepository.getTripDayById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public TripDay getTripDayByIdAllData(Long id) {
+        TripDay tripDay = tripsManagementRepository.getTripDayByIdAllData(id);
+        return tripDay;
+    }
+
+
+
 }

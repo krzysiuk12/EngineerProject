@@ -93,7 +93,7 @@ public class SecurityProfile extends BaseObject {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_passwordsecurityprofile", foreignKey = @ForeignKey(name = "FK_securityprofile_passwordsecurityprofile"), nullable = true)
+    @JoinColumn(name = "id_passwordsecurityprofile", foreignKey = @ForeignKey(name = "FK_securityprofile_passwordsecurityprofile"))
     public PasswordSecurityProfile getPasswordSecurityProfile() {
         return passwordSecurityProfile;
     }
@@ -102,7 +102,7 @@ public class SecurityProfile extends BaseObject {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_accountsecurityprofile", foreignKey = @ForeignKey(name = "FK_securityprofile_accountsecurityprofile"), nullable = true)
+    @JoinColumn(name = "id_accountsecurityprofile", foreignKey = @ForeignKey(name = "FK_securityprofile_accountsecurityprofile"))
     public AccountSecurityProfile getAccountSecurityProfile() {
         return accountSecurityProfile;
     }

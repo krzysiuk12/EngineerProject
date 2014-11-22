@@ -1,6 +1,5 @@
 package repository.implementation;
 
-import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
 import domain.useraccounts.UserGroup;
 import org.hibernate.Criteria;
@@ -24,16 +23,7 @@ public class UserManagementRepository extends BaseHibernateRepository implements
         super(sessionFactory);
     }
 
-    @Override
-    public void saveOrUpdateUserAccount(UserAccount account) {
-        getCurrentSession().saveOrUpdate(account);
-    }
-
-    @Override
-    public void saveOrUpdateIndividual(Individual individual) {
-        getCurrentSession().saveOrUpdate(individual);
-    }
-
+    //<editor-fold desc="Get UserAccount (Id, Token, Login)">
     @Override
     public UserAccount getUserAccountById(Long id) {
         return (UserAccount)getCurrentSession().get(UserAccount.class, id);
@@ -60,12 +50,16 @@ public class UserManagementRepository extends BaseHibernateRepository implements
         criteria.add(Restrictions.eq("token", token));
         return (UserAccount)returnSingleOrNull(criteria.list());
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Get All UserAccounts">
     @Override
     public List<UserAccount> getAllUserAccounts() {
         return getCurrentSession().createCriteria(UserAccount.class).list();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Validate Unique (Login, Email)">
     @Override
     public boolean validateUniqueLogin(String login) {
         Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
@@ -80,12 +74,9 @@ public class UserManagementRepository extends BaseHibernateRepository implements
         criteria.add(Restrictions.eq("email", email));
         return criteria.list().isEmpty();
     }
+    //</editor-fold>
 
-    @Override
-    public void saveOrUpdateUserGroup(UserGroup userGroup) {
-        getCurrentSession().saveOrUpdate(userGroup);
-    }
-
+    //<editor-fold desc="Get UserGroup (Id, Name)">
     @Override
     public UserGroup getUserGroupById(Long id) {
         Criteria criteria = getCurrentSession().createCriteria(UserGroup.class);
@@ -99,4 +90,5 @@ public class UserManagementRepository extends BaseHibernateRepository implements
         criteria.add(Restrictions.eq("name", name));
         return (UserGroup)returnSingleOrNull(criteria.list());
     }
+    //</editor-fold>
 }

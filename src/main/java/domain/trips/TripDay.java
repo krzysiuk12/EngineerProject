@@ -1,6 +1,11 @@
 package domain.trips;
 
 import domain.common.implementation.VersionedBaseObject;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,6 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "TripDays")
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "creationDate", "lastModificationDate", "removalDate"})
 public class TripDay extends VersionedBaseObject {
 
     private Trip trip;
@@ -29,6 +35,7 @@ public class TripDay extends VersionedBaseObject {
         return super.getId();
     }
 
+    @JsonBackReference("trip-tripday")
     @ManyToOne
     @JoinColumn(name = "id_trip", foreignKey = @ForeignKey(name = "FK_tripday_trip_trip"), nullable = false)
     public Trip getTrip() {
@@ -38,7 +45,9 @@ public class TripDay extends VersionedBaseObject {
         this.trip = trip;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tripDay")
+    @JsonManagedReference("tripday-tripdaylocation")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tripDay")
+    @Fetch(FetchMode.SELECT)
     public List<TripDayLocation> getLocations() {
         return locations;
     }
@@ -46,7 +55,9 @@ public class TripDay extends VersionedBaseObject {
         this.locations = locations;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tripDay")
+    @JsonManagedReference("tripday-tripstep")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tripDay")
+    @Fetch(FetchMode.SELECT)
     public List<TripStep> getTripSteps() {
         return tripSteps;
     }

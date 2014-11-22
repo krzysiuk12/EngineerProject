@@ -29,4 +29,6 @@ public interface IUserManagementService {
 
     public UserGroup getUserGroupById(Long id);
     public UserGroup getUserGroupByName(String name);
+
+    public void changeUserAccountPassword(String previousPassword, String currentPassword, String userToken) throws Exception;
 }

@@ -1,5 +1,8 @@
 package jsonserializers.trips;
 
+import domain.trips.DistanceUnit;
+import domain.trips.TravelMode;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,17 +14,19 @@ public class TripCreationSerializer {
     private String name;
     private String description;
     private Date startDate;
-    private Date endDate;
+    private TravelMode travelMode;
+    private DistanceUnit distanceUnit;
     private List<TripDayCreationSerializer> tripDays;
 
     public TripCreationSerializer() {
     }
 
-    public TripCreationSerializer(String name, String description, Date startDate, Date endDate, List<TripDayCreationSerializer> tripDays) {
+    public TripCreationSerializer(String name, String description, Date startDate, TravelMode travelMode, DistanceUnit distanceUnit, List<TripDayCreationSerializer> tripDays) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.travelMode = travelMode;
+        this.distanceUnit = distanceUnit;
         this.tripDays = tripDays;
     }
 
@@ -49,12 +54,20 @@ public class TripCreationSerializer {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public TravelMode getTravelMode() {
+        return travelMode;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setTravelMode(TravelMode travelMode) {
+        this.travelMode = travelMode;
+    }
+
+    public DistanceUnit getDistanceUnit() {
+        return distanceUnit;
+    }
+
+    public void setDistanceUnit(DistanceUnit distanceUnit) {
+        this.distanceUnit = distanceUnit;
     }
 
     public List<TripDayCreationSerializer> getTripDays() {

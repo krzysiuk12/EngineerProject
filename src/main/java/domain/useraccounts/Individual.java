@@ -23,7 +23,6 @@ public class Individual extends BaseObject {
     private String middleName;
     private String lastName;
     private Date dateOfBirth;
-    private Gender gender;
     private String description;
     private String facebookAccountUrl;
     private String city;
@@ -74,15 +73,6 @@ public class Individual extends BaseObject {
     }
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
-    public Gender getGender() {
-        return gender;
-    }
-    public void setGender(Gender gender) {
-        this.gender = gender;
     }
 
     @Basic

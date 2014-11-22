@@ -1,6 +1,5 @@
 package repository.interfaces;
 
-import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
 import domain.useraccounts.UserGroup;
 
@@ -9,11 +8,7 @@ import java.util.List;
 /**
  * Created by Krzysiu on 2014-06-09.
  */
-public interface IUserManagementRepository {
-
-    public void saveOrUpdateUserAccount(UserAccount account);
-    public void saveOrUpdateIndividual(Individual individual);
-    public void saveOrUpdateUserGroup(UserGroup userGroup);
+public interface IUserManagementRepository extends IBaseHibernateRepository {
 
     public UserAccount getUserAccountById(Long id);
     public UserAccount getUserAccountByIdAllData(Long id);

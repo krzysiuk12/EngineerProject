@@ -1,7 +1,5 @@
 package repository.implementation;
 
-import domain.securityprofiles.AccountSecurityProfile;
-import domain.securityprofiles.PasswordSecurityProfile;
 import domain.securityprofiles.SecurityProfile;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -19,21 +17,6 @@ public class SecurityProfileManagementRepository extends BaseHibernateRepository
     @Autowired
     public SecurityProfileManagementRepository(SessionFactory sessionFactory) {
         super(sessionFactory);
-    }
-
-    @Override
-    public void saveSecurityProfile(SecurityProfile securityProfile) {
-        getCurrentSession().saveOrUpdate(securityProfile);
-    }
-
-    @Override
-    public void saveAccountSecurityProfile(AccountSecurityProfile accountSecurityProfile) {
-        getCurrentSession().saveOrUpdate(accountSecurityProfile);
-    }
-
-    @Override
-    public void savePasswordSecurityProfile(PasswordSecurityProfile passwordSecurityProfile) {
-        getCurrentSession().saveOrUpdate(passwordSecurityProfile);
     }
 
     @Override

@@ -1,9 +1,8 @@
 package repository.implementation;
 
-import domain.locations.Address;
 import domain.locations.Location;
+import domain.useraccounts.UserAccount;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
@@ -24,16 +23,7 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         super(sessionFactory);
     }
 
-    @Override
-    public void saveOrUpdateLocation(Location location) {
-        getCurrentSession().saveOrUpdate(location);
-    }
-
-    @Override
-    public void saveOrUpdateAddress(Address address) {
-        getCurrentSession().saveOrUpdate(address);
-    }
-
+    //<editor-fold desc="Get Location By Id">
     @Override
     public Location getLocationById(Long id) {
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
@@ -46,26 +36,31 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
     public Location getLocationByIdAllData(Long id) {
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
         criteria.add(Restrictions.eq("id", id));
-        criteria.setFetchMode("createdByAccount", FetchMode.JOIN);
-        criteria.setFetchMode("createdByAccount.individual", FetchMode.JOIN);
+        criteria.createAlias("createdByAccount", "createdByAccount", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("createdByAccount.individual", "createdByIndividual", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("comments", "comments", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("comments.userAccount", "userAccount", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("userAccount.individual", "individual", JoinType.LEFT_OUTER_JOIN);
         criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return (Location)returnSingleOrNull(criteria.list());
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Get Locations Lists">
     @Override
     public List<Location> getAllLocations() {
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
-        criteria.createAlias("createdByAccount", "createdByAccount", JoinType.INNER_JOIN);
         criteria.add(Restrictions.eq("usersPrivate", false));
         criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
         return criteria.list();
     }
 
     @Override
-    public List<Location> getAllUsersPrivateLocations(Long userId) {
+    public List<Location> getAllUsersPrivateLocations(UserAccount userAccount) {
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
-        criteria.createAlias("createdByAccount", "createdByAccount", JoinType.INNER_JOIN);
-        criteria.add(Restrictions.eq("createdByAccount.id", userId));
+        criteria.createAlias("createdByAccount", "createdByAccount", JoinType.LEFT_OUTER_JOIN);
+        criteria.add(Restrictions.eq("createdByAccount", userAccount));
         criteria.add(Restrictions.eq("usersPrivate", true));
         criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
         return criteria.list();
@@ -87,5 +82,6 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         criteria.add(Restrictions.in("id", locationIds));
         return criteria.list();
     }
+    //</editor-fold>
 
 }
