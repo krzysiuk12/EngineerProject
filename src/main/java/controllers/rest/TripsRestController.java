@@ -3,6 +3,7 @@ package controllers.rest;
 import annotations.AdminAuthorized;
 import domain.trips.Trip;
 import domain.trips.TripDay;
+import domain.trips.TripDayLocation;
 import jsonserializers.common.ResponseSerializer;
 import jsonserializers.trips.TripCreationSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +88,10 @@ public class TripsRestController {
     }
 
     private void prepareTripDayToNoAllDataRequest(TripDay tripDay) {
+        for(TripDayLocation tripDayLocation : tripDay.getLocations()) {
+            tripDayLocation.getLocation().setCreatedByAccount(null);
+            tripDayLocation.getLocation().setComments(null);
+        }
         tripDay.setTripSteps(null);
     }
 
