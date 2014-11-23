@@ -108,7 +108,7 @@ public class UserAccount extends VersionedBaseObject {
         this.lockoutCounter = lockoutCounter;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_individual", unique = true, nullable = false)
     public Individual getIndividual() {
         return individual;

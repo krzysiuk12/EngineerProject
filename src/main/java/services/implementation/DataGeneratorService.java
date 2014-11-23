@@ -144,11 +144,8 @@ public class DataGeneratorService implements IDataGeneratorService {
     public Individual createIndividual(String firstName, String middleName, String lastName, Date dateOfBirth, String description, String facebookAccountUrl, String city, String country) {
         Individual individual = new Individual();
         individual.setFirstName(firstName);
-        individual.setMiddleName(middleName);
         individual.setLastName(lastName);
-        individual.setDateOfBirth(dateOfBirth);
         individual.setDescription(description);
-        individual.setFacebookAccountUrl(facebookAccountUrl);
         individual.setCity(city);
         individual.setCountry(country);
         return individual;

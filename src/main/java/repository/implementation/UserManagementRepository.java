@@ -3,9 +3,9 @@ package repository.implementation;
 import domain.useraccounts.UserAccount;
 import domain.useraccounts.UserGroup;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import repository.interfaces.IUserManagementRepository;
@@ -33,7 +33,7 @@ public class UserManagementRepository extends BaseHibernateRepository implements
     public UserAccount getUserAccountByIdAllData(Long id) {
         Criteria criteria = getCurrentSession().createCriteria(UserAccount.class);
         criteria.add(Restrictions.eq("id", id));
-        criteria.setFetchMode("individual", FetchMode.JOIN);
+        criteria.createAlias("individual", "individual", JoinType.INNER_JOIN);
         return (UserAccount)returnSingleOrNull(criteria.list());
     }
 

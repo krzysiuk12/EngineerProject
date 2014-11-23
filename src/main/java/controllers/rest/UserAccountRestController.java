@@ -5,6 +5,7 @@ import annotations.NotAuthorized;
 import domain.useraccounts.UserAccount;
 import jsonserializers.common.ResponseSerializer;
 import jsonserializers.users.ChangePasswordSerializer;
+import jsonserializers.users.UserAccountSerializer;
 import jsonserializers.users.UserRegistrationSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,9 +76,17 @@ public class UserAccountRestController {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Change UserAccount Password">
     @RequestMapping(value = "/my/password", method = RequestMethod.POST)
-    public @ResponseBody ResponseSerializer<UserAccount> getMyUserAccountData(@RequestHeader(value = "authorization") String token, @RequestBody ChangePasswordSerializer changePasswordSerializer) throws Exception {
+    public @ResponseBody ResponseSerializer<UserAccount> changeUserAccountPassword(@RequestHeader(value = "authorization") String token, @RequestBody ChangePasswordSerializer changePasswordSerializer) throws Exception {
         userManagementService.changeUserAccountPassword(changePasswordSerializer.getCurrentPassword(), changePasswordSerializer.getNewPassword(), token);
+        return new ResponseSerializer();
+    }
+    //</editor-fold>
+
+    @RequestMapping(value = "/my", method = RequestMethod.POST)
+    public @ResponseBody ResponseSerializer changeUserAccountPassword(@RequestHeader(value = "authorization") String token, @RequestBody UserAccountSerializer uas) throws Exception {
+        userManagementService.updateUserAccount(uas.getEmail(), uas.getFirstName(), uas.getLastName(), uas.getCity(), uas.getCountry(), uas.getDescription(), token);
         return new ResponseSerializer();
     }
 }

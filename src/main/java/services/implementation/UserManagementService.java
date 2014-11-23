@@ -62,6 +62,7 @@ public class UserManagementService implements IUserManagementService {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Add New UserAccount, Update UserAccount">
     @Override
     @Transactional
     public void addUserAccount(String login, String password, String email, String firstName, String lastName) throws Exception {
@@ -76,6 +77,22 @@ public class UserManagementService implements IUserManagementService {
         saveIndividual(individual);
         saveUserAccount(userAccount);
     }
+
+    @Override
+    @Transactional
+    public void updateUserAccount(String email, String firstName, String lastName, String city, String country, String description, String token) throws Exception {
+        UserAccount userAccount = getUserAccountByIdAllData(getUserAccountByToken(token).getId());
+        Individual individual = userAccount.getIndividual();
+        individual.setFirstName(firstName);
+        individual.setLastName(lastName);
+        individual.setCity(city);
+        individual.setCountry(country);
+        individual.setDescription(description);
+        saveIndividual(individual);
+        userAccount.setEmail(email);
+        saveUserAccount(userAccount);
+    }
+    //</editor-fold>
 
     //<editor-fold desc="Get UserAccount By ... (Id, Token, Login)">
     @Override
@@ -104,6 +121,7 @@ public class UserManagementService implements IUserManagementService {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Get All UserAccounts">
     @Override
     @Transactional(readOnly = true)
     public List<UserAccount> getAllUserAccounts() {
@@ -113,6 +131,7 @@ public class UserManagementService implements IUserManagementService {
         }
         return userAccounts;
     }
+    //</editor-fold>
 
     //<editor-fold desc="Authenticate UserAccount">
     @Override
@@ -144,6 +163,7 @@ public class UserManagementService implements IUserManagementService {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Change UserAccount Password">
     @Override
     @Transactional
     public void changeUserAccountPassword(String currentPassword, String newPassword, String userToken) throws Exception {
@@ -155,6 +175,7 @@ public class UserManagementService implements IUserManagementService {
             //throw new FormValidationError()
         }
     }
+    //</editor-fold>
 
     //<editor-fold desc="Validation UserAccount, Individual">
     private List<ErrorMessages> validateUserAccount(UserAccount userAccount) {

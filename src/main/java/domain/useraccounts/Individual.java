@@ -3,7 +3,6 @@ package domain.useraccounts;
 import domain.common.implementation.BaseObject;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by Krzysiu on 2014-05-30.
@@ -20,11 +19,8 @@ public class Individual extends BaseObject {
     }
 
     private String firstName;
-    private String middleName;
     private String lastName;
-    private Date dateOfBirth;
     private String description;
-    private String facebookAccountUrl;
     private String city;
     private String country;
 
@@ -49,30 +45,12 @@ public class Individual extends BaseObject {
     }
 
     @Basic
-    @Column(name = "middleName")
-    public String getMiddleName() {
-        return middleName;
-    }
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    @Basic
     @Column(name = "lastName", nullable = false)
     public String getLastName() {
         return lastName;
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "dateOfBirth")
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
     }
 
     @Basic
@@ -82,15 +60,6 @@ public class Individual extends BaseObject {
     }
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Basic
-    @Column(name = "facebookaccounturl")
-    public String getFacebookAccountUrl() {
-        return facebookAccountUrl;
-    }
-    public void setFacebookAccountUrl(String facebookAccountUrl) {
-        this.facebookAccountUrl = facebookAccountUrl;
     }
 
     @Basic

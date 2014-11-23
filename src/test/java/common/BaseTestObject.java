@@ -75,10 +75,8 @@ public abstract class BaseTestObject {
         Individual individual = new Individual();
         individual.setFirstName(firstName);
         individual.setLastName(lastName);
-        individual.setDateOfBirth(birthDate);
         individual.setCity(city);
         individual.setCountry(country);
-        individual.setFacebookAccountUrl(facebookUrl);
         return individual;
     }
 
@@ -128,10 +126,8 @@ public abstract class BaseTestObject {
         Individual individual = Mockito.mock(Individual.class);
         Mockito.when(individual.getFirstName()).thenReturn(firstName);
         Mockito.when(individual.getLastName()).thenReturn(lastName);
-        Mockito.when(individual.getDateOfBirth()).thenReturn(birthDate);
         Mockito.when(individual.getCity()).thenReturn(city);
         Mockito.when(individual.getCountry()).thenReturn(country);
-        Mockito.when(individual.getFacebookAccountUrl()).thenReturn(facebookUrl);
         return individual;
     }
 
