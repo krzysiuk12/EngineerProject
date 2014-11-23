@@ -145,7 +145,8 @@ public class UserManagementService implements IUserManagementService {
     //</editor-fold>
 
     @Override
-    public void changeUserAccountPassword(String newPassword, String currentPassword, String userToken) throws Exception {
+    @Transactional
+    public void changeUserAccountPassword(String currentPassword, String newPassword, String userToken) throws Exception {
         UserAccount userAccount = getUserAccountByToken(userToken);
         if(userAccount.getPassword().equals(currentPassword)) {
             userAccount.setPassword(newPassword);

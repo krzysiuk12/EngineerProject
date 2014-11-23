@@ -4,6 +4,7 @@ import annotations.AdminAuthorized;
 import annotations.NotAuthorized;
 import domain.useraccounts.UserAccount;
 import jsonserializers.common.ResponseSerializer;
+import jsonserializers.users.ChangePasswordSerializer;
 import jsonserializers.users.UserRegistrationSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,13 +30,16 @@ public class UserAccountRestController {
         this.locationManagementService = locationManagementService;
     }
 
+    //<editor-fold desc="Add New UserAccount">
     @NotAuthorized
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody ResponseSerializer addNewUserAccount(@RequestBody UserRegistrationSerializer data) throws Exception {
         userManagementService.addUserAccount(data.getLogin(), data.getPassword(), data.getEmail(), data.getFirstName(), data.getLastName());
         return new ResponseSerializer();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Get UserAccount By Id">
     @AdminAuthorized
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public @ResponseBody ResponseSerializer<UserAccount> getUserAccountById(@RequestHeader(value = "authorization") String token, @PathVariable("userId") Long userId) throws Exception {
@@ -50,12 +54,6 @@ public class UserAccountRestController {
         return new ResponseSerializer(userManagementService.getUserAccountByIdAllData(userId));
     }
 
-    @AdminAuthorized
-    @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody ResponseSerializer<List<UserAccount>> getAllUserAccounts(@RequestHeader(value = "authorization") String token) throws Exception {
-        return new ResponseSerializer(userManagementService.getAllUserAccounts());
-    }
-
     @RequestMapping(value = "/my", method = RequestMethod.GET)
     public @ResponseBody ResponseSerializer<UserAccount> getMyUserAccountData(@RequestHeader(value = "authorization") String token) throws Exception {
         UserAccount userAccount =  userManagementService.getUserAccountByToken(token);
@@ -67,5 +65,19 @@ public class UserAccountRestController {
     public @ResponseBody ResponseSerializer<UserAccount> getMyUserAccountAllData(@RequestHeader(value = "authorization") String token) throws Exception {
         return new ResponseSerializer(userManagementService.getUserAccountByIdAllData(userManagementService.getUserAccountByToken(token).getId()));
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Get UserAccounts">
+    @AdminAuthorized
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody ResponseSerializer<List<UserAccount>> getAllUserAccounts(@RequestHeader(value = "authorization") String token) throws Exception {
+        return new ResponseSerializer(userManagementService.getAllUserAccounts());
+    }
+    //</editor-fold>
+
+    @RequestMapping(value = "/my/password", method = RequestMethod.POST)
+    public @ResponseBody ResponseSerializer<UserAccount> getMyUserAccountData(@RequestHeader(value = "authorization") String token, @RequestBody ChangePasswordSerializer changePasswordSerializer) throws Exception {
+        userManagementService.changeUserAccountPassword(changePasswordSerializer.getCurrentPassword(), changePasswordSerializer.getNewPassword(), token);
+        return new ResponseSerializer();
+    }
 }
