@@ -84,7 +84,7 @@ public class SecurityProfile extends BaseObject {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", length = 50)
+    @Column(name = "status", length = 50, nullable = false)
     public Status getStatus() {
         return status;
     }

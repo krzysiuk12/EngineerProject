@@ -12,12 +12,6 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Individual extends BaseObject {
 
-    public enum Gender {
-        MALE,
-        FEMALE,
-        NOT_DEFINED
-    }
-
     private String firstName;
     private String lastName;
     private String description;

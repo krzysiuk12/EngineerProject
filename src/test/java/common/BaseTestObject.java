@@ -71,7 +71,7 @@ public abstract class BaseTestObject {
         return individual;
     }
 
-    protected Individual createIndividual(String firstName, String lastName, Date birthDate, Individual.Gender gender, String city, String country, String facebookUrl) {
+    protected Individual createIndividual(String firstName, String lastName, Date birthDate, String city, String country, String facebookUrl) {
         Individual individual = new Individual();
         individual.setFirstName(firstName);
         individual.setLastName(lastName);
@@ -122,7 +122,7 @@ public abstract class BaseTestObject {
         return userAccount;
     }
 
-    protected Individual createMockIndividual(String firstName, String lastName, Date birthDate, Individual.Gender gender, String city, String country, String facebookUrl) {
+    protected Individual createMockIndividual(String firstName, String lastName, Date birthDate, String city, String country, String facebookUrl) {
         Individual individual = Mockito.mock(Individual.class);
         Mockito.when(individual.getFirstName()).thenReturn(firstName);
         Mockito.when(individual.getLastName()).thenReturn(lastName);

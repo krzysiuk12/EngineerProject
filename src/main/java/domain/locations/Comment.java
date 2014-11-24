@@ -69,7 +69,7 @@ public class Comment extends BaseObject {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "rating", nullable = false)
+    @Column(name = "rating", length = 50, nullable = false)
     public Rating getRating() {
         return rating;
     }

@@ -136,6 +136,7 @@ public class DataGeneratorService implements IDataGeneratorService {
     @Transactional
     public UserAccount createAndSaveUserAccount(String login, String password, String email, Individual individual, UserGroup userGroup) throws Exception {
         UserAccount userAccount = createUserAccount(login, password, email, individual, userGroup);
+        userManagementService.saveIndividual(individual);
         userManagementService.saveUserAccount(userAccount);
         return userAccount;
     }

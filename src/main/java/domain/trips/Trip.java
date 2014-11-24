@@ -56,7 +56,7 @@ public class Trip extends VersionedBaseObject {
     }
 
     @Basic
-    @Column(name = "description", length = 100)
+    @Column(name = "description", length = 500)
     public String getDescription() {
         return description;
     }
