@@ -2,6 +2,8 @@ package services.implementation;
 
 import domain.locations.Location;
 import domain.trips.*;
+import exceptions.ErrorMessages;
+import exceptions.FormValidationError;
 import jsonserializers.google.directions.GoogleDirectionsSerializer;
 import jsonserializers.trips.TripDayCreationSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,29 @@ public class TripsManagementService implements ITripsManagementService {
     @Override
     @Transactional
     public Trip addNewTrip(String name, String desc, Date startDate, TravelMode mode, DistanceUnit unit, List<TripDayCreationSerializer> daysData, String userToken) throws Exception {
+        List<ErrorMessages> errorMessages = new ArrayList<>();
+        if(name == null) {
+            errorMessages.add(ErrorMessages.INVALID_TRIP_NAME);
+        }
+        if(desc == null) {
+            errorMessages.add(ErrorMessages.INVALID_TRIP_DESCRIPTION);
+        }
+        if(startDate == null) {
+            errorMessages.add(ErrorMessages.INVALID_TRIP_START_DATE);
+        }
+        if(mode == null) {
+            errorMessages.add(ErrorMessages.INVALID_TRIP_MODE);
+        }
+        if(unit == null) {
+            errorMessages.add(ErrorMessages.INVALID_TRIP_UNIT);
+        }
+        if(daysData == null || daysData.isEmpty()) {
+            errorMessages.add(ErrorMessages.INVALID_TRIP_TRIP_DAYS);
+        }
+        if(!errorMessages.isEmpty()) {
+            throw new FormValidationError(errorMessages);
+        }
+
         Trip trip = new Trip();
         trip.setName(name);
         trip.setDescription(desc);

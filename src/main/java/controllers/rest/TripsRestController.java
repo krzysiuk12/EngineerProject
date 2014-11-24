@@ -75,7 +75,11 @@ public class TripsRestController {
     public
     @ResponseBody
     ResponseSerializer<TripDay> getTripDayByIdAllData(@RequestHeader(value = "authorization") String token, @PathVariable("id") Long id) throws Exception {
-        return new ResponseSerializer<>(tripsManagementService.getTripDayByIdAllData(id));
+        TripDay tripDay = tripsManagementService.getTripDayById(id);
+        for(TripDayLocation tripDayLocation : tripDay.getLocations()) {
+            prepareTripDayLocationToNoAllDataRequest(tripDayLocation);
+        }
+        return new ResponseSerializer<>(tripDay);
     }
 
     @RequestMapping(value = "/my", method = RequestMethod.GET)
@@ -87,10 +91,14 @@ public class TripsRestController {
         return new ResponseSerializer<>(trips);
     }
 
+    private void prepareTripDayLocationToNoAllDataRequest(TripDayLocation tripDayLocation) {
+        tripDayLocation.getLocation().setCreatedByAccount(null);
+        tripDayLocation.getLocation().setComments(null);
+    }
+
     private void prepareTripDayToNoAllDataRequest(TripDay tripDay) {
         for(TripDayLocation tripDayLocation : tripDay.getLocations()) {
-            tripDayLocation.getLocation().setCreatedByAccount(null);
-            tripDayLocation.getLocation().setComments(null);
+            prepareTripDayLocationToNoAllDataRequest(tripDayLocation);
         }
         tripDay.setTripSteps(null);
     }
