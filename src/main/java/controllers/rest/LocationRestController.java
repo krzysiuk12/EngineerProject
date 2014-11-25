@@ -35,7 +35,7 @@ public class LocationRestController {
     @ResponseBody
     ResponseSerializer addNewLocation(@RequestHeader(value = "authorization") String token, @RequestBody LocationSerializer data) throws Exception {
         try {
-            locationManagementService.addNewLocation(data.getName(), data.getLongitude(), data.getLatitude(), data.getAddressCity(), data.getAddressCountry(), token);
+            locationManagementService.addNewLocation(data.getName(), data.getDescription(), data.getLongitude(), data.getLatitude(), data.getAddressStreet(), data.getAddressPostalCode(), data.getAddressCity(), data.getAddressCountry(), token);
             return new ResponseSerializer();
         } catch (Exception ex) {
             System.out.println(ex);
@@ -47,7 +47,7 @@ public class LocationRestController {
     public
     @ResponseBody
     ResponseSerializer addNewPrivateLocation(@RequestHeader(value = "authorization") String token, @RequestBody LocationSerializer data) throws Exception {
-        locationManagementService.addNewPrivateLocation(data.getName(), data.getLongitude(), data.getLatitude(), data.getAddressCity(), data.getAddressCountry(), token);
+        locationManagementService.addNewPrivateLocation(data.getName(), data.getDescription(), data.getLongitude(), data.getLatitude(), data.getAddressStreet(), data.getAddressPostalCode(), data.getAddressCity(), data.getAddressCountry(), token);
         return new ResponseSerializer();
     }
     //</editor-fold>

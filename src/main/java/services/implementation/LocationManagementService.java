@@ -61,19 +61,19 @@ public class LocationManagementService implements ILocationManagementService {
     //<editor-fold desc="Add Locations (Normal, Private)">
     @Override
     @Transactional
-    public void addNewLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception {
+    public void addNewLocation(String name, String description, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
         UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
-        Address address = createAddress(addressCity, addressCountry);
-        Location location = createLocation(name, latitude, longitude, false, address, createdBy);
+        Address address = createAddress(street, postalcode, city, country);
+        Location location = createLocation(name, description, latitude, longitude, false, address, createdBy);
         saveLocation(location, createdBy);
     }
 
     @Override
     @Transactional
-    public void addNewPrivateLocation(String name, double longitude, double latitude, String addressCity, String addressCountry, String userToken) throws Exception {
+    public void addNewPrivateLocation(String name, String description, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
         UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
-        Address address = createAddress(addressCity, addressCountry);
-        Location location = createLocation(name, latitude, longitude, true, address, createdBy);
+        Address address = createAddress(street, postalcode, city, country);
+        Location location = createLocation(name, description, latitude, longitude, true, address, createdBy);
         saveLocation(location, createdBy);
     }
     //</editor-fold>
@@ -239,16 +239,19 @@ public class LocationManagementService implements ILocationManagementService {
     }
 
     //<editor-fold desc="Creation Helper Methods">
-    protected Address createAddress(String city, String country) {
+    protected Address createAddress(String street, String postalCode, String city, String country) {
         Address address = new Address();
+        address.setStreet(street);
+        address.setPostalCode(postalCode);
         address.setCity(city);
         address.setCountry(country);
         return address;
     }
 
-    private Location createLocation(String name, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy) {
+    private Location createLocation(String name, String description, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy) {
         Location location = new Location();
         location.setName(name);
+        location.setDescription(description);
         location.setLatitude(latitude);
         location.setLongitude(longitude);
         location.setStatus(Location.Status.AVAILABLE);

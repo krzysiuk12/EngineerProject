@@ -9,8 +9,11 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 public class LocationSerializer {
 
     private String name;
+    private String description;
     private double latitude;
     private double longitude;
+    private String addressStreet;
+    private String addressPostalCode;
     private String addressCity;
     private String addressCountry;
 
@@ -63,5 +66,29 @@ public class LocationSerializer {
 
     public void setAddressCountry(String addressCountry) {
         this.addressCountry = addressCountry;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAddressStreet() {
+        return addressStreet;
+    }
+
+    public void setAddressStreet(String addressStreet) {
+        this.addressStreet = addressStreet;
+    }
+
+    public String getAddressPostalCode() {
+        return addressPostalCode;
+    }
+
+    public void setAddressPostalCode(String addressPostalCode) {
+        this.addressPostalCode = addressPostalCode;
     }
 }
