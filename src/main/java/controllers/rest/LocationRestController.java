@@ -120,9 +120,9 @@ public class LocationRestController {
     @RequestMapping(value = "/{locationId}", method = RequestMethod.PUT)
     public
     @ResponseBody
-    Location updateLocationByIdAllData(@RequestHeader(value = "authorization") String token, @PathVariable("locationId") Long id, @RequestBody Location location) throws Exception {
-        //TODO: Create service + repository method for saving
-        return null;
+    ResponseSerializer updateLocationByIdAllData(@RequestHeader(value = "authorization") String token, @PathVariable("locationId") Long id, @RequestBody LocationSerializer data) throws Exception {
+        locationManagementService.updateLocation(id, data.getName(), data.getDescription(), data.getUrl(), data.getStatus(), data.getLongitude(), data.getLatitude(), data.getAddressStreet(), data.getAddressPostalCode(), data.getAddressCity(), data.getAddressCountry(), token);
+        return new ResponseSerializer();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

@@ -48,6 +48,8 @@ public enum ErrorMessages {
     INVALID_TRIP_UNIT,
     INVALID_TRIP_TRIP_DAYS,
 
+    INVALID_LOCATION_ID,
+
     SERVER_SIDE_ERROR;
 
 }

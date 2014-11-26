@@ -58,6 +58,20 @@ public class LocationManagementService implements ILocationManagementService {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Update Location">
+    @Override
+    @Transactional
+    public void updateLocation(Long id, String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
+        Location updatedLocation = getLocationByIdAllData(id);
+        if(updatedLocation == null) {
+            throw new FormValidationError(ErrorMessages.INVALID_LOCATION_ID);
+        }
+        UserAccount modifiedBy = userManagementService.getUserAccountByToken(userToken);
+        updateLocation(updatedLocation, name, description, url, status, longitude, latitude, street, postalcode, city, country);
+        saveLocation(updatedLocation, modifiedBy);
+    }
+    //</editor-fold>
+
     //<editor-fold desc="Add Locations (Normal, Private)">
     @Override
     @Transactional
@@ -236,6 +250,19 @@ public class LocationManagementService implements ILocationManagementService {
     private void preperLocationToNotAllDataRequest(Location location) {
         location.setCreatedByAccount(null);
         location.setComments(null);
+    }
+
+    private void updateLocation(Location saved, String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country) {
+        saved.setName(name);
+        saved.setDescription(description);
+        saved.setUrl(url);
+        saved.setLatitude(latitude);
+        saved.setLongitude(longitude);
+        saved.setStatus(status);
+        saved.getAddress().setCity(city);
+        saved.getAddress().setCountry(country);
+        saved.getAddress().setStreet(street);
+        saved.getAddress().setPostalCode(postalcode);
     }
 
     //<editor-fold desc="Creation Helper Methods">
