@@ -61,19 +61,19 @@ public class LocationManagementService implements ILocationManagementService {
     //<editor-fold desc="Add Locations (Normal, Private)">
     @Override
     @Transactional
-    public void addNewLocation(String name, String description, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
+    public void addNewLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
         UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
         Address address = createAddress(street, postalcode, city, country);
-        Location location = createLocation(name, description, latitude, longitude, false, address, createdBy);
+        Location location = createLocation(name, description, url, status, latitude, longitude, false, address, createdBy);
         saveLocation(location, createdBy);
     }
 
     @Override
     @Transactional
-    public void addNewPrivateLocation(String name, String description, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
+    public void addNewPrivateLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
         UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
         Address address = createAddress(street, postalcode, city, country);
-        Location location = createLocation(name, description, latitude, longitude, true, address, createdBy);
+        Location location = createLocation(name, description, url, status, latitude, longitude, true, address, createdBy);
         saveLocation(location, createdBy);
     }
     //</editor-fold>
@@ -248,13 +248,14 @@ public class LocationManagementService implements ILocationManagementService {
         return address;
     }
 
-    private Location createLocation(String name, String description, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy) {
+    private Location createLocation(String name, String description, String url, Location.Status status, double latitude, double longitude, boolean usersPrivate, Address address, UserAccount createdBy) {
         Location location = new Location();
         location.setName(name);
         location.setDescription(description);
         location.setLatitude(latitude);
         location.setLongitude(longitude);
-        location.setStatus(Location.Status.AVAILABLE);
+        location.setUrl(url);
+        location.setStatus(status != null ? status : Location.Status.AVAILABLE);
         location.setUsersPrivate(usersPrivate);
         location.setAddress(address);
         location.updateInformation(createdBy);

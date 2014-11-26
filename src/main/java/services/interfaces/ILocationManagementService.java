@@ -14,8 +14,8 @@ public interface ILocationManagementService {
     public void saveLocation(Location location, UserAccount executor) throws Exception;
     public void saveComment(Comment comment) throws Exception;
 
-    public void addNewLocation(String name, String description, double longitude, double latitude, String street, String postalcode, String addressCity, String addressCountry, String userToken) throws Exception;
-    public void addNewPrivateLocation(String name, String description, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception;
+    public void addNewLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String addressCity, String addressCountry, String userToken) throws Exception;
+    public void addNewPrivateLocation(String name, String description,String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception;
     public void addNewComment(Long locationId, Comment.Rating rating, String comment, String userToken) throws Exception;
 
     public Location getLocationById(Long id);

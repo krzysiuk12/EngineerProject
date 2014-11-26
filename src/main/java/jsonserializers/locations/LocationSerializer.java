@@ -1,5 +1,6 @@
 package jsonserializers.locations;
 
+import domain.locations.Location;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
@@ -10,8 +11,10 @@ public class LocationSerializer {
 
     private String name;
     private String description;
+    private String url;
     private double latitude;
     private double longitude;
+    private Location.Status status;
     private String addressStreet;
     private String addressPostalCode;
     private String addressCity;
@@ -20,10 +23,15 @@ public class LocationSerializer {
     public LocationSerializer() {
     }
 
-    public LocationSerializer(String name, double latitude, double longitude, String addressCity, String addressCountry) {
+    public LocationSerializer(String name, String description, String url, double latitude, double longitude, Location.Status status, String addressStreet, String addressPostalCode, String addressCity, String addressCountry) {
         this.name = name;
+        this.description = description;
+        this.url = url;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.status = status;
+        this.addressStreet = addressStreet;
+        this.addressPostalCode = addressPostalCode;
         this.addressCity = addressCity;
         this.addressCountry = addressCountry;
     }
@@ -34,6 +42,14 @@ public class LocationSerializer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public double getLatitude() {
@@ -90,5 +106,13 @@ public class LocationSerializer {
 
     public void setAddressPostalCode(String addressPostalCode) {
         this.addressPostalCode = addressPostalCode;
+    }
+
+    public Location.Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Location.Status status) {
+        this.status = status;
     }
 }
