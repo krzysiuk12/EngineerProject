@@ -53,7 +53,7 @@ public class SessionManagementService implements ISessionManagementService {
                 userAccount.setInvalidSignInAttemptsCounter(userAccount.getInvalidSignInAttemptsCounter() + 1);
 
                 SecurityProfile securityProfile = securityProfileManagementService.getDefaultSecurityProfile();
-                if(userAccount.getInvalidSignInAttemptsCounter() >= securityProfile.getAccountSecurityProfile().getMaximumInvalidLogInAttempts()) {
+                if(securityProfile != null && userAccount.getInvalidSignInAttemptsCounter() >= securityProfile.getAccountSecurityProfile().getMaximumInvalidLogInAttempts()) {
                     userAccount.setInvalidSignInAttemptsCounter(0);
                     userAccount.setLockoutCounter(userAccount.getLockoutCounter() + 1);
                     if(userAccount.getLockoutCounter() >= securityProfile.getAccountSecurityProfile().getMaximumLockoutsBeforeTurningOff()) {

@@ -105,7 +105,7 @@ public class GoogleGeocodingService implements IGoogleGeocodingService {
             location.setLongitude(serializer.getResults().get(0).getGeometry().getLocation().getLng());
             location.setName(aIC.getEstablishment() != null ? aIC.getEstablishment() : location.getAddress().getCity());
             location.setDescription(aIC.getEstablishment() != null ? aIC.getEstablishment() : location.getAddress().getCity());
-            location.getAddress().setStreet(aIC.getRoute() + (aIC.getStreetNumber() != null ? " " + aIC.getStreetNumber() : ""));
+            location.getAddress().setStreet(aIC.getRoute() != null ? aIC.getRoute() : ""  + (aIC.getStreetNumber() != null ? " " + aIC.getStreetNumber() : ""));
         }
         return location;
     }
