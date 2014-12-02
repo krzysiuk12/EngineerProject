@@ -85,7 +85,7 @@ public class UserAccountRestController {
     //</editor-fold>
 
     @RequestMapping(value = "/my", method = RequestMethod.POST)
-    public @ResponseBody ResponseSerializer changeUserAccountPassword(@RequestHeader(value = "authorization") String token, @RequestBody UserAccountSerializer uas) throws Exception {
+    public @ResponseBody ResponseSerializer updateUserAccount(@RequestHeader(value = "authorization") String token, @RequestBody UserAccountSerializer uas) throws Exception {
         userManagementService.updateUserAccount(uas.getEmail(), uas.getFirstName(), uas.getLastName(), uas.getCity(), uas.getCountry(), uas.getDescription(), token);
         return new ResponseSerializer();
     }

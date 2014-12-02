@@ -28,6 +28,7 @@ public class SessionRestController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody ResponseSerializer<LoginSerializer> loginUser(@RequestBody LoginSerializer serializer, HttpServletRequest request) throws Exception {
         String token = sessionManagementService.loginUser(serializer.getLogin(), serializer.getPassword(),request.getRemoteAddr(), request.getSession().getId());
+        serializer.setPassword(null);
         serializer.setToken(token);
         return new ResponseSerializer(serializer);
     }

@@ -1,6 +1,7 @@
 package domain.common.implementation;
 
 import domain.common.interfaces.IVersionedBaseObject;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
  * Created by Krzysiu on 2014-05-30.
  */
 @MappedSuperclass
+@JsonIgnoreProperties(value = { "versionNumber", "lastModificationDate", "removalDate"})
 public abstract class VersionedBaseObject extends BaseObject implements IVersionedBaseObject {
 
     protected int versionNumber;

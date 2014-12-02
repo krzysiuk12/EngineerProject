@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "useraccounts")
-@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "token", "userGroup"})
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"versionNumber", "lastModificationDate", "removalDate", "lastModificationByAccount", "removedByAccount", "token", "password", "userGroup"})
 public class UserAccount extends VersionedBaseObject {
 
     public enum Status {

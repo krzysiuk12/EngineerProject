@@ -2,7 +2,6 @@ package controllers.rest;
 
 import domain.locations.Location;
 import jsonserializers.common.ResponseSerializer;
-import jsonserializers.google.directions.GoogleDirectionsSerializer;
 import jsonserializers.google.geocoding.GoogleGeocodingSerializer;
 import jsonserializers.google.request.GoogleGeocodeSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import services.interfaces.IGoogleDirectionsService;
 import services.interfaces.IGoogleGeocodingService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Krzysztof Kicinger on 2014-11-15.
@@ -32,21 +29,6 @@ public class GoogleRestController {
         this.googleGeocodingService = googleGeocodingService;
         this.googleDirectionsService = googleDirectionsService;
         this.freeGeoService = freeGeoService;
-    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public @ResponseBody void test(@RequestHeader(value = "authorization") String token) throws Exception {
-        GoogleGeocodingSerializer geoSerializer = googleGeocodingService.getLocationDescription("santacruz", null, null);
-
-        Location origin = new Location();
-        origin.setLatitude(50.067265);
-        origin.setLongitude(19.944448);
-        Location destination = new Location();
-        destination.setLatitude(50.435275);
-        destination.setLongitude(18.850237);
-        GoogleDirectionsSerializer directionsSerializer = googleDirectionsService.getTripDescription(origin, destination, null, null, null);
-        googleDirectionsService.deserializeTripDescription(directionsSerializer, origin, destination, new ArrayList<Location>(), new Date());
-        System.out.println("HERE");
     }
 
     @RequestMapping(value = "/geocode/location", method = RequestMethod.POST)

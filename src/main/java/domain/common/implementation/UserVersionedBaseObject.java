@@ -2,6 +2,7 @@ package domain.common.implementation;
 
 import domain.common.interfaces.IUserVersionedBaseObject;
 import domain.useraccounts.UserAccount;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
  * Created by Krzysiu on 2014-05-31.
  */
 @MappedSuperclass
+@JsonIgnoreProperties(value = { "lastModificationByAccount", "removedByAccount" })
 public abstract class UserVersionedBaseObject extends VersionedBaseObject implements IUserVersionedBaseObject {
 
     protected UserAccount createdByAccount;

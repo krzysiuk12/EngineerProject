@@ -163,7 +163,11 @@ public class LocationManagementService implements ILocationManagementService {
         if (!errorMessages.isEmpty()) {
             throw new FormValidationError(errorMessages);
         }
-        return locationManagementRepository.getLocationsInScope(latitude, longitude, kmScope / DEGREE_KILOMETERS_RATIO);
+        List<Location> resultList = locationManagementRepository.getLocationsInScope(latitude, longitude, kmScope / DEGREE_KILOMETERS_RATIO);
+        for (Location location : resultList) {
+            preperLocationToNotAllDataRequest(location);
+        }
+        return resultList;
     }
 
     @Override
