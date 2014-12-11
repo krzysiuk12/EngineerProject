@@ -54,6 +54,7 @@ public class TripsManagementRepository extends BaseHibernateRepository implement
         Criteria criteria = getCurrentSession().createCriteria(Trip.class);
         criteria.add(Restrictions.eq("author", userAccount));
         criteria.add(Restrictions.eq("id", id));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return (Trip)returnSingleOrNull(criteria.list());
     }
 
@@ -106,6 +107,7 @@ public class TripsManagementRepository extends BaseHibernateRepository implement
     public List<Trip> getAllTrips() {
         Criteria criteria = getCurrentSession().createCriteria(Trip.class);
         criteria.createAlias("days", "days", JoinType.INNER_JOIN);
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
     }
 
