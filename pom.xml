@@ -128,30 +128,11 @@
             <version>${aspectj.version}</version>
         </dependency>
 
-        <!-- JavaMail API -->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>javax.mail-api</artifactId>
-            <version>${javamail.version}</version>
-        </dependency>
-
         <!-- JUnit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
-        </dependency>
-
-        <!-- Velocity Templates -->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>${velocity.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-tools</artifactId>
-            <version>${velocitytools.version}</version>
         </dependency>
 
 
@@ -172,7 +153,6 @@
             <artifactId>commons-csv</artifactId>
             <version>1.0</version>
         </dependency>
-
 
     </dependencies>
 

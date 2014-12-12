@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.interfaces.IUserManagementRepository;
 import services.interfaces.ICodeGeneratorService;
-import services.interfaces.IMailSenderService;
 import services.interfaces.IUserManagementService;
 import tools.ValidationTools;
 
@@ -25,12 +24,10 @@ public class UserManagementService implements IUserManagementService {
 
     private ICodeGeneratorService codeGeneratorService;
     private IUserManagementRepository userManagementRepository;
-    private IMailSenderService mailSenderService;
 
     @Autowired
-    public UserManagementService(IUserManagementRepository userManagementRepository, IMailSenderService mailSenderService, ICodeGeneratorService codeGeneratorService) {
+    public UserManagementService(IUserManagementRepository userManagementRepository, ICodeGeneratorService codeGeneratorService) {
         this.userManagementRepository = userManagementRepository;
-        this.mailSenderService = mailSenderService;
         this.codeGeneratorService = codeGeneratorService;
     }
 

@@ -22,7 +22,6 @@
                 <value>domain.useraccounts.Individual</value>
                 <value>domain.useraccounts.UserAccount</value>
                 <value>domain.useraccounts.UserGroup</value>
-                <value>domain.useraccounts.Preferences</value>
                 <value>domain.locations.Address</value>
                 <value>domain.locations.Location</value>
                 <value>domain.locations.Comment</value>

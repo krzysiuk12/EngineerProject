@@ -8,7 +8,6 @@
     <aop:aspectj-autoproxy />
 
     <import resource="applicationContext-database.xml" />
-    <import resource="applicationContext-mail.xml" />
     <import resource="applicationContext-repository.xml" />
     <import resource="applicationContext-services.xml" />
 

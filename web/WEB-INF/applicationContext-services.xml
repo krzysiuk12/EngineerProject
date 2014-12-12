@@ -7,7 +7,6 @@
 
 
     <import resource="applicationContext-repository.xml" />
-    <import resource="applicationContext-mail.xml" />
 
     <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
     
@@ -15,12 +14,6 @@
 
     <bean name="loggerService" class="services.implementation.LoggerLog4jService">
         <constructor-arg name="tag" value="[Main Logger]" />
-    </bean>
-
-    <bean name="mailSenderService" class="services.implementation.MailSenderSpringService">
-        <constructor-arg name="from" value="${mail.from}" />
-        <constructor-arg name="javaMailSender" ref="mailSender" />
-        <constructor-arg name="velocityEngine" ref="velocityEngine" />
     </bean>
 
 </beans>
