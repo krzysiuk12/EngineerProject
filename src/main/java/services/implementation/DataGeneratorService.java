@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.interfaces.*;
 
-import java.util.Date;
-
 /**
  * Created by Krzysztof Kicinger on 2014-11-18.
  */
@@ -142,7 +140,7 @@ public class DataGeneratorService implements IDataGeneratorService {
     }
 
     @Override
-    public Individual createIndividual(String firstName, String middleName, String lastName, Date dateOfBirth, String description, String facebookAccountUrl, String city, String country) {
+    public Individual createIndividual(String firstName, String lastName, String description, String city, String country) {
         Individual individual = new Individual();
         individual.setFirstName(firstName);
         individual.setLastName(lastName);
@@ -154,8 +152,8 @@ public class DataGeneratorService implements IDataGeneratorService {
 
     @Override
     @Transactional
-    public Individual createAndSaveIndividual(String firstName, String middleName, String lastName, Date dateOfBirth, String description, String facebookAccountUrl, String city, String country) throws Exception {
-        Individual individual = createIndividual(firstName, middleName, lastName, dateOfBirth, description, facebookAccountUrl, city, country);
+    public Individual createAndSaveIndividual(String firstName, String lastName, String description, String city, String country) throws Exception {
+        Individual individual = createIndividual(firstName, lastName, description, city, country);
         userManagementService.saveIndividual(individual);
         return individual;
     }

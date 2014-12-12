@@ -50,9 +50,9 @@ public class SystemInitializationService {
             SecurityProfile securityProfile = dataGeneratorService.createAndSaveSecurityProfile(ConfigurationTools.DEFAULT_SECURITY_PROFILE_NAME, ConfigurationTools.DEFAULT_SECURITY_PROFILE_NAME, true, accountSecurityProfile, passwordSecurityProfile);
             UserGroup administratorsUserGroup = dataGeneratorService.createAndSaveUserGroup(ConfigurationTools.ADMINISTRATORS_USER_GROUP, ConfigurationTools.ADMINISTRATORS_USER_GROUP, securityProfile);
             UserGroup simpleUsersUserGroup = dataGeneratorService.createAndSaveUserGroup(ConfigurationTools.SIMPLE_USERS_USER_GROUP, ConfigurationTools.SIMPLE_USERS_USER_GROUP, securityProfile);
-            Individual systemIndividual = dataGeneratorService.createIndividual(ConfigurationTools.SYSTEM_INDIVIDUAL, null, ConfigurationTools.SYSTEM_INDIVIDUAL, null, "System Individual", null, null, null);
+            Individual systemIndividual = dataGeneratorService.createIndividual(ConfigurationTools.SYSTEM_INDIVIDUAL, ConfigurationTools.SYSTEM_INDIVIDUAL, "System Individual", null, null);
             UserAccount systemUserAccount = dataGeneratorService.createAndSaveUserAccount(ConfigurationTools.SYSTEM_ACCOUNT_LOGIN, ConfigurationTools.SYSTEM_ACCOUNT_PASSWORD, ConfigurationTools.SYSTEM_ACCOUNT_EMAIL, systemIndividual, administratorsUserGroup);
-            Individual administratorIndividual = dataGeneratorService.createIndividual(ConfigurationTools.ADMINISTRATOR_INDIVIDUAL, null, ConfigurationTools.ADMINISTRATOR_INDIVIDUAL, null, "Administrator Individual", null, null, null);
+            Individual administratorIndividual = dataGeneratorService.createIndividual(ConfigurationTools.ADMINISTRATOR_INDIVIDUAL, ConfigurationTools.ADMINISTRATOR_INDIVIDUAL, "Administrator Individual", null, null);
             UserAccount administratorUserAccount = dataGeneratorService.createAndSaveUserAccount(ConfigurationTools.ADMINISTRATOR_LOGIN, ConfigurationTools.ADMINISTRATOR_PASSWORD, ConfigurationTools.ADMINISTRATOR_EMAIL, administratorIndividual, administratorsUserGroup);
             initializeLocations(systemUserAccount);
         }

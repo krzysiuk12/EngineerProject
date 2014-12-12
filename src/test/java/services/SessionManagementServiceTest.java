@@ -1,6 +1,9 @@
 package services;
 
 import common.BaseTestObject;
+import domain.securityprofiles.AccountSecurityProfile;
+import domain.securityprofiles.PasswordSecurityProfile;
+import domain.securityprofiles.SecurityProfile;
 import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
 import exceptions.ErrorMessages;
@@ -11,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import services.interfaces.IDataGeneratorService;
+import services.interfaces.ISecurityProfileManagementService;
 import services.interfaces.ISessionManagementService;
 import services.interfaces.IUserManagementService;
+import tools.ConfigurationTools;
 
 import javax.transaction.Transactional;
 
@@ -31,6 +37,12 @@ public class SessionManagementServiceTest extends BaseTestObject {
 
     @Autowired
     private IUserManagementService userManagementService;
+
+    @Autowired
+    private ISecurityProfileManagementService securityProfileManagementService;
+
+    @Autowired
+    private IDataGeneratorService dataGeneratorService;
 
     @Test
     @Transactional
@@ -56,15 +68,22 @@ public class SessionManagementServiceTest extends BaseTestObject {
     @Test
     @Transactional
     public void testAccountLockingOut() throws Exception {
+        PasswordSecurityProfile passwordSecurityProfile = dataGeneratorService.createPasswordSecurityProfile(4, 32, false, 0, 0, false, false, false, false);
+        securityProfileManagementService.savePasswordSecurityProfile(passwordSecurityProfile);
+        AccountSecurityProfile accountSecurityProfile = dataGeneratorService.createAccountSecurityProfile(4, 32, 3, 30, 3);
+        securityProfileManagementService.saveAccountSecurityProfile(accountSecurityProfile);
+        SecurityProfile securityProfile = dataGeneratorService.createSecurityProfile(ConfigurationTools.DEFAULT_SECURITY_PROFILE_NAME, ConfigurationTools.DEFAULT_SECURITY_PROFILE_NAME, true, accountSecurityProfile, passwordSecurityProfile);
+        securityProfileManagementService.saveSecurityProfile(securityProfile);
+
         Individual individual = createIndividual("Jan", "Kowalski");
         userManagementService.saveIndividual(individual);
         UserAccount account = createUserAccount("LoginUserLogin", "LoginUserPassword", "LoginUserToken", "LoginUserEmail", UserAccount.Status.ACTIVE, individual);
         userManagementService.saveUserAccount(account);
         loginUserExpectedError(account.getLogin(), "InvalidPassword", "192.168.0.0", "1234567890", ErrorMessages.INVALID_PASSWORD);
         loginUserExpectedError(account.getLogin(), "InvalidPassword", "192.168.0.0", "1234567890", ErrorMessages.INVALID_PASSWORD);
-        loginUserExpectedError(account.getLogin(), "InvalidPassword", "192.168.0.0", "1234567890", ErrorMessages.INVALID_PASSWORD);
+        loginUserExpectedError(account.getLogin(), "InvalidPassword", "192.168.0.0", "1234567890", ErrorMessages.USER_ACCOUNT_LOCKED_OUT);
         UserAccount userAccount = userManagementService.getUserAccountById(account.getId());
-        //assertEquals(userAccount.getStatus(), UserAccount.Status.LOCKED_OUT);
+        assertEquals(userAccount.getStatus(), UserAccount.Status.LOCKED_OUT);
     }
 
     @Test
