@@ -117,7 +117,6 @@ public class TripsManagementService implements ITripsManagementService {
         Location originLocation = locationManagementService.getLocationById(originLocationId);
         Location destinationLocation = locationManagementService.getLocationById(destinationLocationId);
         List<Location> waypointLocations = locationManagementService.getAllLocationsByIds(waypointIds);
-
         GoogleDirectionsSerializer serializer = googleDirectionsService.getTripDescription(originLocation, destinationLocation, travelMode, distanceUnit, waypointLocations);
         TripDay tripDay = googleDirectionsService.deserializeTripDescription(serializer, originLocation, destinationLocation, waypointLocations, day);
         tripDay.setTrip(trip);

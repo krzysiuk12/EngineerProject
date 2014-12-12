@@ -189,9 +189,6 @@ public class UserManagementService implements IUserManagementService {
         if (userAccount.getStatus() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_STATUS);
         }
-/*        if (userAccount.getToken() == null) {
-            errorMessages.add(ErrorMessages.INVALID_USER_TOKEN);
-        }*/
         if (userAccount.getEmail() == null) {
             errorMessages.add(ErrorMessages.INVALID_USER_EMAIL);
         }
@@ -228,7 +225,7 @@ public class UserManagementService implements IUserManagementService {
             errorMessages.add(ErrorMessages.INVALID_INDIVIDUAL_LAST_NAME);
         }
         if (individual.getLastName() != null && !ValidationTools.validateLastName(individual.getLastName())) {
-            errorMessages.add(ErrorMessages.INVALID_INDIVIDUAL_FIRST_NAME);
+            errorMessages.add(ErrorMessages.INVALID_INDIVIDUAL_LAST_NAME);
         }
         return errorMessages;
     }

@@ -2,8 +2,10 @@ package common;
 
 import domain.locations.Address;
 import domain.locations.Location;
+import domain.securityprofiles.SecurityProfile;
 import domain.useraccounts.Individual;
 import domain.useraccounts.UserAccount;
+import domain.useraccounts.UserGroup;
 import org.mockito.Mockito;
 
 import java.util.Collection;
@@ -129,6 +131,14 @@ public abstract class BaseTestObject {
         Mockito.when(individual.getCity()).thenReturn(city);
         Mockito.when(individual.getCountry()).thenReturn(country);
         return individual;
+    }
+
+    protected UserGroup createUserGroup(String name, String desc, SecurityProfile securityProfile) {
+        UserGroup userGroup = new UserGroup();
+        userGroup.setName(name);
+        userGroup.setDescription(desc);
+        userGroup.setSecurityProfile(securityProfile);
+        return userGroup;
     }
 
     protected void assertCollectionSize(Collection<?> collection, int size) {

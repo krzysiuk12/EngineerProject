@@ -24,7 +24,7 @@ import java.util.List;
 @Service
 public class LocationManagementService implements ILocationManagementService {
 
-    private static final double DEGREE_KILOMETERS_RATIO = 112.0;
+    public static final double DEGREE_KILOMETERS_RATIO = 112.0;
 
     private ILocationManagementRepository locationManagementRepository;
     private IUserManagementService userManagementService;
@@ -125,9 +125,9 @@ public class LocationManagementService implements ILocationManagementService {
     @Override
     @Transactional
     public Location getMyLocationByIdAllData(Long id, String userToken) {
-        UserAccount userAccount = userManagementService.getUserAccountByIdAllData(userManagementService.getUserAccountByToken(userToken).getId());
+        UserAccount userAccount = userManagementService.getUserAccountByToken(userToken);
         Location location = locationManagementRepository.getLocationByIdAllData(id);
-        if (location != null && location.isUsersPrivate() && location.getCreatedByAccount().getId() == userAccount.getId()) {
+        if (location != null && location.isUsersPrivate() && location.getCreatedByAccount() != null && location.getCreatedByAccount().getId() == userAccount.getId()) {
             return location;
         }
         return null;
@@ -173,7 +173,7 @@ public class LocationManagementService implements ILocationManagementService {
     @Override
     @Transactional
     public List<Location> getAllLocationsByIds(List<Long> locationIds) throws Exception {
-        return locationManagementRepository.getAllLocationsByIds(locationIds);
+        return locationIds == null ? new ArrayList<>() : locationManagementRepository.getAllLocationsByIds(locationIds);
     }
     //</editor-fold>
 
@@ -306,7 +306,7 @@ public class LocationManagementService implements ILocationManagementService {
     private double getCurrentLocationRating(Location location, Comment.Rating rating) {
         double ratingValue = rating.getValue();
         double currentRating = location.getRating();
-        double numberOfComments = location.getComments().size() + 1;
+        double numberOfComments = location.getComments() != null ? location.getComments().size() + 1 : 1;
         double difference = (ratingValue - currentRating) / numberOfComments;
         return location.getRating() + difference;
     }

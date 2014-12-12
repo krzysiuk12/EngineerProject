@@ -53,16 +53,18 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
         criteria.add(Restrictions.eq("usersPrivate", false));
         criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
     }
 
     @Override
     public List<Location> getAllUsersPrivateLocations(UserAccount userAccount) {
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
-        criteria.createAlias("createdByAccount", "createdByAccount", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("createdByAccount", "createdByAccount", JoinType.INNER_JOIN);
         criteria.add(Restrictions.eq("createdByAccount", userAccount));
         criteria.add(Restrictions.eq("usersPrivate", true));
         criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
     }
 
@@ -73,6 +75,7 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
         criteria.add(Restrictions.between("longitude", longitude - degreeScope, longitude + degreeScope));
         criteria.add(Restrictions.eq("usersPrivate", false));
         criteria.add(Restrictions.ne("status", Location.Status.REMOVED));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
     }
 
@@ -80,6 +83,7 @@ public class LocationManagementRepository extends BaseHibernateRepository implem
     public List<Location> getAllLocationsByIds(List<Long> locationIds) {
         Criteria criteria = getCurrentSession().createCriteria(Location.class);
         criteria.add(Restrictions.in("id", locationIds));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
     }
     //</editor-fold>

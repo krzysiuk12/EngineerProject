@@ -42,6 +42,14 @@ public class Comment extends BaseObject {
     public Comment() {
     }
 
+    public Comment(UserAccount userAccount, Location location, Rating rating, String comment, Date date) {
+        this.userAccount = userAccount;
+        this.location = location;
+        this.rating = rating;
+        this.comment = comment;
+        this.date = date;
+    }
+
     @Override
     @Id
     @GeneratedValue(generator = "PK_Sequence_Comments", strategy = GenerationType.SEQUENCE)

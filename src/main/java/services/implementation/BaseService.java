@@ -21,19 +21,4 @@ public class BaseService implements IBaseService {
         this.dataGeneratorService = dataGeneratorService;
     }
 
-    public ILoggerService getLoggerService() {
-        return loggerService;
-    }
-
-    public void setLoggerService(ILoggerService loggerService) {
-        this.loggerService = loggerService;
-    }
-
-    public IDataGeneratorService getDataGeneratorService() {
-        return dataGeneratorService;
-    }
-
-    public void setDataGeneratorService(IDataGeneratorService dataGeneratorService) {
-        this.dataGeneratorService = dataGeneratorService;
-    }
 }
