@@ -15,9 +15,9 @@ public interface ILocationManagementService {
 
     public void saveComment(Comment comment) throws Exception;
 
-    public void addNewLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String addressCity, String addressCountry, String userToken) throws Exception;
+    public long addNewLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String addressCity, String addressCountry, String userToken) throws Exception;
 
-    public void addNewPrivateLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception;
+    public long addNewPrivateLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception;
 
     public void addNewComment(Long locationId, Comment.Rating rating, String comment, String userToken) throws Exception;
 

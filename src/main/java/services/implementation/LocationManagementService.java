@@ -75,20 +75,22 @@ public class LocationManagementService implements ILocationManagementService {
     //<editor-fold desc="Add Locations (Normal, Private)">
     @Override
     @Transactional
-    public void addNewLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
+    public long addNewLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
         UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
         Address address = createAddress(street, postalcode, city, country);
         Location location = createLocation(name, description, url, status, latitude, longitude, false, address, createdBy);
         saveLocation(location, createdBy);
+        return location.getId();
     }
 
     @Override
     @Transactional
-    public void addNewPrivateLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
+    public long addNewPrivateLocation(String name, String description, String url, Location.Status status, double longitude, double latitude, String street, String postalcode, String city, String country, String userToken) throws Exception {
         UserAccount createdBy = userManagementService.getUserAccountByToken(userToken);
         Address address = createAddress(street, postalcode, city, country);
         Location location = createLocation(name, description, url, status, latitude, longitude, true, address, createdBy);
         saveLocation(location, createdBy);
+        return location.getId();
     }
     //</editor-fold>
 

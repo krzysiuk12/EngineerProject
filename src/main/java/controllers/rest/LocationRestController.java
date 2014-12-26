@@ -33,10 +33,10 @@ public class LocationRestController {
     @RequestMapping(method = RequestMethod.POST)
     public
     @ResponseBody
-    ResponseSerializer addNewLocation(@RequestHeader(value = "authorization") String token, @RequestBody LocationSerializer data) throws Exception {
+    ResponseSerializer<Long> addNewLocation(@RequestHeader(value = "authorization") String token, @RequestBody LocationSerializer data) throws Exception {
         try {
-            locationManagementService.addNewLocation(data.getName(), data.getDescription(), data.getUrl(), data.getStatus(), data.getLongitude(), data.getLatitude(), data.getAddressStreet(), data.getAddressPostalCode(), data.getAddressCity(), data.getAddressCountry(), token);
-            return new ResponseSerializer();
+            long id = locationManagementService.addNewLocation(data.getName(), data.getDescription(), data.getUrl(), data.getStatus(), data.getLongitude(), data.getLatitude(), data.getAddressStreet(), data.getAddressPostalCode(), data.getAddressCity(), data.getAddressCountry(), token);
+            return new ResponseSerializer<Long>(id);
         } catch (Exception ex) {
             System.out.println(ex);
             throw ex;
@@ -46,9 +46,9 @@ public class LocationRestController {
     @RequestMapping(value = "/private", method = RequestMethod.POST)
     public
     @ResponseBody
-    ResponseSerializer addNewPrivateLocation(@RequestHeader(value = "authorization") String token, @RequestBody LocationSerializer data) throws Exception {
-        locationManagementService.addNewPrivateLocation(data.getName(), data.getDescription(), data.getUrl(), data.getStatus(), data.getLongitude(), data.getLatitude(), data.getAddressStreet(), data.getAddressPostalCode(), data.getAddressCity(), data.getAddressCountry(), token);
-        return new ResponseSerializer();
+    ResponseSerializer<Long> addNewPrivateLocation(@RequestHeader(value = "authorization") String token, @RequestBody LocationSerializer data) throws Exception {
+        long id = locationManagementService.addNewPrivateLocation(data.getName(), data.getDescription(), data.getUrl(), data.getStatus(), data.getLongitude(), data.getLatitude(), data.getAddressStreet(), data.getAddressPostalCode(), data.getAddressCity(), data.getAddressCountry(), token);
+        return new ResponseSerializer<Long>(id);
     }
     //</editor-fold>
 
